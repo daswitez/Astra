@@ -118,56 +118,135 @@ export default function Home() {
         });
       });
 
-      // Chaos Web & Singularity ScrollTrigger
+      // Chaos Web & Singularity ScrollTrigger Narrative (5 Steps)
       if (chaosRef.current && singularityRef.current) {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: chaosRef.current,
             start: "top top",
-            end: "+=1500",
+            end: "+=6000", // Extended scroll for 5-step story
             scrub: 1,
             pin: true,
           }
         });
 
-        // 1. Vibrate tools violently
+        // STEP 1: The Problem (Chaos)
         tl.to(".chaos-node", {
-          x: "random(-20, 20)",
-          y: "random(-20, 20)",
-          rotation: "random(-15, 15)",
-          duration: 0.1,
-          repeat: 10,
-          yoyo: true,
+          x: "random(-30, 30)",
+          y: "random(-30, 30)",
+          rotation: "random(-20, 20)",
+          duration: 2,
           ease: "none"
         }, 0);
-
+        
         tl.to(".chaos-thread", {
           stroke: "#ef4444",
           strokeWidth: 4,
           opacity: 1,
-          duration: 1
+          duration: 2
         }, 0);
+        
+        tl.fromTo(".narrative-step-1", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1 }, 0.5);
 
-        // 2. The Snap to Singularity
-        tl.to(".chaos-node, .chaos-thread, .chaos-text", {
-          scale: 0,
+        // STEP 2: The Breaking Point (Disconnection)
+        tl.to(".narrative-step-1", { opacity: 0, x: 50, duration: 1 }, 3);
+        tl.fromTo(".narrative-step-2", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1 }, 3.5);
+        
+        tl.to(".chaos-thread", {
           opacity: 0,
+          scale: 1.5,
+          duration: 0.5,
+          ease: "power2.out"
+        }, 3.5);
+
+        tl.to(".chaos-node", {
+          x: "random(-200, 200)",
+          y: "random(-200, 200)",
+          scale: 0.5,
+          opacity: 0.3,
+          duration: 2,
+          ease: "power3.out"
+        }, 3.5);
+
+        // STEP 3: The Gravity (Astra Pulls)
+        tl.to(".narrative-step-2", { opacity: 0, x: 50, duration: 1 }, 6.5);
+        tl.fromTo(".narrative-step-3", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1 }, 7);
+        
+        // Spawn the Astra gravity core
+        tl.fromTo(".astra-core", {
+          scale: 0,
+          opacity: 0
+        }, {
+          scale: 1,
+          opacity: 1,
+          duration: 1.5,
+          ease: "back.out(1.5)"
+        }, 7);
+
+        // Nodes get pulled toward the center
+        tl.to(".chaos-node", {
+          x: 0,
+          y: 0,
+          scale: 0, // Gets sucked into the core
+          opacity: 0,
+          duration: 2,
+          ease: "power4.in"
+        }, 7.5);
+
+        // STEP 4: The System (Native Integration)
+        tl.to(".narrative-step-3", { opacity: 0, y: -20, duration: 1 }, 10);
+        tl.fromTo(".narrative-step-4", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 1 }, 10.5);
+
+        // Core expands slightly and projects native nodes
+        tl.to(".astra-core", {
+          scale: 1.5,
+          boxShadow: "0 0 150px rgba(109,40,217,0.8)",
           duration: 1,
-          ease: "back.in(2)"
-        }, 1.5);
+          ease: "power2.out"
+        }, 10.5);
 
-        // 3. Singularity explodes into clarity
-        tl.fromTo(singularityRef.current, {
+        // Native nodes shoot out and orbit
+        tl.fromTo(".native-node", {
           scale: 0,
           opacity: 0,
-          rotationY: 90
+          x: 0,
+          y: 0
+        }, {
+          scale: 1,
+          opacity: 1,
+          duration: 1.5,
+          stagger: 0.2,
+          ease: "back.out(1.5)"
+        }, 11);
+
+        // Position nodes in a circle
+        tl.to(".native-node-1", { x: -120, y: -120, duration: 1 }, 11);
+        tl.to(".native-node-2", { x: 120, y: -120, duration: 1 }, 11);
+        tl.to(".native-node-3", { x: -120, y: 120, duration: 1 }, 11);
+        tl.to(".native-node-4", { x: 120, y: 120, duration: 1 }, 11);
+
+        // Slowly rotate native nodes container
+        tl.to(".native-node-container", {
+          rotation: 90,
+          duration: 3,
+          ease: "none"
+        }, 11.5);
+
+        // STEP 5: The Singularity
+        tl.to(".narrative-step-4", { opacity: 0, y: -20, duration: 1 }, 14.5);
+        tl.to(".native-node, .astra-core", { scale: 0, opacity: 0, duration: 0.5 }, 15);
+        
+        tl.fromTo(singularityRef.current, {
+          scale: 0.5,
+          opacity: 0,
+          rotationY: 45
         }, {
           scale: 1,
           opacity: 1,
           rotationY: 0,
           duration: 2,
           ease: "power4.out"
-        }, 2);
+        }, 15.5);
       }
     }, containerRef);
     return () => ctx.revert();
@@ -453,34 +532,101 @@ export default function Home() {
         className="h-screen w-full relative flex flex-col items-center justify-center overflow-hidden"
         style={{ backgroundColor: "var(--color-bg-secondary)" }}
       >
-        {/* The Chaos Web (Problem) */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none chaos-text">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-center max-w-4xl px-6 tracking-tight">
-            Your team is drowning in <span className="text-red-500">context switching.</span>
-          </h2>
-          <p className="text-xl text-center max-w-2xl px-6" style={{ color: "var(--color-text-secondary)" }}>
-            Engineers lose 40% of their day jumping between disjointed tools. The cognitive load is breaking your highest performers.
-          </p>
+        {/* Storytelling Static UI Layers */}
+        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center px-12 md:px-24">
+          {/* Step 1 Text */}
+          <div className="narrative-step-1 absolute max-w-xl left-12 md:left-24 opacity-0 flex flex-col gap-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-bold w-fit">
+              <TriangleAlert className="w-4 h-4" /> The Real Bottleneck
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+              The <span className="text-rose-500">Chaos</span> of Fragmented Work.
+            </h2>
+            <p className="text-xl md:text-2xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
+              Slack for chat. Jira for tasks. Docs scattered in the wind. Engineers don't code, they search for context across 10 different tabs.
+            </p>
+          </div>
+
+          {/* Step 2 Text */}
+          <div className="narrative-step-2 absolute max-w-xl right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm font-bold w-fit">
+               The Cost of Context Switching
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+              The Breaking <span className="text-yellow-500">Point.</span>
+            </h2>
+            <p className="text-xl md:text-2xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
+              Every time you jump tools, it takes 23 minutes to refocus. Connections snap. Context is lost. High-performing teams are dragged down by their own infrastructure.
+            </p>
+          </div>
+
+          {/* Step 3 Text */}
+          <div className="narrative-step-3 absolute max-w-lg left-12 md:left-24 opacity-0 flex flex-col gap-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-bold w-fit">
+               <Sparkles className="w-4 h-4" /> The Paradigm Shift
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+              A New <span className="text-gradient">Gravity.</span>
+            </h2>
+            <p className="text-lg md:text-xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
+              What if you didn't have to connect tools anymore? What if the workspace itself was the tool? Astra acts as a gravitational center for your workflow.
+            </p>
+          </div>
+
+          {/* Step 4 Text */}
+          <div className="narrative-step-4 absolute max-w-lg right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-bold w-fit">
+               <Blocks className="w-4 h-4" /> Architecture
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+              A Native <span className="text-blue-500">Ecosystem.</span>
+            </h2>
+            <p className="text-lg md:text-xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
+              Zero plugins. Zero integrations. Chat, Kanban, Storage, and Metrics are built natively into the same engine. They speak the same language instantly.
+            </p>
+          </div>
         </div>
 
         {/* Abstract 3D/Nodes representing chaos */}
-        <div className="absolute inset-0 z-0">
-          <svg className="w-full h-full opacity-30 chaos-thread transition-all duration-300">
-            <path d="M 200,200 Q 400,300 800,200 T 1400,300" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
-            <path d="M 300,800 Q 600,500 1000,700 T 1600,600" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
-            <path d="M 100,600 Q 500,200 900,400 T 1500,800" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+        <div className="absolute inset-0 z-0 flex items-center justify-center">
+          <svg className="absolute w-full h-full opacity-30 chaos-thread transition-all duration-300">
+            <path d="M 300,300 Q 600,400 900,300 T 1500,400" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+            <path d="M 400,700 Q 700,500 1100,600 T 1700,500" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+            <path d="M 200,500 Q 600,200 1000,400 T 1600,700" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
           </svg>
-          <div className="chaos-node absolute top-[20%] left-[15%] w-24 h-24 rounded-2xl glass-active flex items-center justify-center">
+          
+          <div className="chaos-node absolute top-[25%] left-[20%] w-24 h-24 rounded-2xl glass-active flex items-center justify-center shadow-2xl">
             <Slack className="w-10 h-10 text-rose-400" />
           </div>
-          <div className="chaos-node absolute top-[70%] left-[25%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center">
+          <div className="chaos-node absolute top-[65%] left-[30%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-xl">
             <Github className="w-8 h-8 text-neutral-400" />
           </div>
-          <div className="chaos-node absolute top-[30%] right-[20%] w-28 h-28 rounded-2xl glass-active flex items-center justify-center shadow-red-500/20 shadow-xl">
+          <div className="chaos-node absolute top-[35%] right-[25%] w-28 h-28 rounded-2xl glass-active flex items-center justify-center shadow-red-500/20 shadow-2xl">
             <Trello className="w-12 h-12 text-blue-400" />
           </div>
-          <div className="chaos-node absolute top-[65%] right-[30%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center">
+          <div className="chaos-node absolute top-[60%] right-[35%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-lg">
             <TriangleAlert className="w-8 h-8 text-yellow-500" />
+          </div>
+
+          <div className="native-node-container absolute inset-0 flex items-center justify-center pointer-events-none">
+            {/* Native Nodes - Spawn centrally and move outward in step 4 */}
+            <div className="native-node native-node-1 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-blue-500/30 border opacity-0">
+              <MessageSquare className="w-6 h-6 text-blue-400" />
+            </div>
+            <div className="native-node native-node-2 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-purple-500/30 border opacity-0">
+              <Blocks className="w-6 h-6 text-purple-400" />
+            </div>
+            <div className="native-node native-node-3 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-emerald-500/30 border opacity-0">
+              <LayoutTemplate className="w-6 h-6 text-emerald-400" />
+            </div>
+            <div className="native-node native-node-4 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-cyan-500/30 border opacity-0">
+              <BarChart3 className="w-6 h-6 text-cyan-400" />
+            </div>
+          </div>
+
+          {/* The Gravity Core (Astra Logo pulling things in Step 3/4) */}
+          <div className="astra-core absolute w-32 h-32 rounded-full flex items-center justify-center z-10 opacity-0 shadow-[0_0_100px_rgba(109,40,217,0.5)]" style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}>
+             <Sparkles className="w-12 h-12 text-white" />
           </div>
         </div>
 
