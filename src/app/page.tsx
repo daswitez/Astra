@@ -28,6 +28,14 @@ import {
   Github,
   Trello,
   Slack,
+  Figma,
+  Cloud,
+  PenTool,
+  Type,
+  Share2,
+  GitMerge,
+  Timer,
+  Focus,
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -248,6 +256,36 @@ export default function Home() {
           ease: "power4.out"
         }, 15.5);
       }
+
+      // App Ecosystem 3D Parallax Stack
+      gsap.utils.toArray<HTMLElement>(".ecosystem-container").forEach((container) => {
+        const cards = gsap.utils.toArray<HTMLElement>(".ecosystem-card", container);
+        if (cards.length > 0) {
+           const tl = gsap.timeline({
+             scrollTrigger: {
+               trigger: container,
+               start: "top top",
+               end: "+=3000",
+               scrub: 1,
+               pin: true,
+             }
+           });
+
+           // Card 1 starts visible. 
+           // Move Card 2 up over Card 1
+           tl.fromTo(cards[1], { y: "100%", scale: 0.9, opacity: 0 }, { y: "5%", scale: 0.95, opacity: 1, duration: 1 }, 0);
+           // Push Card 1 slightly back
+           tl.to(cards[0], { y: "-5%", scale: 0.9, opacity: 0.5, duration: 1 }, 0);
+           
+           // Move Card 3 up over Card 2
+           tl.fromTo(cards[2], { y: "100%", scale: 0.9, opacity: 0 }, { y: "10%", scale: 1, opacity: 1, duration: 1 }, 1.5);
+           // Push Card 2 slightly back
+           tl.to(cards[1], { y: "-2%", scale: 0.9, opacity: 0.5, duration: 1 }, 1.5);
+           // Push Card 1 further back
+           tl.to(cards[0], { y: "-10%", scale: 0.85, opacity: 0.2, duration: 1 }, 1.5);
+        }
+      });
+
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -348,17 +386,15 @@ export default function Home() {
           </div>
 
           <h1 className="hero-headline text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] mb-8">
-            One workspace.<br />
-            <span className="text-gradient">Zero context switching.</span>
+            The Operating System for<br />
+            <span className="text-gradient">the Modern Enterprise.</span>
           </h1>
 
           <p
             className="hero-sub text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
             style={{ color: "var(--color-text-secondary)" }}
           >
-            Astra unifies your team&apos;s chat, documents, tasks, and AI intelligence into a single
-            spatial interface. Built for engineering teams who refuse to lose 40% of their day
-            switching between apps.
+            Stop switching contexts. Astra unites your entire organization—Engineering, Sales, Marketing, and Operations—in a single zero-latency workspace.
           </p>
 
           <div className="hero-cta flex flex-col sm:flex-row gap-4 items-center justify-center">
@@ -369,7 +405,7 @@ export default function Home() {
                 boxShadow: "0 8px 30px rgba(109, 40, 217, 0.3)",
               }}
             >
-              Start Your Workspace — Free
+              Unify Your Workspace (Free)
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
@@ -537,76 +573,76 @@ export default function Home() {
           {/* Step 1 Text */}
           <div className="narrative-step-1 absolute max-w-xl left-12 md:left-24 opacity-0 flex flex-col gap-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-bold w-fit">
-              <TriangleAlert className="w-4 h-4" /> The Real Bottleneck
-            </div>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-              The <span className="text-rose-500">Chaos</span> of Fragmented Work.
-            </h2>
-            <p className="text-xl md:text-2xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
-              Slack for chat. Jira for tasks. Docs scattered in the wind. Engineers don't code, they search for context across 10 different tabs.
-            </p>
-          </div>
+               <TriangleAlert className="w-4 h-4" /> The Organizational Silo
+             </div>
+             <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+               The <span className="text-rose-500">Chaos</span> of Fragmented Work.
+             </h2>
+             <p className="text-xl md:text-2xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
+               Salesforce for reps. Jira for devs. Figma for design. Your best people aren't working—they're searching for context across 10 disjointed apps.
+             </p>
+           </div>
 
-          {/* Step 2 Text */}
-          <div className="narrative-step-2 absolute max-w-xl right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm font-bold w-fit">
-               The Cost of Context Switching
-            </div>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-              The Breaking <span className="text-yellow-500">Point.</span>
-            </h2>
-            <p className="text-xl md:text-2xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
-              Every time you jump tools, it takes 23 minutes to refocus. Connections snap. Context is lost. High-performing teams are dragged down by their own infrastructure.
-            </p>
-          </div>
+           {/* Step 2 Text */}
+           <div className="narrative-step-2 absolute max-w-xl right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm font-bold w-fit">
+                The Fragmentation Tax
+             </div>
+             <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+               The Breaking <span className="text-yellow-500">Point.</span>
+             </h2>
+             <p className="text-xl md:text-2xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
+               Your company loses 40% of its potential in the gaps between apps. The cognitive load of switching context is breaking your cross-functional teams.
+             </p>
+           </div>
 
-          {/* Step 3 Text */}
-          <div className="narrative-step-3 absolute max-w-lg left-12 md:left-24 opacity-0 flex flex-col gap-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-bold w-fit">
-               <Sparkles className="w-4 h-4" /> The Paradigm Shift
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-              A New <span className="text-gradient">Gravity.</span>
-            </h2>
-            <p className="text-lg md:text-xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
-              What if you didn't have to connect tools anymore? What if the workspace itself was the tool? Astra acts as a gravitational center for your workflow.
-            </p>
-          </div>
+           {/* Step 3 Text */}
+           <div className="narrative-step-3 absolute max-w-lg left-12 md:left-24 opacity-0 flex flex-col gap-4">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-bold w-fit">
+                <Sparkles className="w-4 h-4" /> The Singularity
+             </div>
+             <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+               A New <span className="text-gradient">Gravity.</span>
+             </h2>
+             <p className="text-lg md:text-xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
+               What if you didn't have to connect tools anymore? What if the workspace itself was the tool? Astra acts as a gravitational center for your entire company.
+             </p>
+           </div>
 
-          {/* Step 4 Text */}
-          <div className="narrative-step-4 absolute max-w-lg right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-bold w-fit">
-               <Blocks className="w-4 h-4" /> Architecture
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-              A Native <span className="text-blue-500">Ecosystem.</span>
-            </h2>
-            <p className="text-lg md:text-xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
-              Zero plugins. Zero integrations. Chat, Kanban, Storage, and Metrics are built natively into the same engine. They speak the same language instantly.
-            </p>
-          </div>
-        </div>
+           {/* Step 4 Text */}
+           <div className="narrative-step-4 absolute max-w-lg right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-bold w-fit">
+                <Blocks className="w-4 h-4" /> Unity
+             </div>
+             <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+               A Native <span className="text-blue-500">Ecosystem.</span>
+             </h2>
+             <p className="text-lg md:text-xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
+               Zero plugins. Zero integrations. Sales, Engineering, and Marketing all speak the same language instantly inside the same interface.
+             </p>
+           </div>
+         </div>
 
-        {/* Abstract 3D/Nodes representing chaos */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center">
-          <svg className="absolute w-full h-full opacity-30 chaos-thread transition-all duration-300">
-            <path d="M 300,300 Q 600,400 900,300 T 1500,400" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
-            <path d="M 400,700 Q 700,500 1100,600 T 1700,500" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
-            <path d="M 200,500 Q 600,200 1000,400 T 1600,700" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
-          </svg>
-          
-          <div className="chaos-node absolute top-[25%] left-[20%] w-24 h-24 rounded-2xl glass-active flex items-center justify-center shadow-2xl">
-            <Slack className="w-10 h-10 text-rose-400" />
-          </div>
-          <div className="chaos-node absolute top-[65%] left-[30%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-xl">
-            <Github className="w-8 h-8 text-neutral-400" />
-          </div>
-          <div className="chaos-node absolute top-[35%] right-[25%] w-28 h-28 rounded-2xl glass-active flex items-center justify-center shadow-red-500/20 shadow-2xl">
-            <Trello className="w-12 h-12 text-blue-400" />
-          </div>
-          <div className="chaos-node absolute top-[60%] right-[35%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-lg">
-            <TriangleAlert className="w-8 h-8 text-yellow-500" />
-          </div>
+         {/* Abstract 3D/Nodes representing chaos */}
+         <div className="absolute inset-0 z-0 flex items-center justify-center">
+           <svg className="absolute w-full h-full opacity-30 chaos-thread transition-all duration-300">
+             <path d="M 300,300 Q 600,400 900,300 T 1500,400" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+             <path d="M 400,700 Q 700,500 1100,600 T 1700,500" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+             <path d="M 200,500 Q 600,200 1000,400 T 1600,700" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+           </svg>
+
+           <div className="chaos-node absolute top-[25%] left-[20%] w-24 h-24 rounded-2xl glass-active flex items-center justify-center shadow-2xl">
+             <Slack className="w-10 h-10 text-rose-400" />
+           </div>
+           <div className="chaos-node absolute top-[65%] left-[30%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-xl">
+             <Figma className="w-8 h-8 text-pink-400" />
+           </div>
+           <div className="chaos-node absolute top-[35%] right-[25%] w-28 h-28 rounded-2xl glass-active flex items-center justify-center shadow-red-500/20 shadow-2xl">
+             <Cloud className="w-12 h-12 text-blue-400" /> {/* Proxy for Salesforce */}
+           </div>
+           <div className="chaos-node absolute top-[60%] right-[35%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-lg">
+             <TriangleAlert className="w-8 h-8 text-yellow-500" />
+           </div>
 
           <div className="native-node-container absolute inset-0 flex items-center justify-center pointer-events-none">
             {/* Native Nodes - Spawn centrally and move outward in step 4 */}
@@ -648,13 +684,13 @@ export default function Home() {
                 <Sparkles className="w-8 h-8" style={{ color: "var(--color-accent)" }} />
               </div>
               <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
-                Astra brings it all home.
+                Astra brings your company into focus.
               </h2>
               <p className="text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-8" style={{ color: "var(--color-text-secondary)" }}>
-                Native context. Zero latency. Complete clarity.
+                Native context. Zero latency. Complete organizational clarity.
               </p>
               <div className="flex items-center gap-4 text-sm font-bold tracking-widest uppercase">
-                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Unified Search</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Unified Org</span>
                 <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Single UI</span>
               </div>
             </div>
@@ -662,61 +698,177 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== FEATURES ========== */}
+      {/* ========== CORE FEATURES (SPATIAL BENTO BOX) ========== */}
       <section id="features" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">
-              Four pillars. One OS.
+              A workspace that works for you.
             </h2>
             <p className="scroll-fade-up text-lg" style={{ color: "var(--color-text-secondary)" }}>
-              Everything your team needs, without the fragmentation tax.
+              Experience the power of native context across your entire organization.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                icon: MessageSquare,
-                title: "Native Departmental Channels",
-                desc: "Your chat is your workspace. Every department gets dedicated channels — #General, #Chat, #Storage, #Metrics — all inside Astra. No more Slack tabs. Messages are living documents that convert into tasks with one click.",
-                color: "#3b82f6",
-              },
-              {
-                icon: Zap,
-                title: "Zero-Latency Text-to-Task",
-                desc: "Highlight any message or document block and morph it into a tracked execution card instantly. The task keeps a living link back to the original conversation. Context is never lost.",
-                color: "#8b5cf6",
-              },
-              {
-                icon: Eye,
-                title: "Invisible Telemetry (DORA + SPACE)",
-                desc: "Automated engineering metrics that never ask your team to fill out forms. Deployment frequency, lead time, change failure rate — all captured passively from your GitHub integration.",
-                color: "#06b6d4",
-              },
-              {
-                icon: BrainCircuit,
-                title: "Cross-Departmental AI Agent",
-                desc: "Press ⌘K and ask anything. Astra's AI reads across every department's Storage and Chat channels to generate instant, contextual summaries. No more asking 'where is that document?'",
-                color: "#6d28d9",
-              },
-            ].map(({ icon: Icon, title, desc, color }) => (
-              <div
-                key={title}
-                className="stagger-card glass-panel rounded-2xl p-8 hover:-translate-y-1 transition-transform duration-300"
-              >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[320px]">
+            
+            {/* Bento 1: Unified Timeline (Tall) */}
+            <div className="stagger-card glass-panel rounded-3xl p-8 flex flex-col md:row-span-2 group overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10 flex-1 flex flex-col">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
-                  style={{ backgroundColor: `${color}15`, border: `1px solid ${color}30` }}
+                  style={{ backgroundColor: "rgba(59, 130, 246, 0.15)", border: "1px solid rgba(59, 130, 246, 0.3)" }}
                 >
-                  <Icon className="w-6 h-6" style={{ color }} />
+                  <MessageSquare className="w-6 h-6 text-blue-400" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{title}</h3>
-                <p className="leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-                  {desc}
+                <h3 className="text-2xl font-bold mb-3">Unified Timeline</h3>
+                <p className="leading-relaxed mb-8" style={{ color: "var(--color-text-secondary)" }}>
+                  Your chat is your workspace. Messages are living documents that convert into actions with one click.
                 </p>
+                
+                {/* Mock UI: Chat to Ticket */}
+                <div className="mt-auto flex flex-col gap-4 relative">
+                  {/* Glowing Connection Line */}
+                  <div className="absolute left-6 top-10 bottom-10 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500 opacity-20 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Chat Message */}
+                  <div className="glass-active rounded-xl p-4 ml-8 relative transform group-hover:-translate-y-1 transition-transform">
+                     <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center">
+                        <MessageSquare className="w-3 h-3 text-blue-400" />
+                     </div>
+                     <div className="w-3/4 h-2 rounded bg-neutral-600 mb-2" />
+                     <div className="w-1/2 h-2 rounded bg-neutral-700" />
+                  </div>
+                  
+                  {/* Jira Ticket */}
+                  <div className="glass-active rounded-xl p-4 ml-8 relative transform group-hover:-translate-y-1 transition-transform delay-75">
+                     <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/50 flex items-center justify-center">
+                        <Trello className="w-3 h-3 text-purple-400" />
+                     </div>
+                     <div className="flex gap-2 mb-2">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300">ENG-142</span>
+                     </div>
+                     <div className="w-full h-2 rounded bg-neutral-600 mb-2" />
+                     <div className="w-2/3 h-2 rounded bg-neutral-700" />
+                  </div>
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Bento 2: AI Command Center (Wide) */}
+            <div className="stagger-card glass-panel rounded-3xl p-8 flex flex-col md:col-span-2 group overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10 flex flex-col md:flex-row gap-8 h-full items-center">
+                <div className="flex-1">
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
+                    style={{ backgroundColor: "rgba(109, 40, 217, 0.15)", border: "1px solid rgba(109, 40, 217, 0.3)" }}
+                  >
+                    <BrainCircuit className="w-6 h-6 text-violet-400" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">AI Command Center</h3>
+                  <p className="leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                    Press ⌘K and instantly query cross-departmental data. Ask questions about sales pipelines, product roadmaps, or marketing campaigns simultaneously.
+                  </p>
+                </div>
+                
+                {/* Mock UI: ⌘K Palette */}
+                <div className="flex-1 w-full max-w-sm">
+                  <div className="glass-omni rounded-2xl p-4 shadow-2xl border border-violet-500/20 transform group-hover:scale-105 transition-transform duration-500">
+                    <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
+                      <Sparkles className="w-4 h-4 text-violet-400" />
+                      <div className="text-sm font-medium text-neutral-300 overflow-hidden whitespace-nowrap border-r-2 border-violet-400 animate-[typing_3s_steps(40,end)_infinite,blink_.75s_step-end_infinite]">
+                        Summarize Q3 marketing...
+                      </div>
+                    </div>
+                    {/* Results Nodes */}
+                    <div className="space-y-2">
+                       <div className="flex items-center gap-3 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                          <Figma className="w-4 h-4 text-pink-400" />
+                          <div className="flex-1">
+                             <div className="w-1/2 h-2 rounded bg-neutral-400 mb-1" />
+                             <div className="w-1/3 h-1.5 rounded bg-neutral-600" />
+                          </div>
+                       </div>
+                       <div className="flex items-center gap-3 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                          <Cloud className="w-4 h-4 text-blue-400" />
+                          <div className="flex-1">
+                             <div className="w-2/3 h-2 rounded bg-neutral-400 mb-1" />
+                             <div className="w-1/4 h-1.5 rounded bg-neutral-600" />
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bento 3: Passive Storage (Square) */}
+            <div className="stagger-card glass-panel rounded-3xl p-8 flex flex-col group overflow-hidden relative">
+               <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10 flex-1 flex flex-col">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
+                  style={{ backgroundColor: "rgba(16, 185, 129, 0.15)", border: "1px solid rgba(16, 185, 129, 0.3)" }}
+                >
+                  <Blocks className="w-6 h-6 text-emerald-400" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Passive Storage</h3>
+                <p className="leading-relaxed mb-auto text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  A complex file tree that auto-organizes itself based on context.
+                </p>
+                
+                {/* Mock UI: Folder structure */}
+                <div className="mt-8 space-y-3">
+                   {/* Parent */}
+                   <div className="glass-active rounded-lg p-3 flex items-center gap-3 transform group-hover:translate-x-2 transition-transform">
+                     <Blocks className="w-4 h-4 text-emerald-400" />
+                     <div className="w-24 h-2 rounded bg-neutral-500" />
+                   </div>
+                   {/* Child 1 */}
+                   <div className="glass-active rounded-lg p-3 ml-6 flex items-center gap-3 transform group-hover:translate-x-4 transition-transform delay-75">
+                     <div className="w-20 h-2 rounded bg-neutral-600" />
+                   </div>
+                   {/* Child 2 */}
+                   <div className="glass-active rounded-lg p-3 ml-6 flex items-center gap-3 transform group-hover:translate-x-6 transition-transform delay-150">
+                     <div className="w-16 h-2 rounded bg-neutral-600" />
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bento 4: Live Telemetry (Square) */}
+            <div className="stagger-card glass-panel rounded-3xl p-8 flex flex-col group overflow-hidden relative">
+               <div className="absolute inset-0 bg-gradient-to-tl from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10 flex-1 flex flex-col">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
+                  style={{ backgroundColor: "rgba(6, 182, 212, 0.15)", border: "1px solid rgba(6, 182, 212, 0.3)" }}
+                >
+                  <Activity className="w-6 h-6 text-cyan-400" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Live Telemetry</h3>
+                <p className="leading-relaxed mb-auto text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  Automated organizational insights and output metrics without micromanagement.
+                </p>
+                
+                {/* Mock UI: Animated Bar Chart */}
+                <div className="mt-8 h-24 flex items-end gap-2 px-2">
+                   {[40, 70, 45, 90, 60].map((height, i) => (
+                      <div 
+                        key={i} 
+                        className="flex-1 bg-cyan-500/20 border border-cyan-500/30 rounded-t-sm transition-all duration-700 group-hover:bg-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)]"
+                        style={{ 
+                          height: `${height}%`,
+                          transitionDelay: `${i * 100}ms`
+                        }}
+                      />
+                   ))}
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -727,7 +879,7 @@ export default function Home() {
           <div className="text-center mb-20">
             <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">How Astra Works</h2>
             <p className="scroll-fade-up text-lg" style={{ color: "var(--color-text-secondary)" }}>
-              From onboarding to deep flow in under 5 minutes.
+              From onboarding to deep organizational flow in under 5 minutes.
             </p>
           </div>
 
@@ -736,25 +888,25 @@ export default function Home() {
               {
                 step: "01",
                 title: "Create Your Organization",
-                desc: "Set up your org in seconds. Invite your team through SSO or magic links. Astra automatically creates your department workspace with all five native channels: #General, #Chat, #Information, #Storage, and #Notifications.",
+                desc: "Set up your company in seconds. Invite your team through SSO or magic links. Astra automatically creates interconnected workspaces across Sales, Engineering, and Marketing.",
                 icon: Globe,
               },
               {
                 step: "02",
-                title: "Connect Your Tools",
-                desc: "Link your GitHub repositories with a single OAuth flow. Astra begins passively collecting deployment events, PR metadata, and CI/CD signals — building your telemetry dashboard without any manual configuration.",
+                title: "Connect Your Stack",
+                desc: "Link your existing tools with a single OAuth flow. Astra begins passively collecting data, context, and deployment events—building your organizational graph automatically.",
                 icon: Blocks,
               },
               {
                 step: "03",
                 title: "Work in Context",
-                desc: "Chat with your team, create documents, and track tasks — all from the same interface. Convert messages into tasks with one click. Every artifact maintains a living bidirectional link to its origin.",
+                desc: "Chat with your team, draft proposals, and track sprints—all from the same interface. Convert conversations into actions instantly, maintaining total bidirectional context.",
                 icon: Zap,
               },
               {
                 step: "04",
-                title: "Enter Flow Mode",
-                desc: "When it's time for deep work, activate Flow Mode. The interface physically transforms: sidebars recede, notifications silence, and your task takes center stage. Your brain gets the uninterrupted focus it needs.",
+                title: "Protect Your Focus",
+                desc: "When it's time for deep work, activate Flow Mode. The interface physically transforms: sidebars recede, noisy notifications silence across the organization, and your critical task takes center stage.",
                 icon: Shield,
               },
             ].map(({ step, title, desc, icon: Icon }) => (
@@ -790,12 +942,12 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="flex-1 space-y-8">
               <h2 className="scroll-fade-up text-4xl md:text-5xl font-bold leading-tight" style={{ color: flowModeActive ? "#ffffff" : "var(--color-text)" }}>
-                Silence the noise.<br />
-                <span className={flowModeActive ? "text-white" : "text-gradient"}>Protect your focus.</span>
+                Protect your focus.<br />
+                <span className={flowModeActive ? "text-white" : "text-gradient"}>Deliver your best work.</span>
               </h2>
               <p className="scroll-fade-up text-lg leading-relaxed transition-colors duration-700" style={{ color: flowModeActive ? "#A1A1AA" : "var(--color-text-secondary)" }}>
-                Developers need 23 minutes to recover from a single interruption.
-                Astra fixes this at the interface level. Click below to experience Flow Mode.
+                Every knowledge worker—from marketers to engineers—craves continuous \"Flow.\"
+                Astra protects this state at the interface level. Click below to experience Flow Mode.
               </p>
 
               <button
@@ -836,15 +988,15 @@ export default function Home() {
                   <div className="glass-active rounded-lg p-3 w-64 shadow-lg flex items-start gap-3 border border-red-500/20">
                     <Slack className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold text-red-400">@here URGENT: Server down</p>
-                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>From #devops-alerts</p>
+                      <p className="text-xs font-bold text-red-400">@here URGENT: Client escalated</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>From #sales-alerts</p>
                     </div>
                   </div>
                   <div className="glass-active rounded-lg p-3 w-64 shadow-lg flex items-start gap-3">
-                    <MessageSquare className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
+                    <Cloud className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold" style={{ color: "var(--color-text)" }}>Can you review my PR?</p>
-                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>From Sarah in #frontend</p>
+                      <p className="text-xs font-bold" style={{ color: "var(--color-text)" }}>Opportunity Lost: Acme Corp</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Salesforce Automation</p>
                     </div>
                   </div>
                 </motion.div>
@@ -858,13 +1010,13 @@ export default function Home() {
                     filter: flowModeActive ? "blur(10px)" : "blur(0px)"
                   }}
                   transition={{ duration: 0.7, ease: "easeInOut", delay: 0.1 }}
-                  className="absolute bottom-10 left-6 pointer-events-none"
+                  className="absolute bottom-10 left-6 pointer-events-none z-0"
                 >
-                  <div className="glass-active rounded-lg p-3 w-56 shadow-lg flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
+                  <div className="glass-active rounded-lg p-3 w-56 shadow-lg flex items-start gap-3 border border-pink-500/20">
+                    <Figma className="w-5 h-5 text-pink-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold" style={{ color: "var(--color-text)" }}>Meeting in 5 min</p>
-                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Sprint Planning</p>
+                      <p className="text-xs font-bold text-pink-400">23 New Comments</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Q3 Marketing Landing Page</p>
                     </div>
                   </div>
                 </motion.div>
@@ -909,76 +1061,155 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== PRICING ========== */}
-      <section id="pricing" className="py-24 px-6" style={{ backgroundColor: "var(--color-bg-secondary)" }}>
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
-          <p className="scroll-fade-up text-lg mb-16" style={{ color: "var(--color-text-secondary)" }}>
-            Start free. Scale when you&apos;re ready. AI credits included.
-          </p>
+      {/* ========== NATIVE APP ECOSYSTEM (3D PARALLAX) ========== */}
+      <section className="bg-black relative overflow-hidden ecosystem-container h-screen flex items-center justify-center pt-24 pb-12">
+         {/* Subtle background glow */}
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-            {/* Free */}
-            <div className="stagger-card glass-panel rounded-2xl p-8 text-left">
-              <h3 className="text-xl font-bold mb-1">Learner</h3>
-              <div className="text-4xl font-extrabold mb-1">$0</div>
-              <p className="text-sm mb-8" style={{ color: "var(--color-text-muted)" }}>Free forever for small squads.</p>
-              <button className="w-full py-3 rounded-full text-sm font-semibold transition-colors" style={{ border: "1px solid var(--color-border-strong)", color: "var(--color-text)" }}>
-                Start Free
-              </button>
-              <ul className="mt-8 space-y-3 text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Up to 5 users</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> All 5 native channels</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> 100 AI queries/mo</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Basic task management</li>
-              </ul>
+         <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col items-center relative z-10">
+            <div className="text-center mb-12 shrink-0">
+               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+                 Built in. <span className="text-gradient">Not bolted on.</span>
+               </h2>
+               <p className="text-lg text-neutral-400 max-w-2xl mx-auto">
+                 Why switch contexts for brainstorming or diagramming? Astra includes high-performance, native mini-apps that live alongside your chat and tasks.
+               </p>
             </div>
 
-            {/* Pro */}
-            <div
-              className="stagger-card rounded-2xl p-8 text-left relative md:-translate-y-4"
-              style={{
-                background: "linear-gradient(135deg, rgba(109,40,217,0.05), rgba(59,130,246,0.05))",
-                border: "2px solid var(--color-accent)",
-                boxShadow: "0 20px 60px rgba(109, 40, 217, 0.12)",
-              }}
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 rounded-full text-xs font-bold text-white tracking-widest uppercase" style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}>
-                Most Popular
-              </div>
-              <h3 className="text-xl font-bold mb-1">Organization Pro</h3>
-              <div className="text-4xl font-extrabold mb-1">$12<span className="text-lg font-normal" style={{ color: "var(--color-text-muted)" }}>/seat/mo</span></div>
-              <p className="text-sm mb-8" style={{ color: "var(--color-text-muted)" }}>For scaling agile teams.</p>
-              <button className="w-full py-3 rounded-full text-sm font-semibold text-white transition-transform hover:scale-105" style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}>
-                Start 14-Day Trial
-              </button>
-              <ul className="mt-8 space-y-3 text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Unlimited users</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Unlimited channels &amp; storage</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> DORA &amp; SPACE telemetry</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> 2,000 AI queries/seat/mo</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Flow Mode with Slack sync</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> GitHub integration</li>
-              </ul>
-            </div>
+            <div className="relative w-full max-w-5xl flex-1 flex justify-center perspective-[2000px]">
+               
+               {/* App 1: Spatial Whiteboard */}
+               <div className="ecosystem-card absolute w-full h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/80 backdrop-blur-3xl shadow-2xl flex flex-col">
+                  {/* Window Bar */}
+                  <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
+                     <div className="flex gap-2">
+                        <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+                        <div className="w-3 h-3 rounded-full bg-green-500/50" />
+                     </div>
+                     <span className="text-sm font-semibold text-neutral-300 flex items-center gap-2">
+                        <PenTool className="w-4 h-4 text-pink-400" /> Spatial Whiteboard
+                     </span>
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1 relative p-12 overflow-hidden flex items-center justify-center">
+                     {/* Brainstorming Mock UI */}
+                     <svg className="absolute inset-0 w-full h-full opacity-30" preserveAspectRatio="none">
+                        <path d="M100,200 C300,50 500,400 800,100" fill="none" stroke="url(#pink-grad)" strokeWidth="4" strokeDasharray="10 10" className="animate-[dash_3s_linear_infinite]" />
+                        <defs>
+                           <linearGradient id="pink-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#ec4899" />
+                              <stop offset="100%" stopColor="#8b5cf6" />
+                           </linearGradient>
+                        </defs>
+                     </svg>
+                     <div className="relative z-10 flex gap-12">
+                        <div className="w-64 h-64 bg-yellow-400/10 border border-yellow-400/30 rounded-lg shadow-lg rotate-[-5deg] p-6 hover:rotate-0 hover:-translate-y-2 transition-transform duration-300">
+                           <Type className="w-6 h-6 text-yellow-500 mb-4" />
+                           <div className="w-3/4 h-3 bg-yellow-500/40 rounded mb-3" />
+                           <div className="w-full h-2 bg-yellow-500/20 rounded mb-2" />
+                           <div className="w-5/6 h-2 bg-yellow-500/20 rounded" />
+                        </div>
+                        <div className="w-64 h-64 bg-pink-400/10 border border-pink-400/30 rounded-lg shadow-lg rotate-[8deg] p-6 hover:rotate-0 hover:-translate-y-2 transition-transform duration-300 translate-y-12">
+                           <PenTool className="w-6 h-6 text-pink-500 mb-4" />
+                           <div className="w-2/3 h-3 bg-pink-500/40 rounded mb-3" />
+                           <div className="w-full h-2 bg-pink-500/20 rounded mb-2" />
+                           <div className="w-4/5 h-2 bg-pink-500/20 rounded" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
 
-            {/* Enterprise */}
-            <div className="stagger-card glass-panel rounded-2xl p-8 text-left">
-              <h3 className="text-xl font-bold mb-1">Enterprise</h3>
-              <div className="text-4xl font-extrabold mb-1">Custom</div>
-              <p className="text-sm mb-8" style={{ color: "var(--color-text-muted)" }}>For uncompromising security.</p>
-              <button className="w-full py-3 rounded-full text-sm font-semibold transition-colors" style={{ border: "1px solid var(--color-border-strong)", color: "var(--color-text)" }}>
-                Contact Sales
-              </button>
-              <ul className="mt-8 space-y-3 text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> SSO (SAML) &amp; SCIM</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Dedicated AI instances</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Custom data retention</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Priority support &amp; SLA</li>
-              </ul>
+               {/* App 2: Auto-Flowcharts */}
+               <div className="ecosystem-card absolute w-full h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/90 backdrop-blur-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] flex flex-col" style={{ transform: "translateY(100%) scale(0.9)", opacity: 0 }}>
+                  {/* Window Bar */}
+                  <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
+                     <div className="flex gap-2">
+                        <div className="w-3 h-3 rounded-full bg-neutral-600" />
+                        <div className="w-3 h-3 rounded-full bg-neutral-600" />
+                     </div>
+                     <span className="text-sm font-semibold text-neutral-300 flex items-center gap-2">
+                        <GitMerge className="w-4 h-4 text-blue-400" /> Auto-Flowcharts
+                     </span>
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1 relative p-12 flex items-center justify-center">
+                     {/* Architecture Mock UI */}
+                     <div className="relative w-full max-w-3xl aspect-[2/1]">
+                        {/* Connecting Lines */}
+                        <svg className="absolute inset-0 w-full h-full opacity-40">
+                           <path d="M200,100 L400,100 L400,250 L600,250" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="5 5" className="animate-[dash_1s_linear_infinite]" />
+                           <path d="M200,250 L400,250 L400,100 L600,100" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="5 5" className="animate-[dash_1s_linear_infinite]" />
+                        </svg>
+                        
+                        {/* Nodes */}
+                        <div className="absolute top-[80px] left-[50px] w-48 p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] animate-pulse">
+                           <div className="flex items-center gap-3 mb-2">
+                              <Cloud className="w-5 h-5 text-blue-400" />
+                              <span className="font-bold text-sm text-blue-200">API Gateway</span>
+                           </div>
+                           <div className="w-full h-1.5 bg-blue-500/30 rounded" />
+                        </div>
+                        
+                        <div className="absolute top-[230px] left-[50px] w-48 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)] animate-pulse" style={{ animationDelay: "0.5s" }}>
+                           <div className="flex items-center gap-3 mb-2">
+                              <Focus className="w-5 h-5 text-emerald-400" />
+                              <span className="font-bold text-sm text-emerald-200">Auth Service</span>
+                           </div>
+                           <div className="w-full h-1.5 bg-emerald-500/30 rounded" />
+                        </div>
+
+                        <div className="absolute top-[155px] right-[50px] w-48 p-4 rounded-xl bg-purple-500/10 border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)] animate-pulse" style={{ animationDelay: "1s" }}>
+                           <div className="flex items-center gap-3 mb-2">
+                              <Share2 className="w-5 h-5 text-purple-400" />
+                              <span className="font-bold text-sm text-purple-200">Database Cluster</span>
+                           </div>
+                           <div className="w-full h-1.5 bg-purple-500/30 rounded" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               {/* App 3: Deep Work Pomodoro */}
+               <div className="ecosystem-card absolute w-full h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b] backdrop-blur-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] flex flex-col" style={{ transform: "translateY(100%) scale(0.9)", opacity: 0 }}>
+                  {/* Window Bar */}
+                  <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
+                     <span className="text-sm font-semibold text-neutral-300 flex items-center gap-2">
+                        <Timer className="w-4 h-4 text-emerald-400" /> Deep Work Tracker
+                     </span>
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1 relative flex flex-col items-center justify-center bg-gradient-to-b from-transparent to-emerald-900/10">
+                     {/* Circular Progress */}
+                     <div className="relative w-64 h-64 flex items-center justify-center mb-8">
+                        <svg className="absolute inset-0 w-full h-full -rotate-90">
+                           <circle cx="128" cy="128" r="120" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
+                           <circle 
+                              cx="128" cy="128" r="120" 
+                              fill="none" 
+                              stroke="#34d399" 
+                              strokeWidth="8" 
+                              strokeLinecap="round"
+                              strokeDasharray="753"
+                              strokeDashoffset="150"
+                              className="transition-all duration-1000"
+                           />
+                        </svg>
+                        <div className="text-center">
+                           <div className="text-6xl font-black text-white tracking-tighter">42:15</div>
+                           <div className="text-emerald-400 font-bold tracking-widest text-sm mt-1 uppercase">Deep Work</div>
+                        </div>
+                     </div>
+                     
+                     <div className="flex items-center gap-4 px-6 py-3 rounded-full bg-white/5 border border-white/10">
+                        <Shield className="w-5 h-5 text-emerald-400" />
+                        <span className="text-neutral-300 font-medium">Distractions Blocked: <span className="text-white font-bold ml-1">14</span></span>
+                     </div>
+                  </div>
+               </div>
+
             </div>
-          </div>
-        </div>
+         </div>
       </section>
 
       {/* ========== FAQ ========== */}
@@ -1043,24 +1274,158 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== FOOTER ========== */}
-      <footer className="py-12 px-6" style={{ borderTop: "1px solid var(--color-border)" }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-md flex items-center justify-center" style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}>
-              <Sparkles className="w-3 h-3 text-white" />
+      {/* ========== PRICING TIERS ========== */}
+      <section id="pricing" className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">
+              Simple, transparent pricing.
+            </h2>
+            <p className="scroll-fade-up text-lg" style={{ color: "var(--color-text-secondary)" }}>
+              Start for free, scale as your organization unifies.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Free Learner */}
+            <div className="glass-panel rounded-3xl p-8 flex flex-col h-full hover:-translate-y-2 transition-transform duration-300">
+              <div className="mb-8">
+                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--color-text)" }}>Free Learner</h3>
+                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>For small teams getting started.</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-5xl font-extrabold">$0</span>
+                  <span className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>/ forever</span>
+                </div>
+              </div>
+              <ul className="space-y-4 mb-8 flex-1 text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Up to 5 users</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Unlimited chat & channels</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Basic task management</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Standard search</li>
+              </ul>
+              <button
+                className="w-full py-4 rounded-xl font-bold transition-colors"
+                style={{ backgroundColor: "var(--color-surface-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
+              >
+                Get Started
+              </button>
             </div>
-            <span className="font-bold text-sm">Astra</span>
+
+            {/* Organization Pro */}
+            <div className="glass-active rounded-3xl p-8 flex flex-col h-full transform md:-translate-y-4 border border-blue-500/30 shadow-[0_0_40px_rgba(59,130,246,0.1)] relative">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold bg-blue-500 text-white tracking-widest uppercase">
+                Most Popular
+              </div>
+              <div className="mb-8">
+                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--color-text)" }}>Organization Pro</h3>
+                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>The complete platform for growing companies.</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-5xl font-extrabold">$15</span>
+                  <span className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>/ user / mo</span>
+                </div>
+              </div>
+              <ul className="space-y-4 mb-8 flex-1 text-sm font-medium">
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> Everything in Free</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> AI Workspace Generation</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> Invisible Telemetry</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> 3rd-Party Integrations</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> Priority Support</li>
+              </ul>
+              <button
+                className="w-full py-4 rounded-xl font-bold text-white transition-transform hover:scale-105"
+                style={{ background: "linear-gradient(135deg, #3b82f6, #2563eb)" }}
+              >
+                Start Free Trial
+              </button>
+            </div>
+
+            {/* Enterprise AI */}
+            <div className="glass-panel rounded-3xl p-8 flex flex-col h-full hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
+               <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-transparent pointer-events-none" />
+              <div className="mb-8 relative z-10">
+                <h3 className="text-xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Enterprise AI</h3>
+                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>For large-scale, secure deployments.</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-extrabold">Custom</span>
+                </div>
+              </div>
+              <ul className="space-y-4 mb-8 flex-1 text-sm font-medium relative z-10" style={{ color: "var(--color-text-secondary)" }}>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Everything in Pro</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Dedicated Cross-Dept AI Models</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Single Sign-On (SAML/SSO)</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Advanced Audit Logs</li>
+                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Custom SLA</li>
+              </ul>
+              <button
+                className="w-full py-4 rounded-xl font-bold transition-colors relative z-10"
+                style={{ backgroundColor: "var(--color-surface-elevated)", border: "1px solid var(--color-border-strong)", color: "var(--color-text)" }}
+              >
+                Contact Sales
+              </button>
+            </div>
           </div>
-          <div className="flex gap-8 text-sm" style={{ color: "var(--color-text-muted)" }}>
-            <span>Privacy</span>
-            <span>Terms</span>
-            <span>Security</span>
-            <span>Status</span>
+        </div>
+      </section>
+
+      {/* ========== FINAL CTA & FOOTER ========== */}
+      <footer className="pt-32 pb-12 border-t mt-12 relative overflow-hidden" style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-bg)" }}>
+        {/* Glow effect in footer */}
+         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-purple-500/10 blur-[100px] pointer-events-none rounded-full" />
+        
+        <div className="max-w-6xl mx-auto px-6 text-center mb-32 relative z-10">
+          <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tight">
+            Ready to unify your company?
+          </h2>
+          <button
+            className="px-10 py-5 rounded-full text-white font-bold text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform"
+            style={{
+              background: "linear-gradient(135deg, #6d28d9, #3b82f6)",
+              boxShadow: "0 10px 40px rgba(109, 40, 217, 0.4)",
+            }}
+          >
+            Deploy Astra <ArrowRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 mb-16 text-sm relative z-10">
+          <div>
+            <div className="flex items-center gap-2 font-bold text-lg mb-6 text-white">
+              <Sparkles className="w-4 h-4 text-purple-500" /> Astra
+            </div>
+            <p className="opacity-60 leading-relaxed mb-6" style={{ color: "var(--color-text-secondary)" }}>
+              The Spatial Productivity OS for modern enterprises. Unifying context, execution, and intelligence.
+            </p>
           </div>
-          <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
-            © 2025 Astra. All rights reserved.
-          </p>
+          <div className="flex flex-col gap-4 text-white">
+             <h4 className="font-bold mb-2">Product</h4>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Features</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Pricing</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Enterprise</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Security (SOC 2)</a>
+          </div>
+          <div className="flex flex-col gap-4 text-white">
+             <h4 className="font-bold mb-2">Resources</h4>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Documentation</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>API Reference</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Blog</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Community</a>
+          </div>
+          <div className="flex flex-col gap-4 text-white">
+             <h4 className="font-bold mb-2">Company</h4>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>About Us</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Careers</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Contact Sales</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Privacy Policy</a>
+          </div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto px-6 pt-8 flex flex-col md:flex-row items-center justify-between text-xs opacity-40 border-t relative z-10" style={{ borderColor: "var(--color-border)", color: "var(--color-text-secondary)" }}>
+           <p>© 2026 Astra Systems Inc. All rights reserved.</p>
+           <div className="flex gap-4 mt-4 md:mt-0">
+             <a href="#" className="hover:opacity-100">Twitter</a>
+             <a href="#" className="hover:opacity-100">GitHub</a>
+             <a href="#" className="hover:opacity-100">LinkedIn</a>
+           </div>
         </div>
       </footer>
     </div>
