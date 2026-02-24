@@ -22,14 +22,25 @@ import {
   Blocks,
   Eye,
   BrainCircuit,
+  TriangleAlert,
+  Frown,
+  Activity,
+  Github,
+  Trello,
+  Slack,
 } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const [isDark, setIsDark] = useState(false);
+  const [flowModeActive, setFlowModeActive] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
+  const chaosRef = useRef<HTMLDivElement>(null);
+  const singularityRef = useRef<HTMLDivElement>(null);
 
   // Toggle theme
   const toggleTheme = () => {
@@ -106,6 +117,58 @@ export default function Home() {
           scrollTrigger: { trigger: el.parentElement, start: "top 80%" },
         });
       });
+
+      // Chaos Web & Singularity ScrollTrigger
+      if (chaosRef.current && singularityRef.current) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: chaosRef.current,
+            start: "top top",
+            end: "+=1500",
+            scrub: 1,
+            pin: true,
+          }
+        });
+
+        // 1. Vibrate tools violently
+        tl.to(".chaos-node", {
+          x: "random(-20, 20)",
+          y: "random(-20, 20)",
+          rotation: "random(-15, 15)",
+          duration: 0.1,
+          repeat: 10,
+          yoyo: true,
+          ease: "none"
+        }, 0);
+
+        tl.to(".chaos-thread", {
+          stroke: "#ef4444",
+          strokeWidth: 4,
+          opacity: 1,
+          duration: 1
+        }, 0);
+
+        // 2. The Snap to Singularity
+        tl.to(".chaos-node, .chaos-thread, .chaos-text", {
+          scale: 0,
+          opacity: 0,
+          duration: 1,
+          ease: "back.in(2)"
+        }, 1.5);
+
+        // 3. Singularity explodes into clarity
+        tl.fromTo(singularityRef.current, {
+          scale: 0,
+          opacity: 0,
+          rotationY: 90
+        }, {
+          scale: 1,
+          opacity: 1,
+          rotationY: 0,
+          duration: 2,
+          ease: "power4.out"
+        }, 2);
+      }
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -384,29 +447,71 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== THE PROBLEM ========== */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-6">
-            Your team is drowning in tools
+      {/* ========== NARRATIVE: THE PROBLEM & SOLUTION ========== */}
+      <section
+        ref={chaosRef}
+        className="h-screen w-full relative flex flex-col items-center justify-center overflow-hidden"
+        style={{ backgroundColor: "var(--color-bg-secondary)" }}
+      >
+        {/* The Chaos Web (Problem) */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none chaos-text">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-center max-w-4xl px-6 tracking-tight">
+            Your team is drowning in <span className="text-red-500">context switching.</span>
           </h2>
-          <p className="scroll-fade-up text-lg leading-relaxed max-w-2xl mx-auto mb-16" style={{ color: "var(--color-text-secondary)" }}>
-            The average company manages 305 SaaS applications. Engineers switch between 10 apps daily,
-            losing 40% of productive time. Every app switch costs 20 minutes of deep focus recovery.
+          <p className="text-xl text-center max-w-2xl px-6" style={{ color: "var(--color-text-secondary)" }}>
+            Engineers lose 40% of their day jumping between disjointed tools. The cognitive load is breaking your highest performers.
           </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Clock, stat: "23 min", desc: "Average recovery time after each context switch" },
-              { icon: Blocks, stat: "305", desc: "Average SaaS apps per enterprise organization" },
-              { icon: Users, stat: "40%", desc: "Of productive time lost to tool fragmentation daily" },
-            ].map(({ icon: Icon, stat, desc }) => (
-              <div key={stat} className="stagger-card glass-panel rounded-2xl p-8 text-center">
-                <Icon className="w-8 h-8 mx-auto mb-4" style={{ color: "var(--color-accent)" }} />
-                <div className="text-4xl font-extrabold mb-2">{stat}</div>
-                <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>{desc}</p>
+        {/* Abstract 3D/Nodes representing chaos */}
+        <div className="absolute inset-0 z-0">
+          <svg className="w-full h-full opacity-30 chaos-thread transition-all duration-300">
+            <path d="M 200,200 Q 400,300 800,200 T 1400,300" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+            <path d="M 300,800 Q 600,500 1000,700 T 1600,600" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+            <path d="M 100,600 Q 500,200 900,400 T 1500,800" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
+          </svg>
+          <div className="chaos-node absolute top-[20%] left-[15%] w-24 h-24 rounded-2xl glass-active flex items-center justify-center">
+            <Slack className="w-10 h-10 text-rose-400" />
+          </div>
+          <div className="chaos-node absolute top-[70%] left-[25%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center">
+            <Github className="w-8 h-8 text-neutral-400" />
+          </div>
+          <div className="chaos-node absolute top-[30%] right-[20%] w-28 h-28 rounded-2xl glass-active flex items-center justify-center shadow-red-500/20 shadow-xl">
+            <Trello className="w-12 h-12 text-blue-400" />
+          </div>
+          <div className="chaos-node absolute top-[65%] right-[30%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center">
+            <TriangleAlert className="w-8 h-8 text-yellow-500" />
+          </div>
+        </div>
+
+        {/* The Singularity (Solution) */}
+        <div
+          ref={singularityRef}
+          className="absolute inset-0 z-20 flex flex-col items-center justify-center px-6"
+          style={{
+            opacity: 0,
+            scale: 0,
+            backgroundColor: "var(--color-bg)",
+            backgroundImage: "radial-gradient(circle at center, rgba(180, 159, 112, 0.05) 0%, transparent 70%)"
+          }}
+        >
+          <div className="glass-omni rounded-3xl p-12 max-w-4xl w-full text-center relative overflow-hidden backdrop-blur-3xl">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5" />
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-16 h-16 rounded-2xl mb-8 flex items-center justify-center shadow-2xl" style={{ backgroundColor: "var(--color-surface)", border: "1px solid var(--color-accent-light)" }}>
+                <Sparkles className="w-8 h-8" style={{ color: "var(--color-accent)" }} />
               </div>
-            ))}
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+                Astra brings it all home.
+              </h2>
+              <p className="text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-8" style={{ color: "var(--color-text-secondary)" }}>
+                Native context. Zero latency. Complete clarity.
+              </p>
+              <div className="flex items-center gap-4 text-sm font-bold tracking-widest uppercase">
+                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Unified Search</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Single UI</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -533,55 +638,125 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== FLOW MODE SPOTLIGHT ========== */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
+      {/* ========== FLOW MODE INTERACTIVE STORY ========== */}
+      <section className="py-32 px-6 transition-colors duration-700 relative overflow-hidden" style={{ backgroundColor: flowModeActive ? "#000000" : "var(--color-bg)" }}>
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="flex-1 space-y-8">
-              <h2 className="scroll-fade-up text-4xl md:text-5xl font-bold leading-tight">
+              <h2 className="scroll-fade-up text-4xl md:text-5xl font-bold leading-tight" style={{ color: flowModeActive ? "#ffffff" : "var(--color-text)" }}>
                 Silence the noise.<br />
-                <span className="text-gradient">Enter Flow Mode.</span>
+                <span className={flowModeActive ? "text-white" : "text-gradient"}>Protect your focus.</span>
               </h2>
-              <p className="scroll-fade-up text-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-                Research shows a developer needs 23 minutes to recover from a single interruption.
-                68% of workers report not having enough uninterrupted time. Astra fixes this at the
-                interface level.
+              <p className="scroll-fade-up text-lg leading-relaxed transition-colors duration-700" style={{ color: flowModeActive ? "#A1A1AA" : "var(--color-text-secondary)" }}>
+                Developers need 23 minutes to recover from a single interruption.
+                Astra fixes this at the interface level. Click below to experience Flow Mode.
               </p>
-              <ul className="scroll-fade-up space-y-4">
-                {[
-                  "Sidebars organically recede from view",
-                  "Non-critical notifications are silenced and batched",
-                  "Your active task takes center stage under a spotlight",
-                  "All missed messages are queued for post-flow review",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-3 text-sm font-medium"
-                    style={{ color: "var(--color-text-secondary)" }}
-                  >
-                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "var(--color-accent)" }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+
+              <button
+                onClick={() => setFlowModeActive(!flowModeActive)}
+                className="scroll-fade-up px-8 py-4 rounded-full font-bold transition-all duration-500 hover:scale-105"
+                style={{
+                  backgroundColor: flowModeActive ? "var(--color-surface)" : "var(--color-accent)",
+                  color: flowModeActive ? "var(--color-text)" : "#ffffff",
+                  boxShadow: flowModeActive ? "none" : "0 10px 30px rgba(180, 159, 112, 0.4)",
+                  border: flowModeActive ? "1px solid var(--color-border)" : "none"
+                }}
+              >
+                {flowModeActive ? "Exit Flow Mode" : "Simulate Flow Mode"}
+              </button>
             </div>
-            <div className="flex-1 relative">
-              <div className="scroll-fade-up glass-omni rounded-2xl p-8 relative overflow-hidden" style={{ minHeight: "320px" }}>
-                <div className="glass-active rounded-xl p-6 max-w-sm mx-auto relative z-10">
-                  <div className="w-16 h-3 rounded-full mb-4" style={{ backgroundColor: "var(--color-accent)", opacity: 0.3 }} />
-                  <h4 className="text-lg font-bold mb-2">Refactor Authentication Logic</h4>
-                  <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
-                    Migrate session tokens to JWT-based auth across all microservices
-                  </p>
-                  <div className="flex gap-2 mt-4">
-                    <span className="px-2 py-1 rounded text-xs font-medium" style={{ backgroundColor: "var(--color-surface-elevated)", border: "1px solid var(--color-border)" }}>Backend</span>
-                    <span className="px-2 py-1 rounded text-xs font-medium" style={{ backgroundColor: "var(--color-surface-elevated)", border: "1px solid var(--color-border)" }}>High Priority</span>
+
+            <div className="flex-1 relative w-full aspect-[4/3]">
+              <div
+                className="absolute inset-0 rounded-2xl p-8 overflow-hidden transition-all duration-700"
+                style={{
+                  backgroundColor: flowModeActive ? "rgba(255,255,255,0.02)" : "var(--color-surface-omni)",
+                  border: flowModeActive ? "1px solid rgba(255,255,255,0.05)" : "1px solid var(--color-border)",
+                  boxShadow: flowModeActive ? "0 0 100px rgba(180, 159, 112, 0.1)" : "none"
+                }}
+              >
+                {/* Dummy Notifications (The Noise) */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    opacity: flowModeActive ? 0 : 1,
+                    y: flowModeActive ? -50 : 0,
+                    scale: flowModeActive ? 0.9 : 1,
+                    filter: flowModeActive ? "blur(10px)" : "blur(0px)"
+                  }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  className="absolute top-6 right-6 space-y-3 pointer-events-none"
+                >
+                  <div className="glass-active rounded-lg p-3 w-64 shadow-lg flex items-start gap-3 border border-red-500/20">
+                    <Slack className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-bold text-red-400">@here URGENT: Server down</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>From #devops-alerts</p>
+                    </div>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs" style={{ backgroundColor: "var(--color-surface-elevated)", border: "1px solid var(--color-border)" }}>
-                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  <span style={{ color: "var(--color-text-muted)" }}>Flow Active · 42:15</span>
-                </div>
+                  <div className="glass-active rounded-lg p-3 w-64 shadow-lg flex items-start gap-3">
+                    <MessageSquare className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-bold" style={{ color: "var(--color-text)" }}>Can you review my PR?</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>From Sarah in #frontend</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={false}
+                  animate={{
+                    opacity: flowModeActive ? 0 : 1,
+                    x: flowModeActive ? -50 : 0,
+                    scale: flowModeActive ? 0.9 : 1,
+                    filter: flowModeActive ? "blur(10px)" : "blur(0px)"
+                  }}
+                  transition={{ duration: 0.7, ease: "easeInOut", delay: 0.1 }}
+                  className="absolute bottom-10 left-6 pointer-events-none"
+                >
+                  <div className="glass-active rounded-lg p-3 w-56 shadow-lg flex items-start gap-3">
+                    <Clock className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-bold" style={{ color: "var(--color-text)" }}>Meeting in 5 min</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Sprint Planning</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* The Focused Task */}
+                <motion.div
+                  layout
+                  transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                  className="absolute p-6 rounded-xl"
+                  style={{
+                    top: flowModeActive ? "50%" : "30%",
+                    left: flowModeActive ? "50%" : "30%",
+                    x: "-50%",
+                    y: "-50%",
+                    scale: flowModeActive ? 1.2 : 1,
+                    backgroundColor: flowModeActive ? "#18181B" : "var(--color-bg)",
+                    border: flowModeActive ? "1px solid rgba(180, 159, 112, 0.3)" : "1px solid var(--color-border)",
+                    boxShadow: flowModeActive ? "0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(180, 159, 112, 0.1)" : "var(--edge-shadow)",
+                    width: "280px"
+                  }}
+                >
+                  <div className="w-16 h-2 rounded-full mb-4" style={{ backgroundColor: "var(--color-accent)", opacity: flowModeActive ? 1 : 0.3 }} />
+                  <h4 className="text-lg font-bold mb-2 transition-colors" style={{ color: flowModeActive ? "#fff" : "var(--color-text)" }}>Refactor Authentication</h4>
+                  <p className="text-xs leading-relaxed transition-colors" style={{ color: flowModeActive ? "#A1A1AA" : "var(--color-text-muted)" }}>
+                    Migrate session tokens to JWT-based auth across all microservices carefully.
+                  </p>
+
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: flowModeActive ? 1 : 0 }}
+                    className="mt-6 flex items-center justify-between pointer-events-none"
+                  >
+                    <div className="text-[10px] font-mono text-emerald-400/70 border border-emerald-400/20 bg-emerald-400/5 px-2 py-1 rounded">
+                      BLOCKING ALL NOTIFICATIONS
+                    </div>
+                  </motion.div>
+                </motion.div>
+
               </div>
             </div>
           </div>

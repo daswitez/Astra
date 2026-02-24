@@ -15,8 +15,9 @@
   --color-text-muted: #999999;
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-strong: rgba(0, 0, 0, 0.15);
-  --color-accent: #6d28d9;
-  --color-accent-light: #8b5cf6;
+  --color-accent: #b49f70;
+  /* Champagne Gold / Muted Luxury Gold */
+  --color-accent-light: #d1bfae;
   --edge-light: inset 0 1px 1px rgba(255, 255, 255, 0.8);
   --edge-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
   --edge-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.08), 0 12px 48px rgba(0, 0, 0, 0.06);
@@ -37,8 +38,9 @@
   --color-text-muted: #71717a;
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-strong: rgba(255, 255, 255, 0.15);
-  --color-accent: #8b5cf6;
-  --color-accent-light: #a78bfa;
+  --color-accent: #cca982;
+  /* Brighter Champagne for dark mode */
+  --color-accent-light: #e6ceb3;
   --edge-light: inset 0 1px 1px rgba(255, 255, 255, 0.15);
   --edge-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
   --edge-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.4), 0 12px 48px rgba(0, 0, 0, 0.3);
@@ -89,7 +91,8 @@ body {
 
 /* ===== Text Gradient ===== */
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-accent), #3b82f6);
+  background: linear-gradient(135deg, var(--color-accent), #8a96a3);
+  /* Champagne Gold to Soft Slate */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
