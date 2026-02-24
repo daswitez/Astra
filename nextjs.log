@@ -1,0 +1,27 @@
+nohup: ignoring input
+
+> astra-tmp@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.16:3000
+
+✓ Starting...
+✓ Ready in 580ms
+ GET / 200 in 590ms (compile: 429ms, render: 161ms)
+ GET / 200 in 44ms (compile: 4ms, render: 39ms)
+ GET / 200 in 144ms (compile: 71ms, render: 73ms)
+ GET / 200 in 145ms (compile: 41ms, render: 104ms)
+ GET / 200 in 65ms (compile: 43ms, render: 22ms)
+✓ Compiled in 2ms
+✓ Compiled in 90ms
+✓ Compiled in 21ms
+ GET / 200 in 117ms (compile: 33ms, render: 83ms)
+✓ Compiled in 64ms
+✓ Compiled in 73ms
+ GET / 200 in 229ms (compile: 43ms, render: 186ms)
+ GET / 200 in 69ms (compile: 43ms, render: 27ms)
+ GET / 200 in 135ms (compile: 7ms, render: 128ms)
+ GET / 200 in 74ms (compile: 4ms, render: 70ms)
+ GET / 200 in 58ms (compile: 2ms, render: 56ms)

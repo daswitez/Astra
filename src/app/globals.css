@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
+/* ===== ASTRA SPATIAL DESIGN SYSTEM ===== */
+
+/* Light Theme (Default) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #f0f1f3;
+  --color-surface: rgba(0, 0, 0, 0.02);
+  --color-surface-elevated: rgba(0, 0, 0, 0.04);
+  --color-surface-omni: rgba(0, 0, 0, 0.06);
+  --color-text: #0a0a0a;
+  --color-text-secondary: #555555;
+  --color-text-muted: #999999;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-accent: #6d28d9;
+  --color-accent-light: #8b5cf6;
+  --edge-light: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  --edge-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --edge-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.08), 0 12px 48px rgba(0, 0, 0, 0.06);
+  --glass-blur: blur(24px);
+  --glass-blur-heavy: blur(40px);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark Theme */
+.dark {
+  --color-bg: #09090b;
+  --color-bg-secondary: #111113;
+  --color-bg-tertiary: #18181b;
+  --color-surface: rgba(255, 255, 255, 0.02);
+  --color-surface-elevated: rgba(255, 255, 255, 0.05);
+  --color-surface-omni: rgba(255, 255, 255, 0.08);
+  --color-text: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+  --color-accent: #8b5cf6;
+  --color-accent-light: #a78bfa;
+  --edge-light: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  --edge-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
+  --edge-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.4), 0 12px 48px rgba(0, 0, 0, 0.3);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Base Styles ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Glass Utilities ===== */
+.glass-panel {
+  background-color: var(--color-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--edge-light), var(--edge-shadow);
+  border: 1px solid var(--color-border);
+}
+
+.glass-active {
+  background-color: var(--color-surface-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--edge-light), var(--edge-shadow-lg);
+  border: 1px solid var(--color-border);
+}
+
+.glass-omni {
+  background-color: var(--color-surface-omni);
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  box-shadow: var(--edge-light), var(--edge-shadow-lg);
+  border: 1px solid var(--color-border-strong);
+}
+
+/* ===== Text Gradient ===== */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-accent), #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Section Divider ===== */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border-strong), transparent);
+}
+
+/* ===== Smooth Theme Transition ===== */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease !important;
 }
