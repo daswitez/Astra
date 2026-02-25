@@ -257,32 +257,48 @@ export default function Home() {
         }, 15.5);
       }
 
-      // App Ecosystem 3D Parallax Stack
+      // App Ecosystem 3D Parallax Stack & Climax
       gsap.utils.toArray<HTMLElement>(".ecosystem-container").forEach((container) => {
         const cards = gsap.utils.toArray<HTMLElement>(".ecosystem-card", container);
-        if (cards.length > 0) {
+        const climaxDash = container.querySelector(".climax-dashboard") as HTMLElement;
+        const climaxText = container.querySelector(".climax-text") as HTMLElement;
+        const heroText = container.querySelector(".ecosystem-hero-text") as HTMLElement;
+
+        if (cards.length === 3 && climaxDash && climaxText && heroText) {
            const tl = gsap.timeline({
              scrollTrigger: {
                trigger: container,
-               start: "top top",
-               end: "+=3000",
+               start: "center center",
+               end: "+=4000", // Extended for climax
                scrub: 1,
                pin: true,
              }
            });
 
-           // Card 1 starts visible. 
-           // Move Card 2 up over Card 1
-           tl.fromTo(cards[1], { y: "100%", scale: 0.9, opacity: 0 }, { y: "5%", scale: 0.95, opacity: 1, duration: 1 }, 0);
-           // Push Card 1 slightly back
+           // 1. Stack Card 2
+           tl.fromTo(cards[1], { y: "30%", scale: 0.9, opacity: 0 }, { y: "5%", scale: 0.95, opacity: 1, duration: 1 }, 0);
            tl.to(cards[0], { y: "-5%", scale: 0.9, opacity: 0.5, duration: 1 }, 0);
            
-           // Move Card 3 up over Card 2
-           tl.fromTo(cards[2], { y: "100%", scale: 0.9, opacity: 0 }, { y: "10%", scale: 1, opacity: 1, duration: 1 }, 1.5);
-           // Push Card 2 slightly back
+           // 2. Stack Card 3
+           tl.fromTo(cards[2], { y: "30%", scale: 0.9, opacity: 0 }, { y: "10%", scale: 1, opacity: 1, duration: 1 }, 1.5);
            tl.to(cards[1], { y: "-2%", scale: 0.9, opacity: 0.5, duration: 1 }, 1.5);
-           // Push Card 1 further back
            tl.to(cards[0], { y: "-10%", scale: 0.85, opacity: 0.2, duration: 1 }, 1.5);
+
+           // 3. THE CLIMAX (The Snap)
+           // Fade out the initial hero text
+           tl.to(heroText, { opacity: 0, y: -20, duration: 0.5 }, 3);
+           
+           // Pulse the cards before shattering
+           tl.to(cards, { scale: 1.05, borderColor: "rgba(109, 40, 217, 0.8)", duration: 0.5, ease: "power2.inOut" }, 3);
+           
+           // Shatter (Drop opacity to 0 and scale up)
+           tl.to(cards, { scale: 1.5, opacity: 0, duration: 0.8, ease: "power4.out", stagger: 0.05 }, 3.5);
+           
+           // Reveal the Master Dashboard
+           tl.fromTo(climaxDash, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.2)" }, 3.8);
+           
+           // Fade in final message
+           tl.fromTo(climaxText, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, 4.2);
         }
       });
 
@@ -1062,12 +1078,12 @@ export default function Home() {
       </section>
 
       {/* ========== NATIVE APP ECOSYSTEM (3D PARALLAX) ========== */}
-      <section className="bg-black relative overflow-hidden ecosystem-container h-screen flex items-center justify-center pt-24 pb-12">
+      <section className="bg-black relative overflow-hidden ecosystem-container h-screen min-h-[700px] flex flex-col items-center justify-center py-20">
          {/* Subtle background glow */}
          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-         <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col items-center relative z-10">
-            <div className="text-center mb-12 shrink-0">
+         <div className="max-w-7xl mx-auto px-6 w-full h-full max-h-[850px] flex flex-col items-center relative z-10">
+            <div className="text-center mb-10 shrink-0 ecosystem-hero-text">
                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
                  Built in. <span className="text-gradient">Not bolted on.</span>
                </h2>
@@ -1076,10 +1092,10 @@ export default function Home() {
                </p>
             </div>
 
-            <div className="relative w-full max-w-5xl flex-1 flex justify-center perspective-[2000px]">
+            <div className="relative w-full max-w-5xl flex-1 flex flex-col justify-center perspective-[2000px] min-h-[400px]">
                
-               {/* App 1: Spatial Whiteboard */}
-               <div className="ecosystem-card absolute w-full h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/80 backdrop-blur-3xl shadow-2xl flex flex-col">
+               {/* --- THE APPS --- */}
+               <div className="ecosystem-card absolute w-full h-[60vh] min-h-[400px] max-h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/80 backdrop-blur-3xl shadow-2xl flex flex-col">
                   {/* Window Bar */}
                   <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
                      <div className="flex gap-2">
@@ -1121,7 +1137,7 @@ export default function Home() {
                </div>
 
                {/* App 2: Auto-Flowcharts */}
-               <div className="ecosystem-card absolute w-full h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/90 backdrop-blur-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] flex flex-col" style={{ transform: "translateY(100%) scale(0.9)", opacity: 0 }}>
+               <div className="ecosystem-card absolute w-full h-[60vh] min-h-[400px] max-h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/90 backdrop-blur-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] flex flex-col" style={{ transform: "translateY(30%) scale(0.9)", opacity: 0 }}>
                   {/* Window Bar */}
                   <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
                      <div className="flex gap-2">
@@ -1171,7 +1187,7 @@ export default function Home() {
                </div>
 
                {/* App 3: Deep Work Pomodoro */}
-               <div className="ecosystem-card absolute w-full h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b] backdrop-blur-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] flex flex-col" style={{ transform: "translateY(100%) scale(0.9)", opacity: 0 }}>
+               <div className="ecosystem-card absolute w-full h-[60vh] min-h-[400px] max-h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b] backdrop-blur-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] flex flex-col" style={{ transform: "translateY(30%) scale(0.9)", opacity: 0 }}>
                   {/* Window Bar */}
                   <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
                      <span className="text-sm font-semibold text-neutral-300 flex items-center gap-2">
@@ -1208,6 +1224,47 @@ export default function Home() {
                   </div>
                </div>
 
+               {/* --- THE CLIMAX (MASTER DASHBOARD) --- */}
+               <div className="climax-dashboard absolute w-full h-[70vh] min-h-[500px] max-h-[700px] glass-panel rounded-3xl border border-purple-500/30 p-0 overflow-hidden bg-[#09090b]/40 backdrop-blur-md shadow-[0_0_100px_rgba(109,40,217,0.3)] flex flex-col z-0 pointer-events-none origin-center" style={{ opacity: 0, scale: 0.8 }}>
+                  {/* Dashboard Header */}
+                  <div className="h-14 border-b border-white/10 flex items-center justify-between px-6 bg-white/5">
+                     <div className="flex gap-4">
+                        <div className="w-4 h-4 rounded-full bg-blue-500" />
+                        <div className="w-4 h-4 rounded-full bg-emerald-500" />
+                        <div className="w-4 h-4 rounded-full bg-purple-500" />
+                        <div className="w-4 h-4 rounded-full bg-pink-500" />
+                        <div className="w-4 h-4 rounded-full bg-yellow-500" />
+                     </div>
+                     <span className="text-sm font-bold tracking-widest text-neutral-400 uppercase">Astra Master Node</span>
+                  </div>
+                  {/* Dashboard Content Grid */}
+                  <div className="flex-1 p-6 grid grid-cols-3 gap-6">
+                     <div className="col-span-1 rounded-2xl bg-white/5 border border-white/10 p-6 flex flex-col gap-4">
+                        <div className="w-full h-8 bg-blue-500/20 rounded mb-4" />
+                        <div className="w-full h-12 bg-white/5 rounded" />
+                        <div className="w-full h-12 bg-white/5 rounded" />
+                        <div className="w-full h-12 bg-white/5 rounded" />
+                     </div>
+                     <div className="col-span-2 rounded-2xl bg-white/5 border border-white/10 p-6 flex flex-col gap-4">
+                        <div className="w-1/2 h-8 bg-purple-500/20 rounded mb-4" />
+                        <div className="flex-1 w-full bg-white/5 rounded grid grid-cols-2 gap-4 p-4">
+                           <div className="rounded bg-emerald-500/10 border border-emerald-500/20" />
+                           <div className="rounded bg-pink-500/10 border border-pink-500/20" />
+                           <div className="col-span-2 rounded bg-yellow-500/10 border border-yellow-500/20" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+
+            {/* Final Climax Text */}
+            <div className="climax-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full z-50 pointer-events-none" style={{ opacity: 0 }}>
+               <h2 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-[0_0_20px_rgba(109,40,217,0.8)]">
+                 Everything <span className="text-gradient">connected.</span><br />
+                 Everything native. <br />
+                 Zero friction.
+               </h2>
             </div>
          </div>
       </section>

@@ -52,6 +52,7 @@ Instead of a simple static grid, we will use a **Spatial Bento Box** layout. Thi
 *   **App 1 (Spatial Whiteboard):** The first card shows an animated brainstorm session. SVG paths draw themselves in real-time. Colorful sticky notes pop into existence with subtle "bounce" animations, simulating a live cross-departmental strategy session.
 *   **App 2 (Auto-Flowcharts):** The second card slides over. It showcases a system architecture or user journey map. Nodes pulse, and glowing, electrical-looking SVG lines instantly connect them, demonstrating how fast teams can map out logic.
 *   **App 3 (Deep Work Pomodoro):** The third card locks into place. A massive, minimalist, glowing circular progress ring slowly counts down. Below it, a clean typography stat updates live: `Distractions Blocked: 14`. This reinforces the "Flow Mode" philosophy.
+*   **The Climax (The "All-in-One" Snap):** Once all three cards are stacked securely, another scroll action triggers a powerful visual effect. The three glass panels shatter or seamlessly morph together into one massive, unified "Astra Master Dashboard." This shows how these individual tools aren't siloed, but feed directly into the central organizational brain. The text reveals: *"Everything connected. Everything native. Zero friction."*
 
 ### Section 7: The Hybrid Pricing Tiers
 *   **Design:** Three distinct glass columns.
