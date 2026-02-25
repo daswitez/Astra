@@ -445,12 +445,12 @@ export default function Home() {
           >
             {tNav("signIn")}
           </button>
-          <button
-            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white transition-transform hover:scale-105"
+          <Link href="/app"
+            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white transition-transform hover:scale-105 inline-flex"
             style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}
           >
             {tNav("getStarted")}
-          </button>
+          </Link>
         </div>
       </nav>
 
@@ -482,7 +482,7 @@ export default function Home() {
           </p>
 
           <div className="hero-cta flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <button
+            <Link href="/app"
               className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 hover:scale-105 transition-transform"
               style={{
                 background: "linear-gradient(135deg, #6d28d9, #3b82f6)",
@@ -491,7 +491,7 @@ export default function Home() {
             >
               {tHero("cta")}
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
             <button
               className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full font-medium text-sm sm:text-base flex items-center justify-center gap-2 transition-colors"
               style={{

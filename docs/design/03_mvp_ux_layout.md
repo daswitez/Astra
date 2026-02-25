@@ -53,3 +53,29 @@ Flow Mode is Astra's signature feature. Transitioning into Flow Mode must feel l
     *   All system notification badges organically dissolve.
 3. **The Focus Canvas:** The Execution Canvas expands to fill the screen constraint. Only the specific task or document the user selected prior to entering Flow Mode is visible. It is presented on a softly glowing glass card in the dead center.
 4. **The Interception Log:** If someone pings the user in `#Chat` during Flow Mode, a tiny, unobtrusive counter (`+1`) appears in the top right corner, completely silent, waiting for the Flow session to end before revealing the message context.
+
+## 4. MVP Aesthetic Principles (Elegant UI)
+
+To ensure the MVP feels highly premium and strictly adheres to our high-end UX requirements, development must follow these rules:
+
+1. **Curated Color Palettes**
+   - **Primary Palette:** Deep, rich tones (e.g., Midnight Blue, Charcoal, Obsidian) for backgrounds to create depth ("The Void").
+   - **Accent Colors:** Use subtle, vibrant gradients (e.g., deep purple to electric blue, or warm gold hues) sparingly for interactive elements or active states. Avoid raw web colors (e.g., `#00FF00`, `#FF0000`).
+
+2. **Refined Typography**
+   - Use high-quality sans-serif fonts natively embedded (e.g., Inter defaults).
+   - Ensure a rigorous typographic hierarchy: tight tracking for large headings; softer, slightly loose tracking for body text.
+   - Extensively use `color: var(--color-text-muted)` (soft grays, semi-transparent whites) to establish clear visual hierarchy, keeping pure white reserved for selected/active items.
+
+3. **Glassmorphism & Depth (Z-Axis UI)**
+   - Panels and sidebars should leverage `backdrop-filter: blur(24px)` with ultra-low opacity solid colors (`rgba(255,255,255,0.02)`).
+   - Add a subtle 1px border (`rgba(255,255,255,0.05)`) to glass components to give them a physical rim.
+   - Use soft, widespread drop shadows (`box-shadow: 0 20px 60px rgba(0,0,0,0.5)`) to effectively simulate layers floating above each other.
+
+4. **Micro-Animations & Dynamic States**
+   - **Hover States:** Interactive UI components must boast smooth hover transitions (`transition-all duration-300`, `hover:scale-[1.02]`) and subtle glow effects.
+   - **Entrance:** Base components shouldn't snap into existence. They should organically fade or drift in via framer-motion/GSAP (`y: 20`, `opacity: 0` -> `y: 0`).
+   - The UI must feel responsive to the cursor without being noisy or jarring.
+
+5. **Expansive Negative Space**
+   - Given the "Spatial OS" nature, give major components adequate breathing room (`padding: 2rem` or `3rem`). Do not crowd the UI. Less density conveys confidence and premium feel.
