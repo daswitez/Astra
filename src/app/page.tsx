@@ -269,36 +269,37 @@ export default function Home() {
              scrollTrigger: {
                trigger: container,
                start: "center center",
-               end: "+=4000", // Extended for climax
+               end: "+=6000", // Much longer scroll distance for slower transitions
                scrub: 1,
                pin: true,
              }
            });
 
            // 1. Stack Card 2
-           tl.fromTo(cards[1], { y: "30%", scale: 0.9, opacity: 0 }, { y: "5%", scale: 0.95, opacity: 1, duration: 1 }, 0);
-           tl.to(cards[0], { y: "-5%", scale: 0.9, opacity: 0.5, duration: 1 }, 0);
+           // Added more time (duration: 2) and delayed the next step so users can see it clearly
+           tl.fromTo(cards[1], { y: "30%", scale: 0.9, opacity: 0 }, { y: "5%", scale: 0.95, opacity: 1, duration: 2 }, 0);
+           tl.to(cards[0], { y: "-5%", scale: 0.9, opacity: 0.5, duration: 2 }, 0);
            
            // 2. Stack Card 3
-           tl.fromTo(cards[2], { y: "30%", scale: 0.9, opacity: 0 }, { y: "10%", scale: 1, opacity: 1, duration: 1 }, 1.5);
-           tl.to(cards[1], { y: "-2%", scale: 0.9, opacity: 0.5, duration: 1 }, 1.5);
-           tl.to(cards[0], { y: "-10%", scale: 0.85, opacity: 0.2, duration: 1 }, 1.5);
+           tl.fromTo(cards[2], { y: "30%", scale: 0.9, opacity: 0 }, { y: "10%", scale: 1, opacity: 1, duration: 2 }, 3);
+           tl.to(cards[1], { y: "-2%", scale: 0.9, opacity: 0.5, duration: 2 }, 3);
+           tl.to(cards[0], { y: "-10%", scale: 0.85, opacity: 0.2, duration: 2 }, 3);
 
            // 3. THE CLIMAX (The Snap)
-           // Fade out the initial hero text
-           tl.to(heroText, { opacity: 0, y: -20, duration: 0.5 }, 3);
+           // Add a pause before the climax starts so they can admire the stack
+           tl.to(heroText, { opacity: 0, y: -20, duration: 1 }, 6);
            
            // Pulse the cards before shattering
-           tl.to(cards, { scale: 1.05, borderColor: "rgba(109, 40, 217, 0.8)", duration: 0.5, ease: "power2.inOut" }, 3);
+           tl.to(cards, { scale: 1.05, borderColor: "rgba(109, 40, 217, 0.8)", duration: 1, ease: "power2.inOut" }, 6);
            
            // Shatter (Drop opacity to 0 and scale up)
-           tl.to(cards, { scale: 1.5, opacity: 0, duration: 0.8, ease: "power4.out", stagger: 0.05 }, 3.5);
+           tl.to(cards, { scale: 1.5, opacity: 0, duration: 1.5, ease: "power4.out", stagger: 0.2 }, 7.5);
            
            // Reveal the Master Dashboard
-           tl.fromTo(climaxDash, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.2)" }, 3.8);
+           tl.fromTo(climaxDash, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 2, ease: "back.out(1.2)" }, 8.5);
            
            // Fade in final message
-           tl.fromTo(climaxText, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, 4.2);
+           tl.fromTo(climaxText, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.5 }, 9.5);
         }
       });
 
@@ -1225,7 +1226,7 @@ export default function Home() {
                </div>
 
                {/* --- THE CLIMAX (MASTER DASHBOARD) --- */}
-               <div className="climax-dashboard absolute w-full h-[70vh] min-h-[500px] max-h-[700px] glass-panel rounded-3xl border border-purple-500/30 p-0 overflow-hidden bg-[#09090b]/40 backdrop-blur-md shadow-[0_0_100px_rgba(109,40,217,0.3)] flex flex-col z-0 pointer-events-none origin-center" style={{ opacity: 0, scale: 0.8 }}>
+               <div className="climax-dashboard absolute w-full max-w-4xl h-[60vh] min-h-[400px] max-h-[600px] glass-panel rounded-3xl border border-purple-500/30 p-0 overflow-hidden bg-[#09090b]/40 backdrop-blur-md shadow-[0_0_100px_rgba(109,40,217,0.3)] flex flex-col z-0 pointer-events-none origin-center" style={{ opacity: 0, scale: 0.8 }}>
                   {/* Dashboard Header */}
                   <div className="h-14 border-b border-white/10 flex items-center justify-between px-6 bg-white/5">
                      <div className="flex gap-4">
