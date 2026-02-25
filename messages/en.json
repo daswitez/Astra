@@ -166,6 +166,28 @@
     "step4Title": "Protect Your Focus",
     "step4Desc": "When it's time for deep work, activate Flow Mode. The interface physically transforms: sidebars recede, noisy notifications silence across the organization, and your critical task takes center stage."
   },
+  "leadership": {
+    "title": "Built for scale. Designed for leaders.",
+    "subtitle": "Get unprecedented visibility into your organization's execution without ever micromanaging a team member.",
+    "tabExecutive": "Executive",
+    "tabEngineering": "Engineering Lead",
+    "tabProduct": "Product Manager",
+    "ceoTitle": "Total Organizational Telemetry",
+    "ceoDesc": "Monitor cross-departmental velocity, alignment scores, and risk factors in real-time. Astra automatically aggregates data from chat, tasks, and commits into executive-level insights.",
+    "ceoMetric1": "Q3 Revenue Velocity",
+    "ceoMetric2": "Cross-Team Alignment",
+    "ceoMetric3": "Blocker Resolution Time",
+    "ctoTitle": "Engineering Command Center",
+    "ctoDesc": "See the exact correlation between product specs, pull requests, and production deployments. Identify bottlenecks in your delivery pipeline before they impact releases.",
+    "ctoMetric1": "Deployments Today",
+    "ctoMetric2": "Active Microservices",
+    "ctoMetric3": "System Status",
+    "pmTitle": "The Alignment Canvas",
+    "pmDesc": "Stop syncing between Figma, Jira, and Slack. Write specs that automatically link to design files and engineering tasks, maintaining a single source of truth as the product evolves.",
+    "pmMetric1": "Feature Specs Drafted",
+    "pmMetric2": "Design Handoffs",
+    "pmMetric3": "Sprint Progress"
+  },
   "flow": {
     "title1": "Protect your focus.",
     "title2": "Deliver your best work.",

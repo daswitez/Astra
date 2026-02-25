@@ -166,6 +166,28 @@
     "step4Title": "Protégez votre concentration",
     "step4Desc": "Lorsqu'il est temps de faire du travail en profondeur, activez le mode Flow. L'interface se transforme physiquement : les barres latérales reculent, les notifications bruyantes sont désactivées dans toute l'organisation et votre tâche critique occupe le devant de la scène."
   },
+  "leadership": {
+    "title": "Conçu pour l'échelle. Pensé pour les dirigeants.",
+    "subtitle": "Bénéficiez d'une visibilité sans précédent sur l'exécution de votre organisation sans jamais faire de microgestion.",
+    "tabExecutive": "Exécutif",
+    "tabEngineering": "Directeur Technique",
+    "tabProduct": "Chef de Produit",
+    "ceoTitle": "Télémétrie Organisationnelle",
+    "ceoDesc": "Surveillez la vélocité interdépartementale, les scores d'alignement et les facteurs de risque en temps réel. Astra agrège automatiquement les données des chats, des tâches et du code en synthèses pour dirigeants.",
+    "ceoMetric1": "Vélocité des revenus T3",
+    "ceoMetric2": "Alignement inter-équipes",
+    "ceoMetric3": "Résolution des blocages",
+    "ctoTitle": "Centre de Commande Technique",
+    "ctoDesc": "Visualisez la corrélation exacte entre les spécifications produit, les pull requests et les déploiements en production. Identifiez les goulots d'étranglement avant qu'ils n'impactent vos sorties.",
+    "ctoMetric1": "Déploiements Aujourd'hui",
+    "ctoMetric2": "Microservices Actifs",
+    "ctoMetric3": "État du Système",
+    "pmTitle": "Tableau d'Alignement",
+    "pmDesc": "Arrêtez de synchroniser manuellement Figma, Jira et Slack. Rédigez des specs qui se lient automatiquement aux designs et aux tâches d'ingénierie, maintenant une source de vérité unique pendant l'évolution du produit.",
+    "pmMetric1": "Spécifications Rédigées",
+    "pmMetric2": "Validations Design",
+    "pmMetric3": "Progression du Sprint"
+  },
   "flow": {
     "title1": "Protégez votre focus.",
     "title2": "Livrez votre meilleur travail.",

@@ -166,6 +166,28 @@
     "step4Title": "Protege Tu Enfoque",
     "step4Desc": "Cuando es hora de trabajo profundo, activa el Modo Flujo. La interfaz se transforma físicamente: las barras laterales retroceden, las notificaciones ruidosas se silencian en toda la organización y tu tarea crítica ocupa el centro de la escena."
   },
+  "leadership": {
+    "title": "Construido para escalar. Diseñado para líderes.",
+    "subtitle": "Obtén una visibilidad sin precedentes de la ejecución de tu organización sin tener que microgestionar a ningún miembro del equipo.",
+    "tabExecutive": "Ejecutivo",
+    "tabEngineering": "Líder de Ingeniería",
+    "tabProduct": "Gerente de Producto",
+    "ceoTitle": "Telemetría Organizacional Total",
+    "ceoDesc": "Monitorea la velocidad entre departamentos, puntajes de alineación y factores de riesgo en tiempo real. Astra agrega automáticamente datos de chats, tareas y commits en información de nivel ejecutivo.",
+    "ceoMetric1": "Velocidad de Ingresos 3T",
+    "ceoMetric2": "Alineación de Equipos",
+    "ceoMetric3": "Tiempo de Resolución de Bloqueos",
+    "ctoTitle": "Centro de Comando de Ingeniería",
+    "ctoDesc": "Ve la correlación exacta entre especificaciones de producto, pull requests y despliegues en producción. Identifica cuellos de botella en tu línea de entrega antes de que afecten los lanzamientos.",
+    "ctoMetric1": "Despliegues de Hoy",
+    "ctoMetric2": "Microservicios Activos",
+    "ctoMetric3": "Estado del Sistema",
+    "pmTitle": "Lienzo de Alineación",
+    "pmDesc": "Deja de sincronizar entre Figma, Jira y Slack. Escribe especificaciones que se enlacen automáticamente a archivos de diseño y tareas de ingeniería, manteniendo una única fuente de verdad a medida que el producto evoluciona.",
+    "pmMetric1": "Especificaciones Redactadas",
+    "pmMetric2": "Entregas de Diseño",
+    "pmMetric3": "Progreso del Sprint"
+  },
   "flow": {
     "title1": "Protege tu enfoque.",
     "title2": "Ofrece tu mejor trabajo.",

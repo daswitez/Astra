@@ -38,8 +38,11 @@ import {
   GitMerge,
   Timer,
   Focus,
+  Target,
+  Code2,
+  Layers,
 } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,9 +61,11 @@ export default function Home() {
   const tGlobal = useTranslations("global");
   const tMockup = useTranslations("mockup");
   const tFlowMode = useTranslations("flowMode");
+  const tLeadership = useTranslations("leadership");
   
   const [isDark, setIsDark] = useState(false);
   const [flowModeActive, setFlowModeActive] = useState(false);
+  const [activeTab, setActiveTab] = useState("ceo");
   const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -932,6 +937,177 @@ export default function Home() {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* ========== LEADERSHIP SECTION ========== */}
+      <section id="leadership" className="py-24 px-6 border-b" style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-bg)" }}>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16 relative z-10">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: "var(--color-text)" }}>{tLeadership("title")}</h2>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: "var(--color-text-secondary)" }}>
+              {tLeadership("subtitle")}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left: Interactive Tabs */}
+            <div className="lg:col-span-4 space-y-4">
+              {[
+                { id: "ceo", label: tLeadership("tabExecutive"), icon: Target },
+                { id: "cto", label: tLeadership("tabEngineering"), icon: Code2 },
+                { id: "pm", label: tLeadership("tabProduct"), icon: Layers },
+              ].map(({ id, label, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => setActiveTab(id)}
+                  className={`w-full text-left p-6 rounded-2xl flex items-center gap-4 transition-all duration-300 ${
+                    activeTab === id
+                      ? "glass-active border-[var(--color-accent)] ring-1 ring-[var(--color-accent)] scale-105"
+                      : "opacity-70 hover:opacity-100"
+                  }`}
+                  style={{ 
+                    borderColor: activeTab === id ? "var(--color-accent)" : "var(--color-border)",
+                    backgroundColor: activeTab === id ? "var(--color-surface-elevated)" : "transparent"
+                  }}
+                >
+                  <div className="p-3 rounded-xl" style={{ backgroundColor: activeTab === id ? "var(--color-surface)" : "var(--color-surface-elevated)" }}>
+                     <Icon className="w-6 h-6" style={{ color: activeTab === id ? "var(--color-accent)" : "var(--color-text-muted)" }} />
+                  </div>
+                  <span className="text-lg font-bold" style={{ color: activeTab === id ? "var(--color-text)" : "var(--color-text-muted)" }}>
+                    {label}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Right: Dynamic UI Mockups */}
+            <div className="lg:col-span-8 relative h-[500px] w-full perspective-1000">
+              <AnimatePresence mode="wait">
+                {activeTab === "ceo" && (
+                  <motion.div
+                    key="ceo"
+                    initial={{ opacity: 0, y: 20, rotateX: 5 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    exit={{ opacity: 0, y: -20, rotateX: -5 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="absolute inset-0 rounded-2xl p-8 shadow-xl overflow-hidden border"
+                    style={{ backgroundColor: "var(--color-surface)", borderColor: "var(--color-border)" }}
+                  >
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none" />
+                    <div className="relative z-10">
+                       <h3 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
+                         {tLeadership("ceoTitle")}
+                       </h3>
+                       <p className="text-base mb-10 max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{tLeadership("ceoDesc")}</p>
+                       <div className="grid grid-cols-3 gap-6">
+                         <div className="p-5 rounded-2xl text-center border overflow-hidden relative group transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                            <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <p className="text-[11px] uppercase font-extrabold tracking-widest mb-3" style={{ color: "var(--color-accent)" }}>{tLeadership("ceoMetric1")}</p>
+                            <p className="text-4xl font-black" style={{ color: "var(--color-text)" }}>+42%</p>
+                         </div>
+                         <div className="p-5 rounded-2xl text-center border transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                            <p className="text-[11px] uppercase font-extrabold tracking-widest text-blue-500 mb-3">{tLeadership("ceoMetric2")}</p>
+                            <p className="text-4xl font-black" style={{ color: "var(--color-text)" }}>A+</p>
+                         </div>
+                         <div className="p-5 rounded-2xl text-center border transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                            <p className="text-[11px] uppercase font-extrabold tracking-widest text-orange-500 mb-3">{tLeadership("ceoMetric3")}</p>
+                            <p className="text-4xl font-black" style={{ color: "var(--color-text)" }}>-1.5h</p>
+                         </div>
+                       </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "cto" && (
+                  <motion.div
+                    key="cto"
+                    initial={{ opacity: 0, y: 20, rotateX: 5 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    exit={{ opacity: 0, y: -20, rotateX: -5 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="absolute inset-0 rounded-2xl p-8 shadow-xl overflow-hidden border"
+                    style={{ backgroundColor: "var(--color-surface)", borderColor: "var(--color-border)" }}
+                  >
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
+                    <div className="relative z-10">
+                       <h3 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-500">
+                         {tLeadership("ctoTitle")}
+                       </h3>
+                       <p className="text-base mb-10 max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{tLeadership("ctoDesc")}</p>
+                        <div className="grid grid-cols-1 gap-4">
+                           <div className="flex items-center justify-between p-4 rounded-xl text-sm font-mono font-bold border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                              <span className="text-blue-500">API Gateway ~ #1204</span>
+                              <span style={{ color: "var(--color-text-muted)" }}>PROD</span>
+                              <span className="text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20">DEPLOYED</span>
+                           </div>
+                           <div className="flex items-center justify-between p-4 rounded-xl text-sm font-mono font-bold border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                              <span className="text-orange-500">Auth Service ~ #1198</span>
+                              <span style={{ color: "var(--color-text-muted)" }}>STG</span>
+                              <span className="text-orange-500 bg-orange-500/10 px-3 py-1 rounded border border-orange-500/20">WAITING</span>
+                           </div>
+                           <div className="flex items-center gap-4 mt-6">
+                              <div className="flex-1 p-4 rounded-xl text-center border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                                 <span className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "var(--color-text-muted)" }}>{tLeadership("ctoMetric1")}</span>
+                                 <span className="text-3xl font-black" style={{ color: "var(--color-text)" }}>43</span>
+                              </div>
+                              <div className="flex-1 p-4 rounded-xl text-center border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                                 <span className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "var(--color-text-muted)" }}>{tLeadership("ctoMetric2")}</span>
+                                 <span className="text-3xl font-black" style={{ color: "var(--color-text)" }}>28</span>
+                              </div>
+                              <div className="flex-1 p-4 rounded-xl text-center border border-emerald-500/30 bg-emerald-500/5">
+                                 <span className="block text-xs font-bold tracking-widest uppercase text-emerald-500 mb-2">{tLeadership("ctoMetric3")}</span>
+                                 <span className="text-3xl font-black text-emerald-500">HEALTHY</span>
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeTab === "pm" && (
+                  <motion.div
+                    key="pm"
+                    initial={{ opacity: 0, y: 20, rotateX: 5 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    exit={{ opacity: 0, y: -20, rotateX: -5 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="absolute inset-0 rounded-2xl p-8 shadow-xl overflow-hidden border"
+                    style={{ backgroundColor: "var(--color-surface)", borderColor: "var(--color-border)" }}
+                  >
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 rounded-full blur-[80px] pointer-events-none" />
+                    <div className="relative z-10">
+                       <h3 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500">
+                         {tLeadership("pmTitle")}
+                       </h3>
+                       <p className="text-base mb-10 max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{tLeadership("pmDesc")}</p>
+                       <div className="flex gap-8 h-48">
+                          {/* Mock Spec Editor */}
+                          <div className="flex-1 rounded-2xl p-6 flex flex-col gap-4 border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                             <div className="w-1/2 h-5 rounded bg-pink-500/30" />
+                             <div className="w-3/4 h-3 rounded mt-2" style={{ backgroundColor: "var(--color-border-strong)" }} />
+                             <div className="w-full h-3 rounded" style={{ backgroundColor: "var(--color-border-strong)" }} />
+                             <div className="w-5/6 h-3 rounded" style={{ backgroundColor: "var(--color-border-strong)" }} />
+                             <div className="w-2/3 h-3 rounded" style={{ backgroundColor: "var(--color-border-strong)" }} />
+                          </div>
+                          {/* Live Metrics */}
+                          <div className="w-1/3 flex flex-col gap-4">
+                             <div className="rounded-2xl p-4 flex-1 flex flex-col justify-center text-center border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                                <span className="block text-[11px] font-extrabold tracking-widest mb-2 uppercase" style={{ color: "var(--color-text-muted)" }}>{tLeadership("pmMetric1")}</span>
+                                <span className="text-4xl font-black text-pink-500">12</span>
+                             </div>
+                             <div className="rounded-2xl p-4 flex-1 flex flex-col justify-center text-center border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                                <span className="block text-[11px] font-extrabold tracking-widest mb-2 uppercase" style={{ color: "var(--color-text-muted)" }}>{tLeadership("pmMetric2")}</span>
+                                <span className="text-4xl font-black text-pink-500">8</span>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </section>
