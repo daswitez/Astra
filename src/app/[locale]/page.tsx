@@ -150,7 +150,16 @@ export default function Home() {
       });
 
       // Chaos Web & Singularity ScrollTrigger Narrative (5 Steps)
-      if (chaosRef.current && singularityRef.current) {
+      let mm = gsap.matchMedia();
+
+      mm.add({
+        isDesktop: "(min-width: 768px)",
+        isMobile: "(max-width: 767px)"
+      }, (context) => {
+        let { isMobile } = context.conditions as { isMobile: boolean, isDesktop: boolean };
+
+        if (!chaosRef.current || !singularityRef.current) return;
+        
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: chaosRef.current,
@@ -160,6 +169,10 @@ export default function Home() {
             pin: true,
           }
         });
+
+        const xOffset = isMobile ? 15 : 50;
+        const scatterRange = isMobile ? 60 : 200;
+        const orbitRadius = isMobile ? 40 : 120;
 
         // STEP 1: The Problem (Chaos)
         tl.to(".chaos-node", {
@@ -177,11 +190,11 @@ export default function Home() {
           duration: 2
         }, 0);
         
-        tl.fromTo(".narrative-step-1", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1 }, 0.5);
+        tl.fromTo(".narrative-step-1", { opacity: 0, x: -xOffset }, { opacity: 1, x: 0, duration: 1 }, 0.5);
 
         // STEP 2: The Breaking Point (Disconnection)
-        tl.to(".narrative-step-1", { opacity: 0, x: 50, duration: 1 }, 3);
-        tl.fromTo(".narrative-step-2", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1 }, 3.5);
+        tl.to(".narrative-step-1", { opacity: 0, x: xOffset, duration: 1 }, 3);
+        tl.fromTo(".narrative-step-2", { opacity: 0, x: -xOffset }, { opacity: 1, x: 0, duration: 1 }, 3.5);
         
         tl.to(".chaos-thread", {
           opacity: 0,
@@ -191,8 +204,8 @@ export default function Home() {
         }, 3.5);
 
         tl.to(".chaos-node", {
-          x: "random(-200, 200)",
-          y: "random(-200, 200)",
+          x: `random(-${scatterRange}, ${scatterRange})`,
+          y: `random(-${scatterRange}, ${scatterRange})`,
           scale: 0.5,
           opacity: 0.3,
           duration: 2,
@@ -200,10 +213,10 @@ export default function Home() {
         }, 3.5);
 
         // STEP 3: The Gravity (Astra Pulls)
-        tl.to(".narrative-step-2", { opacity: 0, x: 50, duration: 1 }, 6.5);
-        tl.fromTo(".narrative-step-3", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1 }, 7);
+        tl.to(".narrative-step-2", { opacity: 0, x: xOffset, duration: 1 }, 6.5);
+        tl.fromTo(".narrative-step-3", { opacity: 0, x: -xOffset }, { opacity: 1, x: 0, duration: 1 }, 7);
         
-        // Spawn the Astra gravity core
+        // Spawn the Astra gravity glow
         tl.fromTo(".astra-core", {
           scale: 0,
           opacity: 0
@@ -211,7 +224,7 @@ export default function Home() {
           scale: 1,
           opacity: 1,
           duration: 1.5,
-          ease: "back.out(1.5)"
+          ease: "power2.out"
         }, 7);
 
         // Nodes get pulled toward the center
@@ -226,12 +239,12 @@ export default function Home() {
 
         // STEP 4: The System (Native Integration)
         tl.to(".narrative-step-3", { opacity: 0, y: -20, duration: 1 }, 10);
-        tl.fromTo(".narrative-step-4", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 1 }, 10.5);
+        tl.fromTo(".narrative-step-4", { opacity: 0, x: xOffset }, { opacity: 1, x: 0, duration: 1 }, 10.5);
 
-        // Core expands slightly and projects native nodes
+        // Core glow expands and projects native nodes
         tl.to(".astra-core", {
-          scale: 1.5,
-          boxShadow: "0 0 150px rgba(109,40,217,0.8)",
+          scale: 2,
+          opacity: 0.8,
           duration: 1,
           ease: "power2.out"
         }, 10.5);
@@ -251,10 +264,10 @@ export default function Home() {
         }, 11);
 
         // Position nodes in a circle
-        tl.to(".native-node-1", { x: -120, y: -120, duration: 1 }, 11);
-        tl.to(".native-node-2", { x: 120, y: -120, duration: 1 }, 11);
-        tl.to(".native-node-3", { x: -120, y: 120, duration: 1 }, 11);
-        tl.to(".native-node-4", { x: 120, y: 120, duration: 1 }, 11);
+        tl.to(".native-node-1", { x: -orbitRadius, y: -orbitRadius, duration: 1 }, 11);
+        tl.to(".native-node-2", { x: orbitRadius, y: -orbitRadius, duration: 1 }, 11);
+        tl.to(".native-node-3", { x: -orbitRadius, y: orbitRadius, duration: 1 }, 11);
+        tl.to(".native-node-4", { x: orbitRadius, y: orbitRadius, duration: 1 }, 11);
 
         // Slowly rotate native nodes container
         tl.to(".native-node-container", {
@@ -278,52 +291,54 @@ export default function Home() {
           duration: 2,
           ease: "power4.out"
         }, 15.5);
-      }
+      });
 
       // App Ecosystem 3D Parallax Stack & Climax
-      gsap.utils.toArray<HTMLElement>(".ecosystem-container").forEach((container) => {
-        const cards = gsap.utils.toArray<HTMLElement>(".ecosystem-card", container);
-        const climaxDash = container.querySelector(".climax-dashboard") as HTMLElement;
-        const climaxText = container.querySelector(".climax-text") as HTMLElement;
-        const heroText = container.querySelector(".ecosystem-hero-text") as HTMLElement;
+      gsap.matchMedia().add({
+        isDesktop: "(min-width: 640px)",
+        isMobile: "(max-width: 639px)"
+      }, (context) => {
+        const { isMobile } = context.conditions!;
+        const scrollDist = isMobile ? 4000 : 8000;
 
-        if (cards.length === 3 && climaxDash && climaxText && heroText) {
-           const tl = gsap.timeline({
-             scrollTrigger: {
-               trigger: container,
-               start: "center center",
-               end: "+=6000", // Much longer scroll distance for slower transitions
-               scrub: 1,
-               pin: true,
-             }
-           });
+        gsap.utils.toArray<HTMLElement>(".ecosystem-container").forEach((container) => {
+          const cards = gsap.utils.toArray<HTMLElement>(".ecosystem-card", container);
+          const climaxDash = container.querySelector(".climax-dashboard") as HTMLElement;
+          const climaxText = container.querySelector(".climax-text") as HTMLElement;
+          const heroText = container.querySelector(".ecosystem-hero-text") as HTMLElement;
 
-           // 1. Stack Card 2
-           // Added more time (duration: 2) and delayed the next step so users can see it clearly
-           tl.fromTo(cards[1], { y: "30%", scale: 0.9, opacity: 0 }, { y: "5%", scale: 0.95, opacity: 1, duration: 2 }, 0);
-           tl.to(cards[0], { y: "-5%", scale: 0.9, opacity: 0.5, duration: 2 }, 0);
-           
-           // 2. Stack Card 3
-           tl.fromTo(cards[2], { y: "30%", scale: 0.9, opacity: 0 }, { y: "10%", scale: 1, opacity: 1, duration: 2 }, 3);
-           tl.to(cards[1], { y: "-2%", scale: 0.9, opacity: 0.5, duration: 2 }, 3);
-           tl.to(cards[0], { y: "-10%", scale: 0.85, opacity: 0.2, duration: 2 }, 3);
+          if (cards.length === 3 && climaxDash && climaxText && heroText) {
+             const tl = gsap.timeline({
+               scrollTrigger: {
+                 trigger: container,
+                 start: "center center",
+                 end: `+=${scrollDist}`,
+                 scrub: 1,
+                 pin: true,
+               }
+             });
 
-           // 3. THE CLIMAX (The Snap)
-           // Add a pause before the climax starts so they can admire the stack
-           tl.to(heroText, { opacity: 0, y: -20, duration: 1 }, 6);
-           
-           // Pulse the cards before shattering
-           tl.to(cards, { scale: 1.05, borderColor: "rgba(109, 40, 217, 0.8)", duration: 1, ease: "power2.inOut" }, 6);
-           
-           // Shatter (Drop opacity to 0 and scale up)
-           tl.to(cards, { scale: 1.5, opacity: 0, duration: 1.5, ease: "power4.out", stagger: 0.2 }, 7.5);
-           
-           // Reveal the Master Dashboard
-           tl.fromTo(climaxDash, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 2, ease: "back.out(1.2)" }, 8.5);
-           
-           // Fade in final message
-           tl.fromTo(climaxText, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.5 }, 9.5);
-        }
+             // 1. Stack Card 2
+             tl.fromTo(cards[1], { y: "30%", scale: 0.9, opacity: 0 }, { y: "5%", scale: 0.95, opacity: 1, duration: 2 }, 0);
+             tl.to(cards[0], { y: "-5%", scale: 0.9, opacity: 0.5, duration: 2 }, 0);
+             
+             // 2. Stack Card 3
+             tl.fromTo(cards[2], { y: "30%", scale: 0.9, opacity: 0 }, { y: "10%", scale: 1, opacity: 1, duration: 2 }, 3);
+             tl.to(cards[1], { y: "-2%", scale: 0.9, opacity: 0.5, duration: 2 }, 3);
+             tl.to(cards[0], { y: "-10%", scale: 0.85, opacity: 0.2, duration: 2 }, 3);
+
+             // 3. THE CLIMAX (The Snap)
+             tl.to(heroText, { opacity: 0, y: -20, duration: 1 }, 6);
+             tl.to(cards, { scale: 1.05, borderColor: "rgba(109, 40, 217, 0.8)", duration: 1, ease: "power2.inOut" }, 6);
+             tl.to(cards, { scale: 1.5, opacity: 0, duration: 1.5, ease: "power4.out", stagger: 0.2 }, 7.5);
+             
+             // Reveal the Master Dashboard (centered)
+             tl.fromTo(climaxDash, { opacity: 0, scale: 0.8, xPercent: -50, left: "50%" }, { opacity: 1, scale: 1, xPercent: -50, left: "50%", duration: 2, ease: "back.out(1.2)" }, 8.5);
+             
+             // Fade in final message (overlaid on top)
+             tl.fromTo(climaxText, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 2 }, 10);
+          }
+        });
       });
 
     }, containerRef);
@@ -361,30 +376,31 @@ export default function Home() {
     >
       {/* ========== NAVBAR ========== */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-6 md:px-12 py-3 sm:py-4"
         style={{
-          backgroundColor: "var(--color-bg)",
+          backgroundColor: "rgba(var(--color-bg-rgb), 0.8)",
+          backdropFilter: "blur(12px)",
           borderBottom: "1px solid var(--color-border)",
         }}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div
-            className="h-8 w-8 rounded-lg flex items-center justify-center"
+            className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg flex items-center justify-center"
             style={{
               background: "linear-gradient(135deg, #6d28d9, #3b82f6)",
             }}
           >
-            <Sparkles className="w-4 h-4 text-white" />
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
           </div>
-          <span className="font-bold text-xl tracking-tight">Astra</span>
+          <span className="font-bold text-lg sm:text-xl tracking-tight">Astra</span>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
+        <div className="hidden lg:flex items-center gap-8 text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
           <a href="#features" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("features")}</a>
           <a href="#how-it-works" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("howItWorks")}</a>
           <a href="#pricing" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("pricing")}</a>
           <a href="#faq" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("faq")}</a>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={toggleTheme}
             className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
@@ -425,12 +441,12 @@ export default function Home() {
           </div>
 
           <button
-            className="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity hidden sm:block"
+            className="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity hidden md:block"
           >
             {tNav("signIn")}
           </button>
           <button
-            className="px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-transform hover:scale-105"
+            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white transition-transform hover:scale-105"
             style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}
           >
             {tNav("getStarted")}
@@ -439,21 +455,21 @@ export default function Home() {
       </nav>
 
       {/* ========== HERO ========== */}
-      <section className="pt-32 pb-20 px-6 md:px-12">
+      <section className="pt-28 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 md:px-12">
           <div className="max-w-5xl mx-auto text-center">
           <div
-            className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-8"
+            className="hero-badge inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-6 sm:mb-8"
             style={{
               backgroundColor: "var(--color-surface-elevated)",
               border: "1px solid var(--color-border)",
               color: "var(--color-text-secondary)",
             }}
           >
-            <Sparkles className="w-4 h-4" style={{ color: "var(--color-accent)" }} />
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: "var(--color-accent)" }} />
             {tHero("badge")}
           </div>
 
-          <h1 className="hero-headline text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] mb-8">
+          <h1 className="hero-headline text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.1] sm:leading-[1.05] mb-6 sm:mb-8">
             {tHero("title1")}<br />
             <span className="text-gradient">{tHero("title2")}</span>
           </h1>
@@ -467,7 +483,7 @@ export default function Home() {
 
           <div className="hero-cta flex flex-col sm:flex-row gap-4 items-center justify-center">
             <button
-              className="px-8 py-4 rounded-full text-white font-semibold text-base flex items-center gap-2 hover:scale-105 transition-transform"
+              className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 hover:scale-105 transition-transform"
               style={{
                 background: "linear-gradient(135deg, #6d28d9, #3b82f6)",
                 boxShadow: "0 8px 30px rgba(109, 40, 217, 0.3)",
@@ -477,7 +493,7 @@ export default function Home() {
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
-              className="px-8 py-4 rounded-full font-medium text-base flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full font-medium text-sm sm:text-base flex items-center justify-center gap-2 transition-colors"
               style={{
                 border: "1px solid var(--color-border-strong)",
                 color: "var(--color-text-secondary)",
@@ -490,17 +506,17 @@ export default function Home() {
 
           {/* Trust Badges */}
           <div
-            className="hero-cta mt-12 flex items-center justify-center gap-6 text-sm"
+            className="hero-cta mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm"
             style={{ color: "var(--color-text-muted)" }}
           >
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust1")}
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust1")}
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust2")}
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust2")}
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust3")}
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust3")}
             </span>
           </div>
         </div>
@@ -570,7 +586,7 @@ export default function Home() {
               </div>
 
               {/* Main Area - Kanban */}
-              <div className="flex-1 p-8 grid grid-cols-3 gap-5">
+              <div className="flex-1 p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 overflow-y-hidden">
                 {[tMockup("todo"), tMockup("inProgress"), tMockup("done")].map((label, colIdx) => (
                   <div key={label} className="flex flex-col gap-3">
                     <div
@@ -637,55 +653,55 @@ export default function Home() {
         style={{ backgroundColor: "var(--color-bg-secondary)" }}
       >
         {/* Storytelling Static UI Layers */}
-        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center px-12 md:px-24">
+        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center px-4 sm:px-12 md:px-24">
           {/* Step 1 Text */}
-          <div className="narrative-step-1 absolute max-w-xl left-12 md:left-24 opacity-0 flex flex-col gap-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-bold w-fit">
-               <TriangleAlert className="w-4 h-4" /> {tP("step1")}
+          <div className="narrative-step-1 absolute max-w-[90%] sm:max-w-xl left-4 sm:left-12 md:left-24 opacity-0 flex flex-col gap-3 sm:gap-4 z-20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs sm:text-sm font-bold w-fit">
+               <TriangleAlert className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {tP("step1")}
              </div>
-             <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tight leading-tight">
                {tP("chaos1")} <span className="text-rose-500">{tP("chaos2")}</span> {tP("chaos3")}
              </h2>
-             <p className="text-xl md:text-2xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
+             <p className="text-base sm:text-xl md:text-2xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
                {tP("subtitle")}
              </p>
            </div>
 
            {/* Step 2 Text */}
-           <div className="narrative-step-2 absolute max-w-xl right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
-             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm font-bold w-fit">
+           <div className="narrative-step-2 absolute max-w-[90%] sm:max-w-xl right-4 sm:right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-3 sm:gap-4 z-20">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs sm:text-sm font-bold w-fit">
                 {tP("title")}
              </div>
-             <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tight leading-tight">
                {tP("break1")} <span className="text-yellow-500">{tP("break2")}</span>
              </h2>
-             <p className="text-xl md:text-2xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
+             <p className="text-base sm:text-xl md:text-2xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
                {tP("breakDesc")}
              </p>
            </div>
 
            {/* Step 3 Text */}
-           <div className="narrative-step-3 absolute max-w-lg left-12 md:left-24 opacity-0 flex flex-col gap-4">
-             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-bold w-fit">
-                <Sparkles className="w-4 h-4" /> {tP("step3")}
+           <div className="narrative-step-3 absolute max-w-[90%] sm:max-w-lg left-4 sm:left-12 md:left-24 opacity-0 flex flex-col gap-3 sm:gap-4 z-20">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs sm:text-sm font-bold w-fit">
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {tP("step3")}
              </div>
-             <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
                {tP("grav1")} <span className="text-gradient">{tP("grav2")}</span>
              </h2>
-             <p className="text-lg md:text-xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
+             <p className="text-base sm:text-lg md:text-xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
                {tP("gravDesc")}
              </p>
            </div>
 
            {/* Step 4 Text */}
-           <div className="narrative-step-4 absolute max-w-lg right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
-             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-bold w-fit">
-                <Blocks className="w-4 h-4" /> {tP("step4")}
+           <div className="narrative-step-4 absolute max-w-[90%] sm:max-w-lg right-4 sm:right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-3 sm:gap-4 z-20">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs sm:text-sm font-bold w-fit">
+                <Blocks className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> {tP("step4")}
              </div>
-             <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
                {tP("eco1")} <span className="text-blue-500">{tP("eco2")}</span>
              </h2>
-             <p className="text-lg md:text-xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
+             <p className="text-base sm:text-lg md:text-xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
                {tP("ecoDesc")}
              </p>
            </div>
@@ -699,39 +715,37 @@ export default function Home() {
              <path d="M 200,500 Q 600,200 1000,400 T 1600,700" stroke="var(--color-border-strong)" strokeWidth="2" fill="none" />
            </svg>
 
-           <div className="chaos-node absolute top-[25%] left-[20%] w-24 h-24 rounded-2xl glass-active flex items-center justify-center shadow-2xl">
-             <Slack className="w-10 h-10 text-rose-400" />
+           <div className="chaos-node absolute top-[15%] sm:top-[25%] left-[10%] sm:left-[20%] w-16 h-16 sm:w-24 sm:h-24 rounded-2xl glass-active flex items-center justify-center shadow-2xl">
+             <Slack className="w-8 h-8 sm:w-10 sm:h-10 text-rose-400" />
            </div>
-           <div className="chaos-node absolute top-[65%] left-[30%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-xl">
-             <Figma className="w-8 h-8 text-pink-400" />
+           <div className="chaos-node absolute top-[75%] sm:top-[65%] left-[20%] sm:left-[30%] w-12 h-12 sm:w-20 sm:h-20 rounded-2xl glass-active flex items-center justify-center shadow-xl">
+             <Figma className="w-6 h-6 sm:w-8 sm:h-8 text-pink-400" />
            </div>
-           <div className="chaos-node absolute top-[35%] right-[25%] w-28 h-28 rounded-2xl glass-active flex items-center justify-center shadow-red-500/20 shadow-2xl">
-             <Cloud className="w-12 h-12 text-blue-400" /> {/* Proxy for Salesforce */}
+           <div className="chaos-node absolute top-[25%] sm:top-[35%] right-[10%] sm:right-[25%] w-20 h-20 sm:w-28 sm:h-28 rounded-2xl glass-active flex items-center justify-center shadow-red-500/20 shadow-2xl">
+             <Cloud className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400" />
            </div>
-           <div className="chaos-node absolute top-[60%] right-[35%] w-20 h-20 rounded-2xl glass-active flex items-center justify-center shadow-lg">
-             <TriangleAlert className="w-8 h-8 text-yellow-500" />
+           <div className="chaos-node absolute top-[70%] sm:top-[60%] right-[20%] sm:right-[35%] w-12 h-12 sm:w-20 sm:h-20 rounded-2xl glass-active flex items-center justify-center shadow-lg">
+             <TriangleAlert className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-500" />
            </div>
 
           <div className="native-node-container absolute inset-0 flex items-center justify-center pointer-events-none">
             {/* Native Nodes - Spawn centrally and move outward in step 4 */}
-            <div className="native-node native-node-1 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-blue-500/30 border opacity-0">
-              <MessageSquare className="w-6 h-6 text-blue-400" />
+            <div className="native-node native-node-1 absolute w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl glass-active flex items-center justify-center shadow-lg border-blue-500/30 border opacity-0">
+              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
             </div>
-            <div className="native-node native-node-2 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-purple-500/30 border opacity-0">
-              <Blocks className="w-6 h-6 text-purple-400" />
+            <div className="native-node native-node-2 absolute w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl glass-active flex items-center justify-center shadow-lg border-purple-500/30 border opacity-0">
+              <Blocks className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
             </div>
-            <div className="native-node native-node-3 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-emerald-500/30 border opacity-0">
-              <LayoutTemplate className="w-6 h-6 text-emerald-400" />
+            <div className="native-node native-node-3 absolute w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl glass-active flex items-center justify-center shadow-lg border-emerald-500/30 border opacity-0">
+              <LayoutTemplate className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
             </div>
-            <div className="native-node native-node-4 absolute w-16 h-16 rounded-2xl glass-active flex items-center justify-center shadow-lg border-cyan-500/30 border opacity-0">
-              <BarChart3 className="w-6 h-6 text-cyan-400" />
+            <div className="native-node native-node-4 absolute w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl glass-active flex items-center justify-center shadow-lg border-cyan-500/30 border opacity-0">
+              <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
             </div>
           </div>
 
-          {/* The Gravity Core (Astra Logo pulling things in Step 3/4) */}
-          <div className="astra-core absolute w-32 h-32 rounded-full flex items-center justify-center z-10 opacity-0 shadow-[0_0_100px_rgba(109,40,217,0.5)]" style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}>
-             <Sparkles className="w-12 h-12 text-white" />
-          </div>
+          {/* The Gravity Core - Radial Glow (replaces the solid star) */}
+          <div className="astra-core absolute w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full opacity-0 pointer-events-none" style={{ background: "radial-gradient(circle, rgba(109,40,217,0.4) 0%, rgba(59,130,246,0.2) 40%, transparent 70%)" }} />
         </div>
 
         {/* The Singularity (Solution) */}
@@ -778,10 +792,10 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[320px]">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-auto lg:auto-rows-[320px]">
             
             {/* Bento 1: Unified Timeline (Tall) */}
-            <div className="stagger-card glass-panel rounded-3xl p-8 flex flex-col md:row-span-2 group overflow-hidden relative">
+            <div className="stagger-card glass-panel rounded-3xl p-8 flex flex-col lg:row-span-2 group overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10 flex-1 flex flex-col">
                 <div
@@ -825,9 +839,9 @@ export default function Home() {
             </div>
 
             {/* Bento 2: AI Command Center (Wide) */}
-            <div className="stagger-card glass-panel rounded-3xl p-8 flex flex-col md:col-span-2 group overflow-hidden relative">
+            <div className="stagger-card glass-panel rounded-3xl p-6 sm:p-8 flex flex-col lg:col-span-2 group overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10 flex flex-col md:flex-row gap-8 h-full items-center">
+              <div className="relative z-10 flex flex-col lg:flex-row gap-6 sm:gap-8 h-full items-center">
                 <div className="flex-1">
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
@@ -983,7 +997,7 @@ export default function Home() {
             </div>
 
             {/* Right: Dynamic UI Mockups */}
-            <div className="lg:col-span-8 relative h-[500px] w-full perspective-1000">
+            <div className="lg:col-span-8 relative min-h-[500px] h-auto lg:h-[500px] w-full perspective-1000">
               <AnimatePresence mode="wait">
                 {activeTab === "ceo" && (
                   <motion.div
@@ -992,7 +1006,7 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -20, rotateX: -5 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="absolute inset-0 rounded-2xl p-8 shadow-xl overflow-hidden border"
+                    className="lg:absolute lg:inset-0 relative rounded-2xl p-4 sm:p-8 shadow-xl overflow-hidden border"
                     style={{ backgroundColor: "var(--color-surface)", borderColor: "var(--color-border)" }}
                   >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none" />
@@ -1000,20 +1014,20 @@ export default function Home() {
                        <h3 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
                          {tLeadership("ceoTitle")}
                        </h3>
-                       <p className="text-base mb-10 max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{tLeadership("ceoDesc")}</p>
-                       <div className="grid grid-cols-3 gap-6">
-                         <div className="p-5 rounded-2xl text-center border overflow-hidden relative group transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                       <p className="text-base mb-8 max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{tLeadership("ceoDesc")}</p>
+                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6">
+                         <div className="p-3 sm:p-5 rounded-2xl text-center border overflow-hidden relative group transition-colors col-span-2 sm:col-span-1" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
                             <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <p className="text-[11px] uppercase font-extrabold tracking-widest mb-3" style={{ color: "var(--color-accent)" }}>{tLeadership("ceoMetric1")}</p>
-                            <p className="text-4xl font-black" style={{ color: "var(--color-text)" }}>+42%</p>
+                            <p className="text-[10px] sm:text-[11px] uppercase font-extrabold tracking-widest mb-2 sm:mb-3" style={{ color: "var(--color-accent)" }}>{tLeadership("ceoMetric1")}</p>
+                            <p className="text-3xl sm:text-4xl font-black" style={{ color: "var(--color-text)" }}>+42%</p>
                          </div>
-                         <div className="p-5 rounded-2xl text-center border transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
-                            <p className="text-[11px] uppercase font-extrabold tracking-widest text-blue-500 mb-3">{tLeadership("ceoMetric2")}</p>
-                            <p className="text-4xl font-black" style={{ color: "var(--color-text)" }}>A+</p>
+                         <div className="p-3 sm:p-5 rounded-2xl text-center border transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                            <p className="text-[10px] sm:text-[11px] uppercase font-extrabold tracking-widest text-blue-500 mb-2 sm:mb-3">{tLeadership("ceoMetric2")}</p>
+                            <p className="text-3xl sm:text-4xl font-black" style={{ color: "var(--color-text)" }}>A+</p>
                          </div>
-                         <div className="p-5 rounded-2xl text-center border transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
-                            <p className="text-[11px] uppercase font-extrabold tracking-widest text-orange-500 mb-3">{tLeadership("ceoMetric3")}</p>
-                            <p className="text-4xl font-black" style={{ color: "var(--color-text)" }}>-1.5h</p>
+                         <div className="p-3 sm:p-5 rounded-2xl text-center border transition-colors" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                            <p className="text-[10px] sm:text-[11px] uppercase font-extrabold tracking-widest text-orange-500 mb-2 sm:mb-3">{tLeadership("ceoMetric3")}</p>
+                            <p className="text-3xl sm:text-4xl font-black" style={{ color: "var(--color-text)" }}>-1.5h</p>
                          </div>
                        </div>
                     </div>
@@ -1027,7 +1041,7 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -20, rotateX: -5 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="absolute inset-0 rounded-2xl p-8 shadow-xl overflow-hidden border"
+                    className="lg:absolute lg:inset-0 relative rounded-2xl p-4 sm:p-8 shadow-xl overflow-hidden border"
                     style={{ backgroundColor: "var(--color-surface)", borderColor: "var(--color-border)" }}
                   >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
@@ -1036,18 +1050,22 @@ export default function Home() {
                          {tLeadership("ctoTitle")}
                        </h3>
                        <p className="text-base mb-10 max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{tLeadership("ctoDesc")}</p>
-                        <div className="grid grid-cols-1 gap-4">
-                           <div className="flex items-center justify-between p-4 rounded-xl text-sm font-mono font-bold border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                        <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 rounded-xl text-xs sm:text-sm font-mono font-bold border gap-2" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
                               <span className="text-blue-500">API Gateway ~ #1204</span>
-                              <span style={{ color: "var(--color-text-muted)" }}>PROD</span>
-                              <span className="text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20">DEPLOYED</span>
+                              <div className="flex items-center gap-2">
+                                <span style={{ color: "var(--color-text-muted)" }}>PROD</span>
+                                <span className="text-emerald-500 bg-emerald-500/10 px-2 sm:px-3 py-1 rounded border border-emerald-500/20 text-xs">DEPLOYED</span>
+                              </div>
                            </div>
-                           <div className="flex items-center justify-between p-4 rounded-xl text-sm font-mono font-bold border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
+                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 rounded-xl text-xs sm:text-sm font-mono font-bold border gap-2" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
                               <span className="text-orange-500">Auth Service ~ #1198</span>
-                              <span style={{ color: "var(--color-text-muted)" }}>STG</span>
-                              <span className="text-orange-500 bg-orange-500/10 px-3 py-1 rounded border border-orange-500/20">WAITING</span>
+                              <div className="flex items-center gap-2">
+                                <span style={{ color: "var(--color-text-muted)" }}>STG</span>
+                                <span className="text-orange-500 bg-orange-500/10 px-2 sm:px-3 py-1 rounded border border-orange-500/20 text-xs">WAITING</span>
+                              </div>
                            </div>
-                           <div className="flex items-center gap-4 mt-6">
+                           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mt-6">
                               <div className="flex-1 p-4 rounded-xl text-center border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
                                  <span className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "var(--color-text-muted)" }}>{tLeadership("ctoMetric1")}</span>
                                  <span className="text-3xl font-black" style={{ color: "var(--color-text)" }}>43</span>
@@ -1073,7 +1091,7 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, y: -20, rotateX: -5 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="absolute inset-0 rounded-2xl p-8 shadow-xl overflow-hidden border"
+                    className="lg:absolute lg:inset-0 relative rounded-2xl p-4 sm:p-8 shadow-xl overflow-hidden border"
                     style={{ backgroundColor: "var(--color-surface)", borderColor: "var(--color-border)" }}
                   >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 rounded-full blur-[80px] pointer-events-none" />
@@ -1082,7 +1100,7 @@ export default function Home() {
                          {tLeadership("pmTitle")}
                        </h3>
                        <p className="text-base mb-10 max-w-lg leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{tLeadership("pmDesc")}</p>
-                       <div className="flex gap-8 h-48">
+                       <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 min-h-[12rem] h-auto">
                           {/* Mock Spec Editor */}
                           <div className="flex-1 rounded-2xl p-6 flex flex-col gap-4 border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
                              <div className="w-1/2 h-5 rounded bg-pink-500/30" />
@@ -1092,7 +1110,7 @@ export default function Home() {
                              <div className="w-2/3 h-3 rounded" style={{ backgroundColor: "var(--color-border-strong)" }} />
                           </div>
                           {/* Live Metrics */}
-                          <div className="w-1/3 flex flex-col gap-4">
+                          <div className="w-full sm:w-1/3 flex flex-row sm:flex-col gap-4">
                              <div className="rounded-2xl p-4 flex-1 flex flex-col justify-center text-center border" style={{ backgroundColor: "var(--color-surface-elevated)", borderColor: "var(--color-border)" }}>
                                 <span className="block text-[11px] font-extrabold tracking-widest mb-2 uppercase" style={{ color: "var(--color-text-muted)" }}>{tLeadership("pmMetric1")}</span>
                                 <span className="text-4xl font-black text-pink-500">12</span>
@@ -1149,9 +1167,9 @@ export default function Home() {
                 icon: Shield,
               },
             ].map(({ step, title, desc, icon: Icon }) => (
-              <div key={step} className="scroll-fade-up flex items-start gap-8">
+              <div key={step} className="scroll-fade-up flex flex-col sm:flex-row items-start gap-4 sm:gap-8">
                 <div
-                  className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-extrabold"
+                  className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl font-extrabold"
                   style={{
                     backgroundColor: "var(--color-surface-elevated)",
                     border: "1px solid var(--color-border)",
@@ -1203,24 +1221,18 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="flex-1 relative w-full aspect-[4/3]">
-              <div
-                className="absolute inset-0 rounded-2xl p-8 overflow-hidden transition-all duration-700"
+            {/* ===== DESKTOP DEMO (sm+): Absolute positioned layout ===== */}
+            <div className="flex-1 relative w-full hidden sm:block">
+              <div className="relative rounded-2xl p-8 overflow-hidden transition-all duration-700 min-h-[350px]"
                 style={{
                   backgroundColor: flowModeActive ? "rgba(255,255,255,0.02)" : "var(--color-surface-omni)",
                   border: flowModeActive ? "1px solid rgba(255,255,255,0.05)" : "1px solid var(--color-border)",
                   boxShadow: flowModeActive ? "0 0 100px rgba(180, 159, 112, 0.1)" : "none"
                 }}
               >
-                {/* Dummy Notifications (The Noise) */}
                 <motion.div
                   initial={false}
-                  animate={{
-                    opacity: flowModeActive ? 0 : 1,
-                    y: flowModeActive ? -50 : 0,
-                    scale: flowModeActive ? 0.9 : 1,
-                    filter: flowModeActive ? "blur(10px)" : "blur(0px)"
-                  }}
+                  animate={{ opacity: flowModeActive ? 0 : 1, y: flowModeActive ? -50 : 0, scale: flowModeActive ? 0.9 : 1, filter: flowModeActive ? "blur(10px)" : "blur(0px)" }}
                   transition={{ duration: 0.8, ease: "easeInOut" }}
                   className="absolute top-6 right-6 space-y-3 pointer-events-none"
                 >
@@ -1242,14 +1254,9 @@ export default function Home() {
 
                 <motion.div
                   initial={false}
-                  animate={{
-                    opacity: flowModeActive ? 0 : 1,
-                    x: flowModeActive ? -50 : 0,
-                    scale: flowModeActive ? 0.9 : 1,
-                    filter: flowModeActive ? "blur(10px)" : "blur(0px)"
-                  }}
+                  animate={{ opacity: flowModeActive ? 0 : 1, x: flowModeActive ? -50 : 0, scale: flowModeActive ? 0.9 : 1, filter: flowModeActive ? "blur(10px)" : "blur(0px)" }}
                   transition={{ duration: 0.7, ease: "easeInOut", delay: 0.1 }}
-                  className="absolute bottom-10 left-6 pointer-events-none z-0"
+                  className="absolute bottom-8 left-6 pointer-events-none z-0"
                 >
                   <div className="glass-active rounded-lg p-3 w-56 shadow-lg flex items-start gap-3 border border-pink-500/20">
                     <Figma className="w-5 h-5 text-pink-400 shrink-0 mt-0.5" />
@@ -1260,17 +1267,12 @@ export default function Home() {
                   </div>
                 </motion.div>
 
-                {/* The Focused Task */}
                 <motion.div
-                  layout
-                  transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                  layout transition={{ type: "spring", stiffness: 70, damping: 15 }}
                   className="absolute p-6 rounded-xl"
                   style={{
-                    top: flowModeActive ? "50%" : "30%",
-                    left: flowModeActive ? "50%" : "30%",
-                    x: "-50%",
-                    y: "-50%",
-                    scale: flowModeActive ? 1.2 : 1,
+                    top: flowModeActive ? "50%" : "30%", left: flowModeActive ? "50%" : "30%",
+                    x: "-50%", y: "-50%", scale: flowModeActive ? 1.1 : 1,
                     backgroundColor: flowModeActive ? "#18181B" : "var(--color-bg)",
                     border: flowModeActive ? "1px solid rgba(180, 159, 112, 0.3)" : "1px solid var(--color-border)",
                     boxShadow: flowModeActive ? "0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(180, 159, 112, 0.1)" : "var(--edge-shadow)",
@@ -1282,18 +1284,70 @@ export default function Home() {
                   <p className="text-xs leading-relaxed transition-colors" style={{ color: flowModeActive ? "#A1A1AA" : "var(--color-text-muted)" }}>
                     {tFlowMode("taskDesc")}
                   </p>
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: flowModeActive ? 1 : 0 }} className="mt-6 flex items-center pointer-events-none">
+                    <div className="text-[10px] font-mono text-emerald-400/70 border border-emerald-400/20 bg-emerald-400/5 px-2 py-1 rounded">{tFlowMode("blocking")}</div>
+                  </motion.div>
+                </motion.div>
+              </div>
+            </div>
 
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: flowModeActive ? 1 : 0 }}
-                    className="mt-6 flex items-center justify-between pointer-events-none"
-                  >
-                    <div className="text-[10px] font-mono text-emerald-400/70 border border-emerald-400/20 bg-emerald-400/5 px-2 py-1 rounded">
-                      {tFlowMode("blocking")}
-                    </div>
+            {/* ===== MOBILE DEMO (<sm): Stacked flow layout ===== */}
+            <div className="w-full sm:hidden">
+              <div className="rounded-2xl p-4 transition-all duration-700 space-y-3"
+                style={{
+                  backgroundColor: flowModeActive ? "rgba(255,255,255,0.02)" : "var(--color-surface-omni)",
+                  border: flowModeActive ? "1px solid rgba(255,255,255,0.05)" : "1px solid var(--color-border)",
+                }}
+              >
+                {/* Task Card */}
+                <motion.div
+                  layout transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                  className="p-4 rounded-xl transition-all duration-500"
+                  style={{
+                    backgroundColor: flowModeActive ? "#18181B" : "var(--color-bg)",
+                    border: flowModeActive ? "1px solid rgba(180, 159, 112, 0.3)" : "1px solid var(--color-border)",
+                    boxShadow: flowModeActive ? "0 10px 30px rgba(0,0,0,0.3)" : "var(--edge-shadow)",
+                  }}
+                >
+                  <div className="w-12 h-1.5 rounded-full mb-3" style={{ backgroundColor: "var(--color-accent)", opacity: flowModeActive ? 1 : 0.3 }} />
+                  <h4 className="text-base font-bold mb-1 transition-colors" style={{ color: flowModeActive ? "#fff" : "var(--color-text)" }}>{tFlowMode("taskTitle")}</h4>
+                  <p className="text-[11px] leading-relaxed transition-colors" style={{ color: flowModeActive ? "#A1A1AA" : "var(--color-text-muted)" }}>
+                    {tFlowMode("taskDesc")}
+                  </p>
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: flowModeActive ? 1 : 0 }} className="mt-3">
+                    <div className="text-[10px] font-mono text-emerald-400/70 border border-emerald-400/20 bg-emerald-400/5 px-2 py-1 rounded w-fit">{tFlowMode("blocking")}</div>
                   </motion.div>
                 </motion.div>
 
+                {/* Notifications (The Noise) */}
+                <motion.div
+                  initial={false}
+                  animate={{ opacity: flowModeActive ? 0 : 1, height: flowModeActive ? 0 : "auto", scale: flowModeActive ? 0.95 : 1 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="space-y-2 overflow-hidden"
+                >
+                  <div className="glass-active rounded-lg p-2.5 shadow-sm flex items-start gap-2.5 border border-red-500/20">
+                    <Slack className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-[11px] font-bold text-red-400">{tFlowMode("slackAlert")}</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>{tFlowMode("slack")}</p>
+                    </div>
+                  </div>
+                  <div className="glass-active rounded-lg p-2.5 shadow-sm flex items-start gap-2.5">
+                    <Cloud className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-[11px] font-bold" style={{ color: "var(--color-text)" }}>{tFlowMode("sfAlert")}</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>{tFlowMode("salesforce")}</p>
+                    </div>
+                  </div>
+                  <div className="glass-active rounded-lg p-2.5 shadow-sm flex items-start gap-2.5 border border-pink-500/20">
+                    <Figma className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-[11px] font-bold text-pink-400">{tFlowMode("figmaAlert")}</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>{tFlowMode("figma")}</p>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -1301,11 +1355,11 @@ export default function Home() {
       </section>
 
       {/* ========== NATIVE APP ECOSYSTEM (3D PARALLAX) ========== */}
-      <section className="bg-black relative overflow-hidden ecosystem-container h-screen min-h-[700px] flex flex-col items-center justify-center py-20">
+      <section className="bg-black relative overflow-hidden ecosystem-container min-h-screen flex flex-col items-center justify-center py-20">
          {/* Subtle background glow */}
          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-         <div className="max-w-7xl mx-auto px-6 w-full h-full max-h-[850px] flex flex-col items-center relative z-10">
+         <div className="max-w-7xl mx-auto px-6 w-full h-full flex flex-col items-center relative z-10">
             <div className="text-center mb-10 shrink-0 ecosystem-hero-text">
                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
                  {tEco("title1")}<span className="text-gradient">{tEco("title2")}</span>
@@ -1315,10 +1369,11 @@ export default function Home() {
                </p>
             </div>
 
-            <div className="relative w-full max-w-5xl flex-1 flex flex-col justify-center perspective-[2000px] min-h-[400px]">
+            <div className="relative w-full max-w-5xl flex-1 flex flex-col justify-center perspective-[2000px] min-h-[300px] sm:min-h-[400px]">
+               <div className="w-full h-full relative">
                
                {/* --- THE APPS --- */}
-               <div className="ecosystem-card absolute w-full h-[60vh] min-h-[400px] max-h-[600px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/80 backdrop-blur-3xl shadow-2xl flex flex-col">
+               <div className="ecosystem-card absolute w-full h-[40vh] sm:h-[55vh] min-h-[250px] sm:min-h-[350px] max-h-[400px] sm:max-h-[500px] glass-panel rounded-3xl border border-white/10 p-0 overflow-hidden bg-[#09090b]/80 backdrop-blur-3xl shadow-2xl flex flex-col">
                   {/* Window Bar */}
                   <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
                      <div className="flex gap-2">
@@ -1448,7 +1503,7 @@ export default function Home() {
                </div>
 
                {/* --- THE CLIMAX (MASTER DASHBOARD) --- */}
-               <div className="climax-dashboard absolute w-full max-w-4xl h-[60vh] min-h-[400px] max-h-[600px] glass-panel rounded-3xl border border-purple-500/30 p-0 overflow-hidden bg-[#09090b]/40 backdrop-blur-md shadow-[0_0_100px_rgba(109,40,217,0.3)] flex flex-col z-0 pointer-events-none origin-center" style={{ opacity: 0, scale: 0.8 }}>
+               <div className="climax-dashboard absolute w-full max-w-4xl h-[40vh] sm:h-[55vh] min-h-[250px] sm:min-h-[350px] max-h-[400px] sm:max-h-[500px] glass-panel rounded-3xl border border-purple-500/30 p-0 overflow-hidden bg-[#09090b]/40 backdrop-blur-md shadow-[0_0_100px_rgba(109,40,217,0.3)] flex flex-col z-0 pointer-events-none origin-center" style={{ opacity: 0, scale: 0.8 }}>
                   {/* Dashboard Header */}
                   <div className="h-14 border-b border-white/10 flex items-center justify-between px-6 bg-white/5">
                      <div className="flex gap-4">
@@ -1479,10 +1534,13 @@ export default function Home() {
                   </div>
                </div>
 
+               </div>
             </div>
 
+
+
             {/* Final Climax Text */}
-            <div className="climax-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full z-50 pointer-events-none" style={{ opacity: 0 }}>
+            <div className="climax-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full z-[60] pointer-events-none px-6" style={{ opacity: 0 }}>
                <h2 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-[0_0_20px_rgba(109,40,217,0.8)]">
                  {tCli("text1")}<span className="text-gradient">{tCli("text2")}</span><br />
                  {tCli("text3")}<br />
@@ -1566,7 +1624,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Free Learner */}
             <div className="glass-panel rounded-3xl p-8 flex flex-col h-full hover:-translate-y-2 transition-transform duration-300">
               <div className="mb-8">
@@ -1662,8 +1720,8 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 mb-16 text-sm relative z-10">
-          <div>
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-12 mb-16 text-sm relative z-10">
+          <div className="col-span-2 md:col-span-2">
             <div className="flex items-center gap-2 font-bold text-lg mb-6 text-white">
               <Sparkles className="w-4 h-4 text-purple-500" /> Astra
             </div>
