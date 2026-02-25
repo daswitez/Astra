@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Sparkles, Home, Layers, Users, Zap, Search, Settings, Plus, Command, FileText, CheckCircle2, MoreHorizontal, BrainCircuit, ArrowRight } from "lucide-react";
+import { Sparkles, Home, Layers, Users, Zap, Search, Settings, Plus, Command, FileText, CheckCircle2, MoreHorizontal, BrainCircuit, ArrowRight, Code2 } from "lucide-react";
 
 export default function AppPage() {
   const tGlobal = useTranslations("global");
   const [isLoading, setIsLoading] = useState(true);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [isOmnibarOpen, setIsOmnibarOpen] = useState(false);
+  const [isFlowMode, setIsFlowMode] = useState(false);
 
   useEffect(() => {
     // Artificial delay for the sleek loading sequence
@@ -164,7 +165,10 @@ export default function AppPage() {
       */}
       <motion.aside
         initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
+        animate={{ 
+          x: isFlowMode ? -300 : 0, 
+          opacity: isFlowMode ? 0 : 1 
+        }}
         transition={{ delay: 2.5, duration: 0.8, ease: "easeOut" }}
         className={`fixed top-4 bottom-4 left-4 z-30 flex flex-col items-center py-6 rounded-2xl transition-all duration-500 ease-in-out border border-white/[0.05] shadow-[0_20px_60px_rgba(0,0,0,0.5)]`}
         style={{
@@ -183,11 +187,33 @@ export default function AppPage() {
         <nav className="flex-1 w-full flex flex-col gap-2 px-3">
           <NavItem icon={<Home className="w-4 h-4" />} label="Home" isExpanded={isSidebarExpanded} />
           <NavItem icon={<Layers className="w-4 h-4" />} label="Organization" isExpanded={isSidebarExpanded} />
-          <NavItem icon={<Users className="w-4 h-4" />} label="Engineering" isExpanded={isSidebarExpanded} active />
+          <NavItem icon={<Users className="w-4 h-4" />} label="Engineering" isExpanded={isSidebarExpanded} active={!isFlowMode} />
           
           <div className="w-full h-px bg-white/5 my-4" />
           
-          <NavItem icon={<Zap className="w-4 h-4 text-amber-400" />} label="Flow Mode" isExpanded={isSidebarExpanded} />
+          <button 
+            onClick={() => setIsFlowMode(!isFlowMode)}
+            className={`
+              w-full h-10 rounded-xl flex items-center gap-3 px-3 transition-all duration-300 relative group overflow-hidden
+              ${isFlowMode ? 'bg-amber-400/10 text-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.1)]' : 'text-white/50 hover:bg-white/[0.05] hover:text-white/90'}
+            `}
+          >
+            {isFlowMode && (
+              <motion.div 
+                layoutId="nav-indicator"
+                className="absolute left-0 top-1/4 bottom-1/4 w-0.5 rounded-r-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.8)]" 
+              />
+            )}
+            <div className="shrink-0 flex items-center justify-center w-5">
+              <Zap className={`w-4 h-4 ${isFlowMode ? 'text-amber-400' : 'text-amber-400/70 group-hover:text-amber-400'}`} />
+            </div>
+            <span 
+              className={`whitespace-nowrap text-sm font-medium transition-all duration-300 
+                ${isSidebarExpanded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none w-0'}`}
+            >
+              {isFlowMode ? 'Exit Flow Mode' : 'Enter Flow Mode'}
+            </span>
+          </button>
         </nav>
 
         <div className="mt-auto w-full px-3">
@@ -197,19 +223,97 @@ export default function AppPage() {
 
       {/* 
         =========================================================
+        FLOW MODE OVERLAY & ACTIVE CONTEXT (Z: 20)
+        =========================================================
+      */}
+      <AnimatePresence>
+        {isFlowMode && (
+          <motion.div
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.8 }}
+            className="fixed inset-0 z-20 flex items-center justify-center pointer-events-auto bg-black/40"
+          >
+            {/* The giant focus task card */}
+            <motion.div
+              layoutId="active-task-card"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="w-full max-w-3xl rounded-[2rem] border border-white/[0.08] bg-black/60 backdrop-blur-3xl p-10 flex flex-col shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden relative"
+            >
+              {/* Intense Focus Glow */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 bg-emerald-500/10 blur-[100px] pointer-events-none" />
+              <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-500/10 blur-[120px] pointer-events-none" />
+              
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-mono text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-3 py-1 rounded shadow-[0_0_15px_rgba(52,211,153,0.15)] flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    In Progress
+                  </span>
+                  <span className="text-xs text-white/40 font-mono tracking-widest uppercase">Flow Session</span>
+                </div>
+                <button 
+                  onClick={() => setIsFlowMode(false)}
+                  className="px-4 py-1.5 rounded-full border border-white/10 hover:bg-white/5 text-xs text-white/50 hover:text-white transition-colors"
+                >
+                  Exit Focus (ESC)
+                </button>
+              </div>
+
+              <h1 className="text-3xl font-bold text-white tracking-tight mb-4">Fix WebGL Context Leak</h1>
+              <p className="text-white/60 text-lg leading-relaxed mb-10 max-w-2xl">
+                The parallax ecosystem cards are leaving orphaned contexts on unmount in mobile Safari resulting in a crash. Need to hook into the useEffect cleanup phase and manually dump the Three.js renderer contexts.
+              </p>
+
+              <div className="flex-1 bg-white/[0.02] border border-white/[0.03] rounded-2xl p-6 flex flex-col items-center justify-center min-h-[250px] relative group overflow-hidden">
+                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+                 <Code2 className="w-12 h-12 text-white/10 group-hover:text-blue-400/50 transition-colors mb-4" />
+                 <p className="text-sm font-medium text-white/30 group-hover:text-white/60 transition-colors">Start typing to attach code snippets...</p>
+                 <kbd className="mt-4 text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-white/30">Cmd + /</kbd>
+              </div>
+
+              <div className="mt-8 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+                    <span className="text-xs font-medium text-indigo-300">AS</span>
+                  </div>
+                  <span className="text-sm text-white/50">Alice Smith is working on this...</span>
+                </div>
+                <button className="px-6 py-3 rounded-xl bg-emerald-500/10 text-emerald-400 text-sm font-semibold hover:bg-emerald-500/20 transition-colors border border-emerald-500/20 shadow-[0_0_20px_rgba(52,211,153,0.1)]">
+                  Complete Task
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 
+        =========================================================
         ZONE B: THE EXECUTION CANVAS (Z: 10)
         =========================================================
       */}
       <motion.main
         initial={{ opacity: 0, filter: "blur(20px)" }}
-        animate={{ opacity: 1, filter: "blur(0px)" }}
+        animate={{ 
+          opacity: 1, 
+          filter: "blur(0px)",
+        }}
         transition={{ delay: 2.8, duration: 1 }}
-        className={`relative min-h-screen pl-[100px] pr-8 pt-8 pb-8 transition-all duration-500 ${isOmnibarOpen ? 'scale-[0.98] opacity-50' : ''}`}
+        className={`
+          relative min-h-screen pr-8 pt-8 pb-8 transition-all duration-700 ease-[0.16,1,0.3,1]
+          ${isOmnibarOpen ? 'scale-[0.98] opacity-50' : ''}
+          ${isFlowMode ? 'pl-8 scale-95 opacity-30 brightness-50' : 'pl-[100px]'}
+        `}
       >
         <div className="w-full max-w-7xl mx-auto flex flex-col h-full space-y-8">
           
           {/* Top Bar inside Canvas */}
-          <header className="flex items-center justify-between w-full h-14">
+          <header className={`flex items-center justify-between w-full h-14 transition-opacity duration-300 ${isFlowMode ? 'opacity-0' : 'opacity-100'}`}>
             <div>
               <h2 className="text-xl font-semibold tracking-tight text-white/90">#Engineering</h2>
               <p className="text-sm text-white/40 mt-0.5">Global team sync & execution</p>
@@ -296,7 +400,7 @@ export default function AppPage() {
               </div>
               
               {/* Input Area */}
-              <div className="mt-8 pt-4">
+              <div className={`mt-8 pt-4 transition-opacity duration-300 ${isFlowMode ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <div className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl p-3 flex items-center gap-3 shadow-[0_10px_40px_rgba(0,0,0,0.6)] group hover:border-white/[0.15] transition-colors">
                   <div className="w-8 h-8 rounded-full bg-white/[0.05] flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
                     <Plus className="w-4 h-4 text-white/60" />
@@ -314,7 +418,7 @@ export default function AppPage() {
             </div>
 
             {/* The Context/Task Pool */}
-            <div className="xl:col-span-1 rounded-3xl border border-white/[0.03] bg-gradient-to-bl from-white/[0.02] to-transparent p-6 relative overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+            <div className={`xl:col-span-1 rounded-3xl border border-white/[0.03] bg-gradient-to-bl from-white/[0.02] to-transparent p-6 relative overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-opacity duration-300 ${isFlowMode ? 'opacity-0' : 'opacity-100'}`}>
                {/* Ambient Glow */}
                <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
                <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/5 blur-[100px] rounded-full pointer-events-none" />
@@ -327,7 +431,11 @@ export default function AppPage() {
                <div className="flex flex-col gap-4 relative z-10">
                  
                  {/* Task Card Example */}
-                 <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05] hover:border-white/[0.1] hover:bg-white/[0.05] shadow-lg transition-all cursor-pointer group">
+                 <motion.div 
+                    layoutId="active-task-card"
+                    onClick={() => setIsFlowMode(true)}
+                    className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05] hover:border-white/[0.1] hover:bg-white/[0.05] shadow-lg transition-all cursor-pointer group"
+                 >
                    <div className="flex justify-between items-start mb-3">
                      <span className="text-[10px] font-mono text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-0.5 rounded shadow-[0_0_10px_rgba(52,211,153,0.1)]">In Progress</span>
                      <div className="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
@@ -340,7 +448,7 @@ export default function AppPage() {
                    <div className="w-full h-1 bg-white/5 rounded-full mt-4 overflow-hidden">
                      <div className="h-full bg-emerald-400 w-1/3 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
                    </div>
-                 </div>
+                 </motion.div>
 
                  {/* Document Card Example */}
                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.03] hover:border-white/[0.08] hover:bg-white/[0.04] shadow-lg transition-all cursor-pointer group flex items-start gap-4">
