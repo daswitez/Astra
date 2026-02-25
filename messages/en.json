@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "signIn": "Sign In",
+    "getStarted": "Get Started Free"
+  },
+  "global": {
+    "trust1": "SOC 2 Type II Certified",
+    "trust2": "End-to-End Encryption",
+    "trust3": "Single Sign-On (SSO)",
+    "builtFor": "Built for"
+  },
+  "mockup": {
+    "search": "Ask Astra AI… ⌘K",
+    "engineering": "Engineering",
+    "storage": "Storage",
+    "chat": "Chat",
+    "metrics": "Metrics",
+    "todo": "To Do",
+    "inProgress": "In Progress",
+    "done": "Done"
+  },
+  "hero": {
+    "badge": "Introducing the Spatial Productivity OS",
+    "title1": "The Operating System for the ",
+    "title2": "Modern Enterprise",
+    "subtitle": "Stop switching contexts. Astra unifies your chat, tasks, documents, and engineering metrics into a single, spatial workspace. Designed for organizational clarity.",
+    "cta": "Deploy Astra",
+    "enterprise": "Contact Enterprise Sales"
+  },
+  "trustedBy": {
+    "title": "TRUSTED BY ENGINEERING & OPS TEAMS AT"
+  },
+  "problem": {
+    "title": "The Fragmentation Tax",
+    "subtitle": "Your organization is losing 20 hours a week to context switching. Marketing is in Slack. Engineering is in Jira. Design is in Figma. Leadership is lost in the middle.",
+    "step1": "The Organization Silo",
+    "step2": "The Breaking Point",
+    "step3": "Centralizing the Chaos",
+    "step4": "Native Ecosystem",
+    "step5": "Total Alignment",
+    "chaos1": "The",
+    "chaos2": "Chaos",
+    "chaos3": "of Fragmented Work.",
+    "break1": "The Breaking",
+    "break2": "Point.",
+    "breakDesc": "Your company loses 40% of its potential in the gaps between apps. The cognitive load of switching context is breaking your cross-functional teams.",
+    "grav1": "A New",
+    "grav2": "Gravity.",
+    "gravDesc": "What if you didn't have to connect tools anymore? What if the workspace itself was the tool? Astra acts as a gravitational center for your entire company.",
+    "eco1": "A Native",
+    "eco2": "Ecosystem.",
+    "ecoDesc": "Zero plugins. Zero integrations. Sales, Engineering, and Marketing all speak the same language instantly inside the same interface.",
+    "focus1": "Astra brings your company into focus.",
+    "focus2": "Native context. Zero latency. Complete organizational clarity.",
+    "check1": "Unified Org",
+    "check2": "Single UI"
+  },
+  "ecosystem": {
+    "title1": "Built in. ",
+    "title2": "Not bolted on.",
+    "subtitle": "Why switch contexts for brainstorming or diagramming? Astra includes high-performance, native mini-apps that live alongside your chat and tasks.",
+    "app1": "Spatial Whiteboard",
+    "app2": "Auto-Flowcharts",
+    "app3": "Deep Work Tracker",
+    "gateway": "API Gateway",
+    "auth": "Auth Service",
+    "db": "Database Cluster",
+    "pomodoro": "Deep Work",
+    "blocked": "Distractions Blocked: "
+  },
+  "climax": {
+    "badge": "Astra Master Node",
+    "text1": "Everything ",
+    "text2": "connected.",
+    "text3": "Everything native.",
+    "text4": "Zero friction."
+  },
+  "flowMode": {
+    "title1": "Protect your focus.",
+    "title2": "Silence the noise.",
+    "subtitle": "Astra's Flow Mode physically alters your workspace. Sidebars disappear. Notifications are muted. Only your active task remains.",
+    "buttonActive": "Exit Flow Mode",
+    "buttonInactive": "Simulate Flow Mode",
+    "discord": "General ✨",
+    "salesforce": "Salesforce Alert",
+    "figma": "Figma Comment",
+    "slack": "Eng Team",
+    "slackAlert": "Production is down!",
+    "figmaAlert": "Reviewed the new designs",
+    "sfAlert": "New high-value lead assigned",
+    "taskTitle": "Refactor Authentication",
+    "taskDesc": "Migrate session tokens to JWT-based auth across all microservices carefully.",
+    "blocking": "BLOCKING ALL NOTIFICATIONS"
+  },
+  "bento": {
+    "title": "A workspace that works for you.",
+    "subtitle": "Experience the power of native context across your entire organization.",
+    "timelineTitle": "Unified Timeline",
+    "timelineDesc": "Your chat is your workspace. Messages are living documents that convert into actions with one click.",
+    "aiTitle": "AI Command Center",
+    "aiDesc": "Press ⌘K and instantly query cross-departmental data. Ask questions about sales pipelines, product roadmaps, or marketing campaigns simultaneously.",
+    "aiSearch": "Summarize Q3 marketing...",
+    "storageTitle": "Passive Storage",
+    "storageDesc": "A complex file tree that auto-organizes itself based on context.",
+    "telemetryTitle": "Live Telemetry",
+    "telemetryDesc": "Automated organizational insights and output metrics without micromanagement."
+  },
+  "pricing": {
+    "title": "Simple, transparent pricing.",
+    "subtitle": "Start for free, scale as your organization unifies.",
+    "free": {
+      "title": "Free Learner",
+      "desc": "For small teams getting started.",
+      "price": "$0",
+      "period": "/ forever",
+      "btn": "Get Started",
+      "features": [
+        "Up to 5 users",
+        "Unlimited chat & channels",
+        "Basic task management",
+        "Standard search"
+      ]
+    },
+    "pro": {
+      "badge": "Most Popular",
+      "title": "Organization Pro",
+      "desc": "The complete platform for growing companies.",
+      "price": "$15",
+      "period": "/ user / mo",
+      "btn": "Start Free Trial",
+      "features": [
+        "Everything in Free",
+        "AI Workspace Generation",
+        "Invisible Telemetry",
+        "3rd-Party Integrations",
+        "Priority Support"
+      ]
+    },
+    "ent": {
+      "title": "Enterprise AI",
+      "desc": "For large-scale, secure deployments.",
+      "price": "Custom",
+      "btn": "Contact Sales",
+      "features": [
+        "Everything in Pro",
+        "Dedicated Cross-Dept AI Models",
+        "Single Sign-On (SAML/SSO)",
+        "Advanced Audit Logs",
+        "Custom SLA"
+      ]
+    }
+  },
+  "how": {
+    "title": "How Astra Works",
+    "subtitle": "From onboarding to deep organizational flow in under 5 minutes.",
+    "step1Title": "Create Your Organization",
+    "step1Desc": "Set up your company in seconds. Invite your team through SSO or magic links. Astra automatically creates interconnected workspaces across Sales, Engineering, and Marketing.",
+    "step2Title": "Connect Your Stack",
+    "step2Desc": "Link your existing tools with a single OAuth flow. Astra begins passively collecting data, context, and deployment events—building your organizational graph automatically.",
+    "step3Title": "Work in Context",
+    "step3Desc": "Chat with your team, draft proposals, and track sprints—all from the same interface. Convert conversations into actions instantly, maintaining total bidirectional context.",
+    "step4Title": "Protect Your Focus",
+    "step4Desc": "When it's time for deep work, activate Flow Mode. The interface physically transforms: sidebars recede, noisy notifications silence across the organization, and your critical task takes center stage."
+  },
+  "flow": {
+    "title1": "Protect your focus.",
+    "title2": "Deliver your best work.",
+    "subtitle1": "Every knowledge worker—from marketers to engineers—craves continuous \"Flow.\"",
+    "subtitle2": "Astra protects this state at the interface level. Click below to experience Flow Mode.",
+    "simulate": "Simulate Flow Mode",
+    "exit": "Exit Flow Mode",
+    "final1": "Stop switching.",
+    "final2": "Start flowing.",
+    "finalSub": "Join the teams who have already consolidated their stack into one spatial OS.",
+    "finalBtn": "Deploy Astra — Free"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "How is Astra different from Slack + Jira + Notion?",
+    "a1": "Those tools were designed for individual jobs. Astra was designed as one unified OS. Chat messages become tasks. Documents link bidirectionally to execution cards. Metrics flow automatically. There's no context switching because everything lives in the same spatial workspace.",
+    "q2": "Does Astra replace our existing tools?",
+    "a2": "For most teams, yes — over time. Astra covers chat, task management, documentation, and engineering metrics in one platform. During transition, we integrate with GitHub, Slack, and Jira so you can migrate at your own pace.",
+    "q3": "How does Flow Mode work technically?",
+    "a3": "Flow Mode alters the interface at the rendering level. Sidebars animate away, notification listeners are suspended, and only your active task is displayed. Incoming messages are queued server-side and delivered in a batch when you exit Flow Mode.",
+    "q4": "Is my data secure?",
+    "a4": "Absolutely. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). Enterprise plans include SOC 2 Type II compliance, SSO via SAML, and custom data retention policies. We never train AI models on your data.",
+    "q5": "What AI capabilities are included?",
+    "a5": "Every plan includes AI querying via the ⌘K Omni-Bar. The AI can search across all your departments' channels and documents to provide contextual summaries, risk signals, and priority suggestions. Enterprise plans get dedicated AI instances."
+  },
+  "footer": {
+    "ctaTitle": "Ready to unify your company?",
+    "ctaBtn": "Deploy Astra",
+    "desc": "The Spatial Productivity OS for modern enterprises. Unifying context, execution, and intelligence.",
+    "copy": "© 2026 Astra Systems Inc. All rights reserved.",
+    "links": {
+      "product": "Product",
+      "features": "Features",
+      "pricing": "Pricing",
+      "enterprise": "Enterprise",
+      "security": "Security (SOC 2)",
+      "resources": "Resources",
+      "docs": "Documentation",
+      "api": "API Reference",
+      "blog": "Blog",
+      "community": "Community",
+      "company": "Company",
+      "about": "About Us",
+      "careers": "Careers",
+      "contact": "Contact Sales",
+      "privacy": "Privacy Policy"
+    }
+  }
+}

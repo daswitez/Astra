@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "features": "Características",
+    "howItWorks": "Cómo Funciona",
+    "pricing": "Precios",
+    "faq": "Preguntas",
+    "signIn": "Iniciar Sesión",
+    "getStarted": "Comenzar Gratis"
+  },
+  "global": {
+    "trust1": "Certificado SOC 2 Tipo II",
+    "trust2": "Cifrado de Extremo a Extremo",
+    "trust3": "Inicio de Sesión Único (SSO)",
+    "builtFor": "Construido para"
+  },
+  "mockup": {
+    "search": "Preguntar a Astra AI… ⌘K",
+    "engineering": "Ingeniería",
+    "storage": "Almacenamiento",
+    "chat": "Chat",
+    "metrics": "Métricas",
+    "todo": "Por Hacer",
+    "inProgress": "En Progreso",
+    "done": "Completado"
+  },
+  "hero": {
+    "badge": "Presentando el SO de Productividad Espacial",
+    "title1": "El Sistema Operativo para la ",
+    "title2": "Empresa Moderna",
+    "subtitle": "Deja de cambiar de contexto. Astra unifica tus chats, tareas, documentos y métricas de ingeniería en un único espacio de trabajo espacial. Diseñado para la claridad organizacional.",
+    "cta": "Desplegar Astra",
+    "enterprise": "Contactar Ventas Enterprise"
+  },
+  "trustedBy": {
+    "title": "CONFIADO POR EQUIPOS DE INGENIERÍA Y OPERACIONES EN"
+  },
+  "problem": {
+    "title": "El Impuesto de Segmentación",
+    "subtitle": "Tu organización está perdiendo 20 horas a la semana cambiando de contexto. Marketing está en Slack. Ingeniería está en Jira. Diseño está en Figma. El liderazgo está perdido en el medio.",
+    "step1": "El Silo Organizacional",
+    "step2": "El Punto de Quiebre",
+    "step3": "Centralizando el Caos",
+    "step4": "Ecosistema Nativo",
+    "step5": "Alineación Total",
+    "chaos1": "El",
+    "chaos2": "Caos",
+    "chaos3": "del Trabajo Fragmentado.",
+    "break1": "El Punto de",
+    "break2": "Quiebre.",
+    "breakDesc": "Tu empresa pierde el 40% de su potencial en las brechas entre aplicaciones. La carga cognitiva de cambiar de contexto está rompiendo tus equipos interfuncionales.",
+    "grav1": "Una Nueva",
+    "grav2": "Gravedad.",
+    "gravDesc": "¿Qué pasaría si ya no tuvieras que conectar herramientas? ¿Qué pasaría si el espacio de trabajo en sí fuera la herramienta? Astra actúa como un centro gravitacional para toda tu empresa.",
+    "eco1": "Un Ecosistema",
+    "eco2": "Nativo.",
+    "ecoDesc": "Cero complementos. Cero integraciones. Ventas, Ingeniería y Marketing hablan el mismo idioma al instante dentro de la misma interfaz.",
+    "focus1": "Astra enfoca a tu empresa.",
+    "focus2": "Contexto nativo. Latencia cero. Claridad organizacional completa.",
+    "check1": "Org Unificada",
+    "check2": "UI Única"
+  },
+  "ecosystem": {
+    "title1": "Integrado. ",
+    "title2": "No añadido.",
+    "subtitle": "¿Por qué cambiar de contexto para hacer lluvia de ideas o diagramas? Astra incluye mini-aplicaciones nativas de alto rendimiento que viven junto a tus chats y tareas.",
+    "app1": "Pizarra Espacial",
+    "app2": "Diagramas de Flujo Automáticos",
+    "app3": "Rastreador de Trabajo Profundo",
+    "gateway": "Puerta de Enlace API",
+    "auth": "Servicio de Autenticación",
+    "db": "Clúster de Base de Datos",
+    "pomodoro": "Trabajo Profundo",
+    "blocked": "Distracciones Bloqueadas: "
+  },
+  "climax": {
+    "badge": "Nodo Maestro Astra",
+    "text1": "Todo ",
+    "text2": "conectado.",
+    "text3": "Todo nativo.",
+    "text4": "Cero fricción."
+  },
+  "flowMode": {
+    "title1": "Protege tu enfoque.",
+    "title2": "Silencia el ruido.",
+    "subtitle": "El Modo Flujo de Astra altera físicamente tu espacio de trabajo. Las barras laterales desaparecen. Las notificaciones se silencian. Solo queda tu tarea activa.",
+    "buttonActive": "Salir del Modo Flujo",
+    "buttonInactive": "Simular Modo Flujo",
+    "discord": "General ✨",
+    "salesforce": "Alerta Salesforce",
+    "figma": "Comentario Figma",
+    "slack": "Equipo de Ing",
+    "slackAlert": "¡Producción caída!",
+    "figmaAlert": "Nuevos diseños revisados",
+    "sfAlert": "Nuevo cliente potencial asignado",
+    "taskTitle": "Refactorizar Autenticación",
+    "taskDesc": "Migrar los tokens de sesión a autenticación basada en JWT en todos los microservicios cuidadosamente.",
+    "blocking": "BLOQUEANDO TODAS LAS NOTIFICACIONES"
+  },
+  "bento": {
+    "title": "Un espacio de trabajo que funciona para ti.",
+    "subtitle": "Experimenta el poder del contexto nativo en toda tu organización.",
+    "timelineTitle": "Línea de tiempo unificada",
+    "timelineDesc": "Tu chat es tu espacio de trabajo. Los mensajes son documentos vivos que se convierten en acciones con un solo clic.",
+    "aiTitle": "Centro de comando de IA",
+    "aiDesc": "Presiona ⌘K y consulta instantáneamente datos interdepartamentales. Haz preguntas sobre pipelines de ventas, hojas de ruta de productos o campañas de marketing simultáneamente.",
+    "aiSearch": "Resumir marketing del 3T...",
+    "storageTitle": "Almacenamiento pasivo",
+    "storageDesc": "Un árbol de archivos complejo que se auto-organiza según el contexto.",
+    "telemetryTitle": "Telemetría en vivo",
+    "telemetryDesc": "Información organizativa automatizada y métricas de rendimiento sin microgestión."
+  },
+  "pricing": {
+    "title": "Precios simples y transparentes.",
+    "subtitle": "Comienza gratis, escala a medida que tu organización se unifica.",
+    "free": {
+      "title": "Estudiante",
+      "desc": "Gratis para siempre para escuadrones pequeños.",
+      "price": "$0",
+      "period": "/ siempre",
+      "btn": "Comenzar Gratis",
+      "features": [
+        "Hasta 5 usuarios",
+        "Canales y chat ilimitados",
+        "Gestión básica de tareas",
+        "Búsqueda estándar"
+      ]
+    },
+    "pro": {
+      "badge": "Más Popular",
+      "title": "Organización Pro",
+      "desc": "La plataforma completa para empresas en crecimiento.",
+      "price": "$15",
+      "period": "/ usuario / mes",
+      "btn": "Prueba Gratuita",
+      "features": [
+        "Todo lo de Estudiante",
+        "Generación de espacio de trabajo IA",
+        "Telemetría invisible",
+        "Integraciones de terceros",
+        "Soporte prioritario"
+      ]
+    },
+    "ent": {
+      "title": "Enterprise IA",
+      "desc": "Para grandes despliegues y seguros.",
+      "price": "Personalizado",
+      "btn": "Contactar Ventas",
+      "features": [
+        "Todo lo de Pro",
+        "Modelos IA multicompartimentales dedicados",
+        "Inicio de sesión único (SAML/SSO)",
+        "Registros de auditoría avanzados",
+        "SLA personalizado"
+      ]
+    }
+  },
+  "how": {
+    "title": "Cómo Funciona Astra",
+    "subtitle": "Desde el registro hasta un flujo organizacional profundo en menos de 5 minutos.",
+    "step1Title": "Crea Tu Organización",
+    "step1Desc": "Configura tu empresa en segundos. Invita a tu equipo a través de SSO o enlaces mágicos. Astra crea automáticamente espacios de trabajo interconectados en Ventas, Ingeniería y Marketing.",
+    "step2Title": "Conecta Tus Herramientas",
+    "step2Desc": "Vincula tus herramientas existentes con un solo flujo OAuth. Astra comienza a recopilar pasivamente datos, contexto y eventos de despliegue, construyendo automáticamente tu gráfico organizacional.",
+    "step3Title": "Trabaja en Contexto",
+    "step3Desc": "Chatea con tu equipo, redacta propuestas y monitorea sprints, todo desde la misma interfaz. Convierte las conversaciones en acciones al instante, manteniendo el contexto bidireccional total.",
+    "step4Title": "Protege Tu Enfoque",
+    "step4Desc": "Cuando es hora de trabajo profundo, activa el Modo Flujo. La interfaz se transforma físicamente: las barras laterales retroceden, las notificaciones ruidosas se silencian en toda la organización y tu tarea crítica ocupa el centro de la escena."
+  },
+  "flow": {
+    "title1": "Protege tu enfoque.",
+    "title2": "Ofrece tu mejor trabajo.",
+    "subtitle1": "Todo trabajador del conocimiento, desde marketing hasta ingeniería, desea el \"Flujo\" continuo.",
+    "subtitle2": "Astra protege este estado a nivel de interfaz. Haz clic abajo para experimentar el Modo Flujo.",
+    "simulate": "Simular Modo Flujo",
+    "exit": "Salir de Modo Flujo",
+    "final1": "Deja de cambiar.",
+    "final2": "Empieza a fluir.",
+    "finalSub": "Únete a los equipos que ya han consolidado su pila técnica en un solo SO espacial.",
+    "finalBtn": "Desplegar Astra — Gratis"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "q1": "¿Cómo se diferencia Astra de Slack + Jira + Notion?",
+    "a1": "Esas herramientas fueron diseñadas para trabajos individuales. Astra fue diseñado como un SO unificado. Los mensajes de chat se convierten en tareas. Funciones y métricas viven juntas sin cambiar de contexto.",
+    "q2": "¿Astra reemplaza nuestras herramientas?",
+    "a2": "Para muchos, sí. Cubre chat, tareas, docs y métricas en una plataforma. Integramos GitHub, Slack y Jira para migrar a tu propio ritmo.",
+    "q3": "¿Cómo funciona el Modo Flujo?",
+    "a3": "Altera la interfaz al renderizar. Las barras se ocultan, notificaciones se pausan, solo queda tu tarea activa. Mensajes encolados se entregan al salir del modo.",
+    "q4": "¿Mis datos están seguros?",
+    "a4": "Absolutamente. Cifrados en reposo (AES-256) y tránsito (TLS 1.3). Cumplimiento SOC 2. Nunca entrenamos IA con tus datos.",
+    "q5": "¿Qué IA está incluida?",
+    "a5": "Búsqueda universal via ⌘K Omni-Bar. Resume y vincula documentos y canales. Planes empresariales obtienen IA dedicada."
+  },
+  "footer": {
+    "ctaTitle": "¿Listo para unificar tu empresa?",
+    "ctaBtn": "Desplegar Astra",
+    "desc": "El SO de Productividad Espacial para empresas modernas. Unificando contexto, ejecución e inteligencia.",
+    "copy": "© 2026 Astra Systems Inc. Todos los derechos reservados.",
+    "links": {
+      "product": "Producto",
+      "features": "Características",
+      "pricing": "Precios",
+      "enterprise": "Empresa",
+      "security": "Seguridad (SOC 2)",
+      "resources": "Recursos",
+      "docs": "Documentación",
+      "api": "Referencia API",
+      "blog": "Blog",
+      "community": "Comunidad",
+      "company": "Compañía",
+      "about": "Sobre Nosotros",
+      "careers": "Carreras",
+      "contact": "Contactar Ventas",
+      "privacy": "Política de Privacidad"
+    }
+  }
+}

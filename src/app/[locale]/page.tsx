@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import {
   ArrowRight,
   Sparkles,
@@ -42,8 +44,24 @@ import { motion, useScroll, useTransform } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  const tNav = useTranslations("nav");
+  const tHero = useTranslations("hero");
+  const tP = useTranslations("problem");
+  const tEco = useTranslations("ecosystem");
+  const tCli = useTranslations("climax");
+  const tBento = useTranslations("bento");
+  const tHow = useTranslations("how");
+  const tFlow = useTranslations("flow");
+  const tFaq = useTranslations("faq");
+  const tPricing = useTranslations("pricing");
+  const tFooter = useTranslations("footer");
+  const tGlobal = useTranslations("global");
+  const tMockup = useTranslations("mockup");
+  const tFlowMode = useTranslations("flowMode");
+  
   const [isDark, setIsDark] = useState(false);
   const [flowModeActive, setFlowModeActive] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
@@ -356,10 +374,10 @@ export default function Home() {
           <span className="font-bold text-xl tracking-tight">Astra</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
-          <a href="#features" className="hover:opacity-100 opacity-70 transition-opacity">Features</a>
-          <a href="#how-it-works" className="hover:opacity-100 opacity-70 transition-opacity">How It Works</a>
-          <a href="#pricing" className="hover:opacity-100 opacity-70 transition-opacity">Pricing</a>
-          <a href="#faq" className="hover:opacity-100 opacity-70 transition-opacity">FAQ</a>
+          <a href="#features" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("features")}</a>
+          <a href="#how-it-works" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("howItWorks")}</a>
+          <a href="#pricing" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("pricing")}</a>
+          <a href="#faq" className="hover:opacity-100 opacity-70 transition-opacity">{tNav("faq")}</a>
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -373,23 +391,51 @@ export default function Home() {
           >
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
+          
+          <div className="relative">
+            <button
+              onClick={() => setLangMenuOpen(!langMenuOpen)}
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+              style={{
+                backgroundColor: "var(--color-surface-elevated)",
+                border: "1px solid var(--color-border)",
+              }}
+              aria-label="Toggle language"
+            >
+              <Globe className="w-4 h-4" />
+            </button>
+            {langMenuOpen && (
+              <div 
+                className="absolute right-0 mt-2 w-32 rounded-xl shadow-lg py-1 z-50 overflow-hidden"
+                style={{
+                  backgroundColor: "var(--color-surface)",
+                  border: "1px solid var(--color-border)",
+                }}
+              >
+                <Link href="/" locale="en" className="block px-4 py-2 text-sm hover:bg-neutral-500/10">English</Link>
+                <Link href="/" locale="es" className="block px-4 py-2 text-sm hover:bg-neutral-500/10">Español</Link>
+                <Link href="/" locale="fr" className="block px-4 py-2 text-sm hover:bg-neutral-500/10">Français</Link>
+              </div>
+            )}
+          </div>
+
           <button
             className="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity hidden sm:block"
           >
-            Sign In
+            {tNav("signIn")}
           </button>
           <button
             className="px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-transform hover:scale-105"
             style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}
           >
-            Get Started Free
+            {tNav("getStarted")}
           </button>
         </div>
       </nav>
 
       {/* ========== HERO ========== */}
       <section className="pt-32 pb-20 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
           <div
             className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-8"
             style={{
@@ -399,19 +445,19 @@ export default function Home() {
             }}
           >
             <Sparkles className="w-4 h-4" style={{ color: "var(--color-accent)" }} />
-            Introducing the Spatial Productivity OS
+            {tHero("badge")}
           </div>
 
           <h1 className="hero-headline text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] mb-8">
-            The Operating System for<br />
-            <span className="text-gradient">the Modern Enterprise.</span>
+            {tHero("title1")}<br />
+            <span className="text-gradient">{tHero("title2")}</span>
           </h1>
 
           <p
             className="hero-sub text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
             style={{ color: "var(--color-text-secondary)" }}
           >
-            Stop switching contexts. Astra unites your entire organization—Engineering, Sales, Marketing, and Operations—in a single zero-latency workspace.
+            {tHero("subtitle")}
           </p>
 
           <div className="hero-cta flex flex-col sm:flex-row gap-4 items-center justify-center">
@@ -422,7 +468,7 @@ export default function Home() {
                 boxShadow: "0 8px 30px rgba(109, 40, 217, 0.3)",
               }}
             >
-              Unify Your Workspace (Free)
+              {tHero("cta")}
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
@@ -432,7 +478,7 @@ export default function Home() {
                 color: "var(--color-text-secondary)",
               }}
             >
-              Watch 2-min Demo
+              {tHero("enterprise")}
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -443,13 +489,13 @@ export default function Home() {
             style={{ color: "var(--color-text-muted)" }}
           >
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> No credit card required
+              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust1")}
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> 5 users free forever
+              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust2")}
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> SOC 2 compliant
+              <CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tGlobal("trust3")}
             </span>
           </div>
         </div>
@@ -484,7 +530,7 @@ export default function Home() {
                   color: "var(--color-text-muted)",
                 }}
               >
-                Ask Astra AI… ⌘K
+                {tMockup("search")}
               </div>
               <div className="w-20" />
             </div>
@@ -497,30 +543,30 @@ export default function Home() {
                 style={{ borderRight: "1px solid var(--color-border)", backgroundColor: "var(--color-surface)" }}
               >
                 <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--color-text-muted)" }}>
-                  Engineering
+                  {tMockup("engineering")}
                 </div>
                 <div
                   className="glass-active rounded-lg px-3 py-2 text-xs font-medium flex items-center gap-2"
                 >
-                  <LayoutTemplate className="w-3.5 h-3.5" /> # Storage
+                  <LayoutTemplate className="w-3.5 h-3.5" /> # {tMockup("storage")}
                 </div>
                 <div
                   className="px-3 py-2 text-xs font-medium flex items-center gap-2 rounded-lg"
                   style={{ color: "var(--color-text-muted)" }}
                 >
-                  <MessageSquare className="w-3.5 h-3.5" /> # Chat
+                  <MessageSquare className="w-3.5 h-3.5" /> # {tMockup("chat")}
                 </div>
                 <div
                   className="px-3 py-2 text-xs font-medium flex items-center gap-2 rounded-lg"
                   style={{ color: "var(--color-text-muted)" }}
                 >
-                  <BarChart3 className="w-3.5 h-3.5" /> # Metrics
+                  <BarChart3 className="w-3.5 h-3.5" /> # {tMockup("metrics")}
                 </div>
               </div>
 
               {/* Main Area - Kanban */}
               <div className="flex-1 p-8 grid grid-cols-3 gap-5">
-                {["To Do", "In Progress", "Done"].map((label, colIdx) => (
+                {[tMockup("todo"), tMockup("inProgress"), tMockup("done")].map((label, colIdx) => (
                   <div key={label} className="flex flex-col gap-3">
                     <div
                       className="text-xs font-bold uppercase tracking-wider mb-1"
@@ -564,7 +610,7 @@ export default function Home() {
             className="scroll-fade-up text-sm font-medium uppercase tracking-widest mb-10"
             style={{ color: "var(--color-text-muted)" }}
           >
-            Built for teams who ship fast
+            {tGlobal("builtFor")}
           </p>
           <div className="scroll-fade-up flex flex-wrap items-center justify-center gap-12">
             {["YCombinator", "TechStars", "Stripe", "Vercel", "Linear"].map((name) => (
@@ -590,52 +636,52 @@ export default function Home() {
           {/* Step 1 Text */}
           <div className="narrative-step-1 absolute max-w-xl left-12 md:left-24 opacity-0 flex flex-col gap-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-bold w-fit">
-               <TriangleAlert className="w-4 h-4" /> The Organizational Silo
+               <TriangleAlert className="w-4 h-4" /> {tP("step1")}
              </div>
              <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-               The <span className="text-rose-500">Chaos</span> of Fragmented Work.
+               {tP("chaos1")} <span className="text-rose-500">{tP("chaos2")}</span> {tP("chaos3")}
              </h2>
              <p className="text-xl md:text-2xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
-               Salesforce for reps. Jira for devs. Figma for design. Your best people aren't working—they're searching for context across 10 disjointed apps.
+               {tP("subtitle")}
              </p>
            </div>
 
            {/* Step 2 Text */}
            <div className="narrative-step-2 absolute max-w-xl right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm font-bold w-fit">
-                The Fragmentation Tax
+                {tP("title")}
              </div>
              <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
-               The Breaking <span className="text-yellow-500">Point.</span>
+               {tP("break1")} <span className="text-yellow-500">{tP("break2")}</span>
              </h2>
              <p className="text-xl md:text-2xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
-               Your company loses 40% of its potential in the gaps between apps. The cognitive load of switching context is breaking your cross-functional teams.
+               {tP("breakDesc")}
              </p>
            </div>
 
            {/* Step 3 Text */}
            <div className="narrative-step-3 absolute max-w-lg left-12 md:left-24 opacity-0 flex flex-col gap-4">
              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-bold w-fit">
-                <Sparkles className="w-4 h-4" /> The Singularity
+                <Sparkles className="w-4 h-4" /> {tP("step3")}
              </div>
              <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-               A New <span className="text-gradient">Gravity.</span>
+               {tP("grav1")} <span className="text-gradient">{tP("grav2")}</span>
              </h2>
              <p className="text-lg md:text-xl font-medium" style={{ color: "var(--color-text-secondary)" }}>
-               What if you didn't have to connect tools anymore? What if the workspace itself was the tool? Astra acts as a gravitational center for your entire company.
+               {tP("gravDesc")}
              </p>
            </div>
 
            {/* Step 4 Text */}
            <div className="narrative-step-4 absolute max-w-lg right-12 md:right-24 opacity-0 text-right flex flex-col items-end gap-4">
              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-bold w-fit">
-                <Blocks className="w-4 h-4" /> Unity
+                <Blocks className="w-4 h-4" /> {tP("step4")}
              </div>
              <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-               A Native <span className="text-blue-500">Ecosystem.</span>
+               {tP("eco1")} <span className="text-blue-500">{tP("eco2")}</span>
              </h2>
              <p className="text-lg md:text-xl font-medium ml-auto" style={{ color: "var(--color-text-secondary)" }}>
-               Zero plugins. Zero integrations. Sales, Engineering, and Marketing all speak the same language instantly inside the same interface.
+               {tP("ecoDesc")}
              </p>
            </div>
          </div>
@@ -701,14 +747,14 @@ export default function Home() {
                 <Sparkles className="w-8 h-8" style={{ color: "var(--color-accent)" }} />
               </div>
               <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
-                Astra brings your company into focus.
+                {tP("focus1")}
               </h2>
               <p className="text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-8" style={{ color: "var(--color-text-secondary)" }}>
-                Native context. Zero latency. Complete organizational clarity.
+                {tP("focus2")}
               </p>
               <div className="flex items-center gap-4 text-sm font-bold tracking-widest uppercase">
-                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Unified Org</span>
-                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Single UI</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tP("check1")}</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> {tP("check2")}</span>
               </div>
             </div>
           </div>
@@ -720,10 +766,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">
-              A workspace that works for you.
+              {tBento("title")}
             </h2>
             <p className="scroll-fade-up text-lg" style={{ color: "var(--color-text-secondary)" }}>
-              Experience the power of native context across your entire organization.
+              {tBento("subtitle")}
             </p>
           </div>
 
@@ -739,9 +785,9 @@ export default function Home() {
                 >
                   <MessageSquare className="w-6 h-6 text-blue-400" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Unified Timeline</h3>
+                <h3 className="text-2xl font-bold mb-3">{tBento("timelineTitle")}</h3>
                 <p className="leading-relaxed mb-8" style={{ color: "var(--color-text-secondary)" }}>
-                  Your chat is your workspace. Messages are living documents that convert into actions with one click.
+                  {tBento("timelineDesc")}
                 </p>
                 
                 {/* Mock UI: Chat to Ticket */}
@@ -784,9 +830,9 @@ export default function Home() {
                   >
                     <BrainCircuit className="w-6 h-6 text-violet-400" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3">AI Command Center</h3>
+                  <h3 className="text-2xl font-bold mb-3">{tBento("aiTitle")}</h3>
                   <p className="leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
-                    Press ⌘K and instantly query cross-departmental data. Ask questions about sales pipelines, product roadmaps, or marketing campaigns simultaneously.
+                    {tBento("aiDesc")}
                   </p>
                 </div>
                 
@@ -796,7 +842,7 @@ export default function Home() {
                     <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
                       <Sparkles className="w-4 h-4 text-violet-400" />
                       <div className="text-sm font-medium text-neutral-300 overflow-hidden whitespace-nowrap border-r-2 border-violet-400 animate-[typing_3s_steps(40,end)_infinite,blink_.75s_step-end_infinite]">
-                        Summarize Q3 marketing...
+                        {tBento("aiSearch")}
                       </div>
                     </div>
                     {/* Results Nodes */}
@@ -831,9 +877,9 @@ export default function Home() {
                 >
                   <Blocks className="w-6 h-6 text-emerald-400" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Passive Storage</h3>
+                <h3 className="text-xl font-bold mb-3">{tBento("storageTitle")}</h3>
                 <p className="leading-relaxed mb-auto text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                  A complex file tree that auto-organizes itself based on context.
+                  {tBento("storageDesc")}
                 </p>
                 
                 {/* Mock UI: Folder structure */}
@@ -865,9 +911,9 @@ export default function Home() {
                 >
                   <Activity className="w-6 h-6 text-cyan-400" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Live Telemetry</h3>
+                <h3 className="text-xl font-bold mb-3">{tBento("telemetryTitle")}</h3>
                 <p className="leading-relaxed mb-auto text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                  Automated organizational insights and output metrics without micromanagement.
+                  {tBento("telemetryDesc")}
                 </p>
                 
                 {/* Mock UI: Animated Bar Chart */}
@@ -894,9 +940,9 @@ export default function Home() {
       <section id="how-it-works" className="py-24 px-6" style={{ backgroundColor: "var(--color-bg-secondary)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">How Astra Works</h2>
+            <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">{tHow("title")}</h2>
             <p className="scroll-fade-up text-lg" style={{ color: "var(--color-text-secondary)" }}>
-              From onboarding to deep organizational flow in under 5 minutes.
+              {tHow("subtitle")}
             </p>
           </div>
 
@@ -904,26 +950,26 @@ export default function Home() {
             {[
               {
                 step: "01",
-                title: "Create Your Organization",
-                desc: "Set up your company in seconds. Invite your team through SSO or magic links. Astra automatically creates interconnected workspaces across Sales, Engineering, and Marketing.",
+                title: tHow("step1Title"),
+                desc: tHow("step1Desc"),
                 icon: Globe,
               },
               {
                 step: "02",
-                title: "Connect Your Stack",
-                desc: "Link your existing tools with a single OAuth flow. Astra begins passively collecting data, context, and deployment events—building your organizational graph automatically.",
+                title: tHow("step2Title"),
+                desc: tHow("step2Desc"),
                 icon: Blocks,
               },
               {
                 step: "03",
-                title: "Work in Context",
-                desc: "Chat with your team, draft proposals, and track sprints—all from the same interface. Convert conversations into actions instantly, maintaining total bidirectional context.",
+                title: tHow("step3Title"),
+                desc: tHow("step3Desc"),
                 icon: Zap,
               },
               {
                 step: "04",
-                title: "Protect Your Focus",
-                desc: "When it's time for deep work, activate Flow Mode. The interface physically transforms: sidebars recede, noisy notifications silence across the organization, and your critical task takes center stage.",
+                title: tHow("step4Title"),
+                desc: tHow("step4Desc"),
                 icon: Shield,
               },
             ].map(({ step, title, desc, icon: Icon }) => (
@@ -959,12 +1005,12 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="flex-1 space-y-8">
               <h2 className="scroll-fade-up text-4xl md:text-5xl font-bold leading-tight" style={{ color: flowModeActive ? "#ffffff" : "var(--color-text)" }}>
-                Protect your focus.<br />
-                <span className={flowModeActive ? "text-white" : "text-gradient"}>Deliver your best work.</span>
+                {tFlow("title1")}<br />
+                <span className={flowModeActive ? "text-white" : "text-gradient"}>{tFlow("title2")}</span>
               </h2>
               <p className="scroll-fade-up text-lg leading-relaxed transition-colors duration-700" style={{ color: flowModeActive ? "#A1A1AA" : "var(--color-text-secondary)" }}>
-                Every knowledge worker—from marketers to engineers—craves continuous \"Flow.\"
-                Astra protects this state at the interface level. Click below to experience Flow Mode.
+                {tFlow("subtitle1")}
+                {tFlow("subtitle2")}
               </p>
 
               <button
@@ -977,7 +1023,7 @@ export default function Home() {
                   border: flowModeActive ? "1px solid var(--color-border)" : "none"
                 }}
               >
-                {flowModeActive ? "Exit Flow Mode" : "Simulate Flow Mode"}
+                {flowModeActive ? tFlow("exit") : tFlow("simulate")}
               </button>
             </div>
 
@@ -1005,15 +1051,15 @@ export default function Home() {
                   <div className="glass-active rounded-lg p-3 w-64 shadow-lg flex items-start gap-3 border border-red-500/20">
                     <Slack className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold text-red-400">@here URGENT: Client escalated</p>
-                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>From #sales-alerts</p>
+                      <p className="text-xs font-bold text-red-400">{tFlowMode("slackAlert")}</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>{tFlowMode("slack")}</p>
                     </div>
                   </div>
                   <div className="glass-active rounded-lg p-3 w-64 shadow-lg flex items-start gap-3">
                     <Cloud className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold" style={{ color: "var(--color-text)" }}>Opportunity Lost: Acme Corp</p>
-                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Salesforce Automation</p>
+                      <p className="text-xs font-bold" style={{ color: "var(--color-text)" }}>{tFlowMode("sfAlert")}</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>{tFlowMode("salesforce")}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -1032,8 +1078,8 @@ export default function Home() {
                   <div className="glass-active rounded-lg p-3 w-56 shadow-lg flex items-start gap-3 border border-pink-500/20">
                     <Figma className="w-5 h-5 text-pink-400 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold text-pink-400">23 New Comments</p>
-                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Q3 Marketing Landing Page</p>
+                      <p className="text-xs font-bold text-pink-400">{tFlowMode("figmaAlert")}</p>
+                      <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>{tFlowMode("figma")}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -1056,9 +1102,9 @@ export default function Home() {
                   }}
                 >
                   <div className="w-16 h-2 rounded-full mb-4" style={{ backgroundColor: "var(--color-accent)", opacity: flowModeActive ? 1 : 0.3 }} />
-                  <h4 className="text-lg font-bold mb-2 transition-colors" style={{ color: flowModeActive ? "#fff" : "var(--color-text)" }}>Refactor Authentication</h4>
+                  <h4 className="text-lg font-bold mb-2 transition-colors" style={{ color: flowModeActive ? "#fff" : "var(--color-text)" }}>{tFlowMode("taskTitle")}</h4>
                   <p className="text-xs leading-relaxed transition-colors" style={{ color: flowModeActive ? "#A1A1AA" : "var(--color-text-muted)" }}>
-                    Migrate session tokens to JWT-based auth across all microservices carefully.
+                    {tFlowMode("taskDesc")}
                   </p>
 
                   <motion.div
@@ -1067,7 +1113,7 @@ export default function Home() {
                     className="mt-6 flex items-center justify-between pointer-events-none"
                   >
                     <div className="text-[10px] font-mono text-emerald-400/70 border border-emerald-400/20 bg-emerald-400/5 px-2 py-1 rounded">
-                      BLOCKING ALL NOTIFICATIONS
+                      {tFlowMode("blocking")}
                     </div>
                   </motion.div>
                 </motion.div>
@@ -1086,10 +1132,10 @@ export default function Home() {
          <div className="max-w-7xl mx-auto px-6 w-full h-full max-h-[850px] flex flex-col items-center relative z-10">
             <div className="text-center mb-10 shrink-0 ecosystem-hero-text">
                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
-                 Built in. <span className="text-gradient">Not bolted on.</span>
+                 {tEco("title1")}<span className="text-gradient">{tEco("title2")}</span>
                </h2>
                <p className="text-lg text-neutral-400 max-w-2xl mx-auto">
-                 Why switch contexts for brainstorming or diagramming? Astra includes high-performance, native mini-apps that live alongside your chat and tasks.
+                 {tEco("subtitle")}
                </p>
             </div>
 
@@ -1105,7 +1151,7 @@ export default function Home() {
                         <div className="w-3 h-3 rounded-full bg-green-500/50" />
                      </div>
                      <span className="text-sm font-semibold text-neutral-300 flex items-center gap-2">
-                        <PenTool className="w-4 h-4 text-pink-400" /> Spatial Whiteboard
+                        <PenTool className="w-4 h-4 text-pink-400" /> {tEco("app1")}
                      </span>
                   </div>
                   {/* Content */}
@@ -1146,7 +1192,7 @@ export default function Home() {
                         <div className="w-3 h-3 rounded-full bg-neutral-600" />
                      </div>
                      <span className="text-sm font-semibold text-neutral-300 flex items-center gap-2">
-                        <GitMerge className="w-4 h-4 text-blue-400" /> Auto-Flowcharts
+                        <GitMerge className="w-4 h-4 text-blue-400" /> {tEco("app2")}
                      </span>
                   </div>
                   {/* Content */}
@@ -1163,7 +1209,7 @@ export default function Home() {
                         <div className="absolute top-[80px] left-[50px] w-48 p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] animate-pulse">
                            <div className="flex items-center gap-3 mb-2">
                               <Cloud className="w-5 h-5 text-blue-400" />
-                              <span className="font-bold text-sm text-blue-200">API Gateway</span>
+                              <span className="font-bold text-sm text-blue-200">{tEco("gateway")}</span>
                            </div>
                            <div className="w-full h-1.5 bg-blue-500/30 rounded" />
                         </div>
@@ -1171,7 +1217,7 @@ export default function Home() {
                         <div className="absolute top-[230px] left-[50px] w-48 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)] animate-pulse" style={{ animationDelay: "0.5s" }}>
                            <div className="flex items-center gap-3 mb-2">
                               <Focus className="w-5 h-5 text-emerald-400" />
-                              <span className="font-bold text-sm text-emerald-200">Auth Service</span>
+                              <span className="font-bold text-sm text-emerald-200">{tEco("auth")}</span>
                            </div>
                            <div className="w-full h-1.5 bg-emerald-500/30 rounded" />
                         </div>
@@ -1179,7 +1225,7 @@ export default function Home() {
                         <div className="absolute top-[155px] right-[50px] w-48 p-4 rounded-xl bg-purple-500/10 border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)] animate-pulse" style={{ animationDelay: "1s" }}>
                            <div className="flex items-center gap-3 mb-2">
                               <Share2 className="w-5 h-5 text-purple-400" />
-                              <span className="font-bold text-sm text-purple-200">Database Cluster</span>
+                              <span className="font-bold text-sm text-purple-200">{tEco("db")}</span>
                            </div>
                            <div className="w-full h-1.5 bg-purple-500/30 rounded" />
                         </div>
@@ -1192,7 +1238,7 @@ export default function Home() {
                   {/* Window Bar */}
                   <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-white/5 shrink-0">
                      <span className="text-sm font-semibold text-neutral-300 flex items-center gap-2">
-                        <Timer className="w-4 h-4 text-emerald-400" /> Deep Work Tracker
+                        <Timer className="w-4 h-4 text-emerald-400" /> {tEco("app3")}
                      </span>
                   </div>
                   {/* Content */}
@@ -1214,13 +1260,13 @@ export default function Home() {
                         </svg>
                         <div className="text-center">
                            <div className="text-6xl font-black text-white tracking-tighter">42:15</div>
-                           <div className="text-emerald-400 font-bold tracking-widest text-sm mt-1 uppercase">Deep Work</div>
+                           <div className="text-emerald-400 font-bold tracking-widest text-sm mt-1 uppercase">{tEco("pomodoro")}</div>
                         </div>
                      </div>
                      
                      <div className="flex items-center gap-4 px-6 py-3 rounded-full bg-white/5 border border-white/10">
                         <Shield className="w-5 h-5 text-emerald-400" />
-                        <span className="text-neutral-300 font-medium">Distractions Blocked: <span className="text-white font-bold ml-1">14</span></span>
+                        <span className="text-neutral-300 font-medium">{tEco("blocked")} <span className="text-white font-bold ml-1">14</span></span>
                      </div>
                   </div>
                </div>
@@ -1236,7 +1282,7 @@ export default function Home() {
                         <div className="w-4 h-4 rounded-full bg-pink-500" />
                         <div className="w-4 h-4 rounded-full bg-yellow-500" />
                      </div>
-                     <span className="text-sm font-bold tracking-widest text-neutral-400 uppercase">Astra Master Node</span>
+                     <span className="text-sm font-bold tracking-widest text-neutral-400 uppercase">{tCli("badge")}</span>
                   </div>
                   {/* Dashboard Content Grid */}
                   <div className="flex-1 p-6 grid grid-cols-3 gap-6">
@@ -1262,9 +1308,9 @@ export default function Home() {
             {/* Final Climax Text */}
             <div className="climax-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full z-50 pointer-events-none" style={{ opacity: 0 }}>
                <h2 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-[0_0_20px_rgba(109,40,217,0.8)]">
-                 Everything <span className="text-gradient">connected.</span><br />
-                 Everything native. <br />
-                 Zero friction.
+                 {tCli("text1")}<span className="text-gradient">{tCli("text2")}</span><br />
+                 {tCli("text3")}<br />
+                 {tCli("text4")}
                </h2>
             </div>
          </div>
@@ -1274,28 +1320,28 @@ export default function Home() {
       <section id="faq" className="py-24 px-6">
         <div className="max-w-3xl mx-auto">
           <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold text-center mb-16">
-            Frequently Asked Questions
+            {tFaq("title")}
           </h2>
           {[
             {
-              q: "How is Astra different from Slack + Jira + Notion?",
-              a: "Those tools were designed for individual jobs. Astra was designed as one unified OS. Chat messages become tasks. Documents link bidirectionally to execution cards. Metrics flow automatically. There's no context switching because everything lives in the same spatial workspace.",
+              q: tFaq("q1"),
+              a: tFaq("a1"),
             },
             {
-              q: "Does Astra replace our existing tools?",
-              a: "For most teams, yes — over time. Astra covers chat, task management, documentation, and engineering metrics in one platform. During transition, we integrate with GitHub, Slack, and Jira so you can migrate at your own pace.",
+              q: tFaq("q2"),
+              a: tFaq("a2"),
             },
             {
-              q: "How does Flow Mode work technically?",
-              a: "Flow Mode alters the interface at the rendering level. Sidebars animate away, notification listeners are suspended, and only your active task is displayed. Incoming messages are queued server-side and delivered in a batch when you exit Flow Mode.",
+              q: tFaq("q3"),
+              a: tFaq("a3"),
             },
             {
-              q: "Is my data secure?",
-              a: "Absolutely. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). Enterprise plans include SOC 2 Type II compliance, SSO via SAML, and custom data retention policies. We never train AI models on your data.",
+              q: tFaq("q4"),
+              a: tFaq("a4"),
             },
             {
-              q: "What AI capabilities are included?",
-              a: "Every plan includes AI querying via the ⌘K Omni-Bar. The AI can search across all your departments' channels and documents to provide contextual summaries, risk signals, and priority suggestions. Enterprise plans get dedicated AI instances.",
+              q: tFaq("q5"),
+              a: tFaq("a5"),
             },
           ].map(({ q, a }) => (
             <div
@@ -1314,11 +1360,11 @@ export default function Home() {
       <section className="py-32 px-6 text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="scroll-fade-up text-4xl md:text-6xl font-extrabold mb-6">
-            Stop switching.<br />
-            <span className="text-gradient">Start flowing.</span>
+            {tFlow("final1")}<br />
+            <span className="text-gradient">{tFlow("final2")}</span>
           </h2>
           <p className="scroll-fade-up text-lg mb-12" style={{ color: "var(--color-text-secondary)" }}>
-            Join the teams who have already consolidated their stack into one spatial OS.
+            {tFlow("finalSub")}
           </p>
           <button
             className="scroll-fade-up px-10 py-5 rounded-full text-lg font-bold text-white hover:scale-105 transition-transform"
@@ -1327,7 +1373,7 @@ export default function Home() {
               boxShadow: "0 12px 40px rgba(109, 40, 217, 0.3)",
             }}
           >
-            Deploy Astra — Free
+            {tFlow("finalBtn")}
           </button>
         </div>
       </section>
@@ -1337,10 +1383,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="scroll-fade-up text-3xl md:text-5xl font-bold mb-4">
-              Simple, transparent pricing.
+              {tPricing("title")}
             </h2>
             <p className="scroll-fade-up text-lg" style={{ color: "var(--color-text-secondary)" }}>
-              Start for free, scale as your organization unifies.
+              {tPricing("subtitle")}
             </p>
           </div>
 
@@ -1348,52 +1394,49 @@ export default function Home() {
             {/* Free Learner */}
             <div className="glass-panel rounded-3xl p-8 flex flex-col h-full hover:-translate-y-2 transition-transform duration-300">
               <div className="mb-8">
-                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--color-text)" }}>Free Learner</h3>
-                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>For small teams getting started.</p>
+                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--color-text)" }}>{tPricing("free.title")}</h3>
+                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>{tPricing("free.desc")}</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-extrabold">$0</span>
-                  <span className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>/ forever</span>
+                  <span className="text-5xl font-extrabold">{tPricing("free.price")}</span>
+                  <span className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>{tPricing("free.period")}</span>
                 </div>
               </div>
               <ul className="space-y-4 mb-8 flex-1 text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Up to 5 users</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Unlimited chat & channels</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Basic task management</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> Standard search</li>
+                {tPricing.raw("free.features").map((feat: string, i: number) => (
+                  <li key={i} className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "var(--color-accent-light)" }} /> {feat}</li>
+                ))}
               </ul>
               <button
                 className="w-full py-4 rounded-xl font-bold transition-colors"
                 style={{ backgroundColor: "var(--color-surface-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
               >
-                Get Started
+                {tPricing("free.btn")}
               </button>
             </div>
 
             {/* Organization Pro */}
             <div className="glass-active rounded-3xl p-8 flex flex-col h-full transform md:-translate-y-4 border border-blue-500/30 shadow-[0_0_40px_rgba(59,130,246,0.1)] relative">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold bg-blue-500 text-white tracking-widest uppercase">
-                Most Popular
+                {tPricing("pro.badge")}
               </div>
               <div className="mb-8">
-                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--color-text)" }}>Organization Pro</h3>
-                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>The complete platform for growing companies.</p>
+                <h3 className="text-xl font-bold mb-2" style={{ color: "var(--color-text)" }}>{tPricing("pro.title")}</h3>
+                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>{tPricing("pro.desc")}</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-extrabold">$15</span>
-                  <span className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>/ user / mo</span>
+                  <span className="text-5xl font-extrabold">{tPricing("pro.price")}</span>
+                  <span className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>{tPricing("pro.period")}</span>
                 </div>
               </div>
               <ul className="space-y-4 mb-8 flex-1 text-sm font-medium">
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> Everything in Free</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> AI Workspace Generation</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> Invisible Telemetry</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> 3rd-Party Integrations</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> Priority Support</li>
+                {tPricing.raw("pro.features").map((feat: string, i: number) => (
+                  <li key={i} className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" /> {feat}</li>
+                ))}
               </ul>
               <button
                 className="w-full py-4 rounded-xl font-bold text-white transition-transform hover:scale-105"
                 style={{ background: "linear-gradient(135deg, #3b82f6, #2563eb)" }}
               >
-                Start Free Trial
+                {tPricing("pro.btn")}
               </button>
             </div>
 
@@ -1401,24 +1444,22 @@ export default function Home() {
             <div className="glass-panel rounded-3xl p-8 flex flex-col h-full hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
                <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-transparent pointer-events-none" />
               <div className="mb-8 relative z-10">
-                <h3 className="text-xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Enterprise AI</h3>
-                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>For large-scale, secure deployments.</p>
+                <h3 className="text-xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">{tPricing("ent.title")}</h3>
+                <p className="text-sm font-medium mb-6" style={{ color: "var(--color-text-secondary)" }}>{tPricing("ent.desc")}</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold">Custom</span>
+                  <span className="text-4xl font-extrabold">{tPricing("ent.price")}</span>
                 </div>
               </div>
               <ul className="space-y-4 mb-8 flex-1 text-sm font-medium relative z-10" style={{ color: "var(--color-text-secondary)" }}>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Everything in Pro</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Dedicated Cross-Dept AI Models</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Single Sign-On (SAML/SSO)</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Advanced Audit Logs</li>
-                <li className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> Custom SLA</li>
+                {tPricing.raw("ent.features").map((feat: string, i: number) => (
+                  <li key={i} className="flex items-start gap-3"><CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" /> {feat}</li>
+                ))}
               </ul>
               <button
                 className="w-full py-4 rounded-xl font-bold transition-colors relative z-10"
                 style={{ backgroundColor: "var(--color-surface-elevated)", border: "1px solid var(--color-border-strong)", color: "var(--color-text)" }}
               >
-                Contact Sales
+                {tPricing("ent.btn")}
               </button>
             </div>
           </div>
@@ -1432,7 +1473,7 @@ export default function Home() {
         
         <div className="max-w-6xl mx-auto px-6 text-center mb-32 relative z-10">
           <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tight">
-            Ready to unify your company?
+            {tFooter("ctaTitle")}
           </h2>
           <button
             className="px-10 py-5 rounded-full text-white font-bold text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform"
@@ -1441,7 +1482,7 @@ export default function Home() {
               boxShadow: "0 10px 40px rgba(109, 40, 217, 0.4)",
             }}
           >
-            Deploy Astra <ArrowRight className="w-5 h-5" />
+            {tFooter("ctaBtn")} <ArrowRight className="w-5 h-5" />
           </button>
         </div>
 
@@ -1451,34 +1492,34 @@ export default function Home() {
               <Sparkles className="w-4 h-4 text-purple-500" /> Astra
             </div>
             <p className="opacity-60 leading-relaxed mb-6" style={{ color: "var(--color-text-secondary)" }}>
-              The Spatial Productivity OS for modern enterprises. Unifying context, execution, and intelligence.
+              {tFooter("desc")}
             </p>
           </div>
           <div className="flex flex-col gap-4 text-white">
-             <h4 className="font-bold mb-2">Product</h4>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Features</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Pricing</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Enterprise</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Security (SOC 2)</a>
+             <h4 className="font-bold mb-2">{tFooter("links.product")}</h4>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.features")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.pricing")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.enterprise")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.security")}</a>
           </div>
           <div className="flex flex-col gap-4 text-white">
-             <h4 className="font-bold mb-2">Resources</h4>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Documentation</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>API Reference</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Blog</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Community</a>
+             <h4 className="font-bold mb-2">{tFooter("links.resources")}</h4>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.docs")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.api")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.blog")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.community")}</a>
           </div>
           <div className="flex flex-col gap-4 text-white">
-             <h4 className="font-bold mb-2">Company</h4>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>About Us</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Careers</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Contact Sales</a>
-             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>Privacy Policy</a>
+             <h4 className="font-bold mb-2">{tFooter("links.company")}</h4>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.about")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.careers")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.contact")}</a>
+             <a href="#" className="opacity-60 hover:opacity-100 transition-opacity" style={{ color: "var(--color-text-secondary)" }}>{tFooter("links.privacy")}</a>
           </div>
         </div>
         
         <div className="max-w-6xl mx-auto px-6 pt-8 flex flex-col md:flex-row items-center justify-between text-xs opacity-40 border-t relative z-10" style={{ borderColor: "var(--color-border)", color: "var(--color-text-secondary)" }}>
-           <p>© 2026 Astra Systems Inc. All rights reserved.</p>
+           <p>{tFooter("copy")}</p>
            <div className="flex gap-4 mt-4 md:mt-0">
              <a href="#" className="hover:opacity-100">Twitter</a>
              <a href="#" className="hover:opacity-100">GitHub</a>
