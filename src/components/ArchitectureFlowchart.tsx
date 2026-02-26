@@ -20,62 +20,59 @@ import {
   ReactFlowProvider
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Database, Server, Globe, ArrowRight, Zap, Shield, Smartphone, ArrowLeft, Play, Settings, HelpCircle, CheckCircle } from 'lucide-react';
+import { Database, Server, Globe, ArrowRight, Zap, Shield, Smartphone, ArrowLeft, Play, Settings, HelpCircle, CheckCircle, FileText } from 'lucide-react';
 
 // --- ASTRA GLASSMORPHIC CUSTOM NODES ---
 
 const GlassNode = ({ 
   data, 
   icon: Icon, 
-  colorClass, 
-  glowClass 
+  colorClass 
 }: { 
   data: any, 
   icon: any, 
-  colorClass: string, 
-  glowClass: string 
+  colorClass: string 
 }) => {
   return (
     <div className={`
-      relative group rounded-2xl w-64 p-5 
-      bg-black/40 backdrop-blur-xl border border-white/[0.08] shadow-[0_20px_40px_rgba(0,0,0,0.6)]
-      hover:border-white/[0.2] transition-colors
+      relative group rounded-xl w-64 p-5 
+      bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] shadow-lg
+      hover:bg-white/[0.04] transition-colors
     `}>
-      <Handle type="target" position={Position.Top} className="w-3 h-3 bg-white/20 border-2 border-black" />
-      
-      {/* Ambient Inner Glow */}
-      <div className={`absolute -inset-1 ${glowClass} blur-xl opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none rounded-3xl`} />
+      <Handle type="target" position={Position.Top} className="w-3 h-3 bg-white border-2 border-[#1a1a1a]" />
       
       <div className="flex items-start gap-4 relative z-10">
-        <div className={`w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center shrink-0 border border-white/[0.1] ${colorClass}`}>
+        <div className={`w-10 h-10 rounded-xl bg-white/[0.02] flex items-center justify-center shrink-0 border border-white/[0.05] ${colorClass}`}>
           <Icon className="w-5 h-5" />
         </div>
         <div>
-          <h4 className="text-sm font-semibold text-white/90 mb-1">{data.label}</h4>
+          <h4 className="text-sm font-medium text-white/90 mb-1">{data.label}</h4>
           <p className="text-[11px] text-white/40 leading-relaxed">{data.description}</p>
         </div>
       </div>
       
       {data.status && (
-        <div className="mt-4 pt-3 border-t border-white/[0.05] flex items-center justify-between">
+        <div className="mt-4 pt-4 border-t border-white/[0.05] flex items-center justify-between">
           <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Status</span>
-          <span className={`text-[10px] font-mono flex items-center gap-1 ${data.statusColor}`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${data.statusBgColor} animate-pulse`} />
+          <span className={`text-[10px] font-mono flex items-center gap-1.5 ${data.statusColor}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${data.statusBgColor}`} />
             {data.status}
           </span>
         </div>
       )}
 
-      <Handle type="source" position={Position.Bottom} className="w-3 h-3 bg-white/20 border-2 border-black" />
+      <Handle type="source" position={Position.Bottom} className="w-3 h-3 bg-white border-2 border-[#1a1a1a]" />
     </div>
   );
 };
 
 // Node Definitions using the wrapper
-const StartNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Play} colorClass="text-emerald-400" glowClass="bg-emerald-500" />;
-const ProcessNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Settings} colorClass="text-blue-400" glowClass="bg-blue-500" />;
-const DecisionNode = ({ data }: { data: any }) => <GlassNode data={data} icon={HelpCircle} colorClass="text-amber-400" glowClass="bg-amber-500" />;
-const EndNode = ({ data }: { data: any }) => <GlassNode data={data} icon={CheckCircle} colorClass="text-purple-400" glowClass="bg-purple-500" />;
+const StartNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Play} colorClass="text-emerald-400" />;
+const ProcessNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Settings} colorClass="text-blue-400" />;
+const DecisionNode = ({ data }: { data: any }) => <GlassNode data={data} icon={HelpCircle} colorClass="text-amber-400" />;
+const EndNode = ({ data }: { data: any }) => <GlassNode data={data} icon={CheckCircle} colorClass="text-purple-400" />;
+const NoteNode = ({ data }: { data: any }) => <GlassNode data={data} icon={FileText} colorClass="text-pink-400" />;
+const DatabaseNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Database} colorClass="text-teal-400" />;
 
 // --- INITIAL GRAPH DATA ---
 
@@ -143,11 +140,11 @@ const initialNodes: Node[] = [
 ];
 
 const initialEdges: Edge[] = [
-  { id: 'e-start-proc1', source: 'start', target: 'process-1', animated: true, style: { stroke: 'rgba(52,211,153,0.5)', strokeWidth: 2 } },
-  { id: 'e-proc1-dec1', source: 'process-1', target: 'decision-1', animated: true, style: { stroke: 'rgba(59,130,246,0.5)', strokeWidth: 2 } },
-  { id: 'e-dec1-proc2', source: 'decision-1', target: 'process-2', style: { stroke: 'rgba(251,191,36,0.5)', strokeWidth: 2 } },
-  { id: 'e-dec1-end1', source: 'decision-1', target: 'end-1', animated: true, style: { stroke: 'rgba(168,85,247,0.5)', strokeWidth: 2 } },
-  { id: 'e-proc2-proc1', source: 'process-2', target: 'process-1', type: 'step', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
+  { id: 'e-start-proc1', source: 'start', target: 'process-1', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
+  { id: 'e-proc1-dec1', source: 'process-1', target: 'decision-1', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
+  { id: 'e-dec1-proc2', source: 'decision-1', target: 'process-2', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
+  { id: 'e-dec1-end1', source: 'decision-1', target: 'end-1', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
+  { id: 'e-proc2-proc1', source: 'process-2', target: 'process-1', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
 ];
 
 // Extracted inner component so `useReactFlow` context works
@@ -157,7 +154,7 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
   const { screenToFlowPosition } = useReactFlow();
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge({ ...params, animated: true, style: { stroke: 'rgba(255,255,255,0.4)', strokeWidth: 2 } }, eds)),
+    (params: Connection) => setEdges((eds) => addEdge({ ...params, type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } }, eds)),
     [setEdges],
   );
 
@@ -201,10 +198,12 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
     processNode: ProcessNode,
     decisionNode: DecisionNode,
     endNode: EndNode,
+    noteNode: NoteNode,
+    databaseNode: DatabaseNode
   }), []);
 
   return (
-    <div className="w-full h-full relative rounded-3xl overflow-hidden border border-white/[0.03] bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
+    <div className="w-full h-full relative bg-[#050505] overflow-hidden">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -250,58 +249,89 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
           <div className="flex flex-col gap-3 bg-black/60 backdrop-blur-xl border border-white/[0.05] p-4 rounded-2xl shadow-2xl w-full">
             <h4 className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-2 px-1">Tool Palette</h4>
             
-            <div 
-              className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
-              onDragStart={(e) => {
-                e.dataTransfer.setData('application/reactflow', 'startNode');
-                e.dataTransfer.effectAllowed = 'move';
-              }}
-              draggable
-            >
-              <Play className="w-4 h-4 text-emerald-400" />
-              <span className="text-sm font-medium text-white/80">Start Node</span>
-            </div>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div 
+                className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('application/reactflow', 'startNode');
+                  e.dataTransfer.effectAllowed = 'move';
+                }}
+                draggable
+              >
+                <Play className="w-5 h-5 text-emerald-400" />
+                <span className="text-[10px] font-medium text-white/60">Start</span>
+              </div>
 
-            <div 
-              className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
-              onDragStart={(e) => {
-                e.dataTransfer.setData('application/reactflow', 'processNode');
-                e.dataTransfer.effectAllowed = 'move';
-              }}
-              draggable
-            >
-              <Settings className="w-4 h-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/80">Process</span>
-            </div>
+              <div 
+                className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('application/reactflow', 'processNode');
+                  e.dataTransfer.effectAllowed = 'move';
+                }}
+                draggable
+              >
+                <Settings className="w-5 h-5 text-blue-400" />
+                <span className="text-[10px] font-medium text-white/60">Process</span>
+              </div>
 
-            <div 
-              className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
-              onDragStart={(e) => {
-                e.dataTransfer.setData('application/reactflow', 'decisionNode');
-                e.dataTransfer.effectAllowed = 'move';
-              }}
-              draggable
-            >
-              <HelpCircle className="w-4 h-4 text-amber-400" />
-              <span className="text-sm font-medium text-white/80">Decision</span>
-            </div>
+              <div 
+                className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('application/reactflow', 'decisionNode');
+                  e.dataTransfer.effectAllowed = 'move';
+                }}
+                draggable
+              >
+                <HelpCircle className="w-5 h-5 text-amber-400" />
+                <span className="text-[10px] font-medium text-white/60">Decision</span>
+              </div>
 
-            <div 
-              className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
-              onDragStart={(e) => {
-                e.dataTransfer.setData('application/reactflow', 'endNode');
-                e.dataTransfer.effectAllowed = 'move';
-              }}
-              draggable
-            >
-              <CheckCircle className="w-4 h-4 text-purple-400" />
-              <span className="text-sm font-medium text-white/80">End Node</span>
+              <div 
+                className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('application/reactflow', 'databaseNode');
+                  e.dataTransfer.effectAllowed = 'move';
+                }}
+                draggable
+              >
+                <Database className="w-5 h-5 text-teal-400" />
+                <span className="text-[10px] font-medium text-white/60">Database</span>
+              </div>
+
+              <div 
+                className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('application/reactflow', 'noteNode');
+                  e.dataTransfer.effectAllowed = 'move';
+                }}
+                draggable
+              >
+                <FileText className="w-5 h-5 text-pink-400" />
+                <span className="text-[10px] font-medium text-white/60">Note</span>
+              </div>
+
+              <div 
+                className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] cursor-grab active:cursor-grabbing transition-colors"
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('application/reactflow', 'endNode');
+                  e.dataTransfer.effectAllowed = 'move';
+                }}
+                draggable
+              >
+                <CheckCircle className="w-5 h-5 text-purple-400" />
+                <span className="text-[10px] font-medium text-white/60">End</span>
+              </div>
             </div>
           </div>
         </Panel>
 
         <Controls 
-          className="bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl fill-white/50" 
+          className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl fill-white/50" 
+        />
+        <MiniMap 
+          className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl" 
+          nodeColor="rgba(255,255,255,0.05)"
+          maskColor="rgba(0,0,0,0.5)"
         />
       </ReactFlow>
     </div>
