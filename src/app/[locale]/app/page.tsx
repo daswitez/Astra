@@ -396,7 +396,7 @@ export default function AppPage() {
 
                       {/* Tool Card: Whiteboard */}
                       <button 
-                        onClick={() => setActiveView('whiteboard')}
+                        onClick={() => router.push('/app/whiteboard')}
                         className="group relative overflow-hidden rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-purple-500/30 p-6 flex flex-col items-start text-left transition-all hover:bg-purple-500/[0.02] shadow-lg"
                       >
                         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 blur-[60px] rounded-full group-hover:bg-purple-500/20 transition-colors pointer-events-none" />
