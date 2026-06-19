@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft, Globe } from 'lucide-react';
-import GlobalNav from '../../../../components/GlobalNav';
+import { useRouter } from '@/i18n/routing';
+import { ArrowLeft, Globe, Download } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { useState, useCallback } from 'react';
 import '@excalidraw/excalidraw/index.css';
 
 // Excalidraw must be dynamically imported without SSR because it relies on window
@@ -80,11 +78,30 @@ const customWhiteboardCSS = `
 
 export default function WhiteboardPage() {
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [excalidrawAPI, setExcalidrawAPI] = useState<any>(null);
+
+  const handleDownload = useCallback(async () => {
+    if (!excalidrawAPI) return;
+    const { exportToBlob } = await import('@excalidraw/excalidraw');
+    const blob = await exportToBlob({
+      elements: excalidrawAPI.getSceneElements(),
+      appState: { ...excalidrawAPI.getAppState(), exportWithDarkMode: true, exportBackground: true },
+      files: excalidrawAPI.getFiles(),
+      mimeType: 'image/png',
+      quality: 1,
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'brainstorming_canvas.png';
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [excalidrawAPI]);
 
   return (
     <div className="flex h-screen w-screen bg-[#050505] overflow-hidden relative">
       <style dangerouslySetInnerHTML={{ __html: customWhiteboardCSS }} />
-      <GlobalNav />
       
       <main className="flex-1 relative w-full h-full">
         {/* Astra Header Overlay - Relocated to Bottom Right */}
@@ -96,9 +113,19 @@ export default function WhiteboardPage() {
           <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
             <Globe className="w-5 h-5 text-purple-400" />
           </div>
-          
+
           <div className="h-8 w-px bg-white/10" />
-          <button 
+          <button
+            onClick={handleDownload}
+            title="Download as PNG"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 text-emerald-400 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            <span className="text-xs font-medium">Download</span>
+          </button>
+
+          <div className="h-8 w-px bg-white/10" />
+          <button
             onClick={() => router.push('/app')}
             className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
           >
@@ -108,14 +135,15 @@ export default function WhiteboardPage() {
 
         {/* The Excalidraw Engine */}
         <div className="absolute inset-y-0 right-0 left-[80px] z-0 bg-[#050505]" style={{ height: "100%" }}>
-            <Excalidraw 
-              theme="dark" 
+            <Excalidraw
+              theme="dark"
               gridModeEnabled={false}
+              excalidrawAPI={(api) => setExcalidrawAPI(api)}
               UIOptions={{
                 canvasActions: {
                   loadScene: false,
                   export: false,
-                  saveAsImage: false
+                  saveAsImage: false,
                 }
               }}
             />

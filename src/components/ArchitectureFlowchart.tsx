@@ -3,14 +3,12 @@
 import React, { useMemo, useCallback } from 'react';
 import { 
   ReactFlow, 
-  Background, 
   Controls, 
   MiniMap,
   Node,
   Edge,
   Handle,
   Position,
-  BackgroundVariant,
   Panel,
   useNodesState,
   useEdgesState,
@@ -21,19 +19,31 @@ import {
   useOnSelectionChange
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Database, Server, Globe, ArrowRight, Zap, Shield, Smartphone, ArrowLeft, Play, Settings, HelpCircle, CheckCircle, FileText, Trash2, Layers, Cloud, User, Square, Camera, X, Send, FolderTree, Hash } from 'lucide-react';
+import { Database, Globe, Zap, ArrowLeft, Play, Settings, HelpCircle, CheckCircle, FileText, Trash2, Layers, Cloud, User, Square, Camera, X, Send, FolderTree, Hash, Download } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // --- ASTRA GLASSMORPHIC CUSTOM NODES ---
+
+type FlowNodeData = {
+  label?: string;
+  description?: string;
+  status?: string;
+  statusColor?: string;
+  statusBgColor?: string;
+};
+
+type FlowNode = Node<FlowNodeData>;
+type FlowEdge = Edge;
 
 const GlassNode = ({ 
   data, 
   icon: Icon, 
   colorClass 
 }: { 
-  data: any, 
-  icon: any, 
+  data: FlowNodeData, 
+  icon: LucideIcon, 
   colorClass: string 
 }) => {
   return (
@@ -70,21 +80,21 @@ const GlassNode = ({
 };
 
 // Node Definitions using the wrapper
-const StartNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Play} colorClass="text-emerald-400" />;
-const ProcessNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Settings} colorClass="text-blue-400" />;
-const DecisionNode = ({ data }: { data: any }) => <GlassNode data={data} icon={HelpCircle} colorClass="text-amber-400" />;
-const EndNode = ({ data }: { data: any }) => <GlassNode data={data} icon={CheckCircle} colorClass="text-purple-400" />;
-const NoteNode = ({ data }: { data: any }) => <GlassNode data={data} icon={FileText} colorClass="text-pink-400" />;
-const DatabaseNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Database} colorClass="text-teal-400" />;
-const BlankNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Square} colorClass="text-gray-400" />;
-const SubprocessNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Layers} colorClass="text-indigo-400" />;
-const APINode = ({ data }: { data: any }) => <GlassNode data={data} icon={Zap} colorClass="text-yellow-400" />;
-const CloudNode = ({ data }: { data: any }) => <GlassNode data={data} icon={Cloud} colorClass="text-cyan-400" />;
-const UserInputNode = ({ data }: { data: any }) => <GlassNode data={data} icon={User} colorClass="text-orange-400" />;
+const StartNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={Play} colorClass="text-emerald-400" />;
+const ProcessNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={Settings} colorClass="text-blue-400" />;
+const DecisionNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={HelpCircle} colorClass="text-amber-400" />;
+const EndNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={CheckCircle} colorClass="text-purple-400" />;
+const NoteNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={FileText} colorClass="text-pink-400" />;
+const DatabaseNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={Database} colorClass="text-teal-400" />;
+const BlankNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={Square} colorClass="text-gray-400" />;
+const SubprocessNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={Layers} colorClass="text-indigo-400" />;
+const APINode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={Zap} colorClass="text-yellow-400" />;
+const CloudNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={Cloud} colorClass="text-cyan-400" />;
+const UserInputNode = ({ data }: { data: FlowNodeData }) => <GlassNode data={data} icon={User} colorClass="text-orange-400" />;
 
 // --- INITIAL GRAPH DATA ---
 
-const initialNodes: Node[] = [
+const initialNodes: FlowNode[] = [
   {
     id: 'start',
     type: 'startNode',
@@ -147,7 +157,7 @@ const initialNodes: Node[] = [
   },
 ];
 
-const initialEdges: Edge[] = [
+const initialEdges: FlowEdge[] = [
   { id: 'e-start-proc1', source: 'start', target: 'process-1', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
   { id: 'e-proc1-dec1', source: 'process-1', target: 'decision-1', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
   { id: 'e-dec1-proc2', source: 'decision-1', target: 'process-2', type: 'smoothstep', style: { stroke: 'rgba(255,255,255,0.2)', strokeWidth: 2 } },
@@ -207,9 +217,22 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
       });
   }, []);
 
+  const handleDownloadImage = useCallback(() => {
+    if (!capturedImage) return;
+    const a = document.createElement('a');
+    a.href = capturedImage;
+    a.download = `${modalData.title.replace(/\s+/g, '_') || 'flowchart'}.png`;
+    a.click();
+    setShowSaveModal(false);
+    setCapturedImage(null);
+  }, [capturedImage, modalData.title]);
+
   const handleSendSchematic = () => {
+    if (modalData.destination === 'download_image') {
+      handleDownloadImage();
+      return;
+    }
     setIsSending(true);
-    // Simulate network delay for uploading schematic to specific channel
     setTimeout(() => {
       setIsSending(false);
       setShowSaveModal(false);
@@ -231,7 +254,7 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
     nodes.find((n) => n.id === selectedNodeId),
   [nodes, selectedNodeId]);
 
-  const updateNodeData = useCallback((id: string, newData: any) => {
+  const updateNodeData = useCallback((id: string, newData: Partial<FlowNodeData>) => {
     setNodes((nds) =>
       nds.map((node) => {
         if (node.id === id) {
@@ -681,8 +704,8 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
                         <button
                           onClick={() => setModalData(prev => ({ ...prev, destination: 'storage_vault' }))}
                           className={`flex items-start gap-3 p-3 rounded-xl border text-left transition-all ${
-                            modalData.destination === 'storage_vault' 
-                              ? 'bg-purple-500/10 border-purple-500/30' 
+                            modalData.destination === 'storage_vault'
+                              ? 'bg-purple-500/10 border-purple-500/30'
                               : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.05]'
                           }`}
                         >
@@ -692,6 +715,24 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
                           <div>
                             <span className={`block text-sm font-medium ${modalData.destination === 'storage_vault' ? 'text-purple-400' : 'text-white/80'}`}>#StorageVault</span>
                             <span className="block text-[11px] text-white/40 mt-0.5">Save quietly to the dedicated files and diagrams directory. No chat ping.</span>
+                          </div>
+                        </button>
+
+                        {/* Option 3: Download Image */}
+                        <button
+                          onClick={() => setModalData(prev => ({ ...prev, destination: 'download_image' }))}
+                          className={`flex items-start gap-3 p-3 rounded-xl border text-left transition-all ${
+                            modalData.destination === 'download_image'
+                              ? 'bg-emerald-500/10 border-emerald-500/30'
+                              : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.05]'
+                          }`}
+                        >
+                          <div className={`mt-0.5 rounded-full p-1 ${modalData.destination === 'download_image' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/5 text-white/40'}`}>
+                            <Download className="w-3.5 h-3.5" />
+                          </div>
+                          <div>
+                            <span className={`block text-sm font-medium ${modalData.destination === 'download_image' ? 'text-emerald-400' : 'text-white/80'}`}>Download Image</span>
+                            <span className="block text-[11px] text-white/40 mt-0.5">Export the flowchart as a PNG file directly to your device.</span>
                           </div>
                         </button>
                       </div>
@@ -709,19 +750,26 @@ function FlowchartCanvas({ onBack }: { onBack?: () => void }) {
                   >
                     Cancel
                   </button>
-                  <button 
+                  <button
                     onClick={handleSendSchematic}
                     disabled={isSending}
                     className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-medium transition-all ${
-                      isSending 
-                        ? 'bg-white/10 text-white/50 cursor-wait' 
-                        : 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)]'
+                      isSending
+                        ? 'bg-white/10 text-white/50 cursor-wait'
+                        : modalData.destination === 'download_image'
+                          ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(5,150,105,0.3)]'
+                          : 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)]'
                     }`}
                   >
                     {isSending ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white/20 border-t-white/80 rounded-full animate-spin" />
                         Routing Data...
+                      </>
+                    ) : modalData.destination === 'download_image' ? (
+                      <>
+                        <Download className="w-4 h-4" />
+                        Download PNG
                       </>
                     ) : (
                       <>
