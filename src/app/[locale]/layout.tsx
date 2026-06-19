@@ -21,7 +21,7 @@ export default async function RootLayout({
   const {locale} = await params;
   
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!(routing.locales as readonly string[]).includes(locale)) {
     notFound();
   }
  
@@ -31,15 +31,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

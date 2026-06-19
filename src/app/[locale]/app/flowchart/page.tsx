@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "@/i18n/routing";
 import ArchitectureFlowchart from "../../../../components/ArchitectureFlowchart";

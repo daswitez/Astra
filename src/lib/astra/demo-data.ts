@@ -1,0 +1,90 @@
+import type { DashboardData } from "./types";
+
+export const demoDashboardData: DashboardData = {
+  isSupabaseConfigured: false,
+  needsWorkspaceSetup: false,
+  userEmail: null,
+  organization: {
+    id: null,
+    name: "Astra Demo Company",
+    inviteCode: "DEMO42",
+  },
+  organizations: [
+    {
+      id: null,
+      name: "Astra Demo Company",
+      inviteCode: "DEMO42",
+    },
+  ],
+  workspace: {
+    id: "demo-workspace",
+    name: "TeamWorkspace",
+    slug: "team-workspace",
+    channelId: null,
+    channelName: "TeamWorkspace",
+  },
+  messages: [
+    {
+      id: "demo-message-1",
+      authorName: "John Doe",
+      authorInitials: "JD",
+      createdAtLabel: "10:42 AM",
+      body: "Just pushed the initial routing architecture for the frontend MVP. It's looking really clean. We still need to resolve the WebGL context memory leak on scaling though. Should we track that?",
+    },
+    {
+      id: "demo-message-2",
+      authorName: "Alice Smith",
+      authorInitials: "AS",
+      createdAtLabel: "11:05 AM",
+      body: "Good catch! I've converted that into a task in the active context. I'll pick it up after I finish the Omni-Bar implementation.",
+    },
+  ],
+  tasks: [
+    {
+      id: "demo-task-1",
+      title: "Update Marketing Homepage Assets",
+      description: null,
+      status: "todo",
+      priority: "medium",
+      assigneeInitials: "SJ",
+      commentCount: 2,
+    },
+    {
+      id: "demo-task-2",
+      title: "Optimize DB Query for User Fetch",
+      description: null,
+      status: "todo",
+      priority: "medium",
+      assigneeInitials: "+",
+      commentCount: 0,
+    },
+    {
+      id: "demo-task-3",
+      title: "Fix WebGL Context Leak",
+      description: "The parallax ecosystem cards are leaving orphaned contexts on unmount in mobile Safari.",
+      status: "in_progress",
+      priority: "high",
+      assigneeInitials: "AS",
+      commentCount: 0,
+    },
+    {
+      id: "demo-task-4",
+      title: "Implement Zone A Sidebar",
+      description: null,
+      status: "review",
+      priority: "low",
+      assigneeInitials: "JD",
+      commentCount: 0,
+    },
+    {
+      id: "demo-task-5",
+      title: "Implement Omni-Bar AI Search",
+      description: null,
+      status: "todo",
+      priority: "medium",
+      assigneeInitials: "AS",
+      commentCount: 0,
+    },
+  ],
+  files: [],
+};

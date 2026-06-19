@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, usePathname } from "@/i18n/routing";
-import { Sparkles, Home, Layers, Users, Zap, Settings } from "lucide-react";
+import { Sparkles, Home, Users, Zap, Settings } from "lucide-react";
 
 export default function GlobalNav() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);

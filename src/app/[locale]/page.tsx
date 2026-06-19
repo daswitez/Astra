@@ -11,23 +11,17 @@ import {
   MessageSquare,
   LayoutTemplate,
   Zap,
-  Bot,
   Shield,
   BarChart3,
-  Users,
-  Clock,
   CheckCircle2,
   ChevronRight,
   Sun,
   Moon,
   Globe,
   Blocks,
-  Eye,
   BrainCircuit,
   TriangleAlert,
-  Frown,
   Activity,
-  Github,
   Trello,
   Slack,
   Figma,
@@ -42,7 +36,7 @@ import {
   Code2,
   Layers,
 } from "lucide-react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -150,13 +144,13 @@ export default function Home() {
       });
 
       // Chaos Web & Singularity ScrollTrigger Narrative (5 Steps)
-      let mm = gsap.matchMedia();
+      const mm = gsap.matchMedia();
 
       mm.add({
         isDesktop: "(min-width: 768px)",
         isMobile: "(max-width: 767px)"
       }, (context) => {
-        let { isMobile } = context.conditions as { isMobile: boolean, isDesktop: boolean };
+        const { isMobile } = context.conditions as { isMobile: boolean, isDesktop: boolean };
 
         if (!chaosRef.current || !singularityRef.current) return;
         
@@ -440,12 +434,13 @@ export default function Home() {
             )}
           </div>
 
-          <button
+          <Link
+            href="/login"
             className="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity hidden md:block"
           >
             {tNav("signIn")}
-          </button>
-          <Link href="/app"
+          </Link>
+          <Link href="/register"
             className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white transition-transform hover:scale-105 inline-flex"
             style={{ background: "linear-gradient(135deg, #6d28d9, #3b82f6)" }}
           >
@@ -482,7 +477,7 @@ export default function Home() {
           </p>
 
           <div className="hero-cta flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <Link href="/app"
+            <Link href="/register"
               className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 hover:scale-105 transition-transform"
               style={{
                 background: "linear-gradient(135deg, #6d28d9, #3b82f6)",
@@ -587,7 +582,7 @@ export default function Home() {
 
               {/* Main Area - Kanban */}
               <div className="flex-1 p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 overflow-y-hidden">
-                {[tMockup("todo"), tMockup("inProgress"), tMockup("done")].map((label, colIdx) => (
+                {[tMockup("todo"), tMockup("inProgress"), tMockup("done")].map((label) => (
                   <div key={label} className="flex flex-col gap-3">
                     <div
                       className="text-xs font-bold uppercase tracking-wider mb-1"
@@ -1709,7 +1704,8 @@ export default function Home() {
           <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tight">
             {tFooter("ctaTitle")}
           </h2>
-          <button
+          <Link
+            href="/register"
             className="px-10 py-5 rounded-full text-white font-bold text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform"
             style={{
               background: "linear-gradient(135deg, #6d28d9, #3b82f6)",
@@ -1717,7 +1713,7 @@ export default function Home() {
             }}
           >
             {tFooter("ctaBtn")} <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
 
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-12 mb-16 text-sm relative z-10">
